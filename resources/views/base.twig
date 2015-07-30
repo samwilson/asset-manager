@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>
+            {% if title %}{{title}} :: {% endif %}
+            {{site_name}}
+        </title>
+        <link href="{{asset('css/foundation.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('css/all.css')}}" rel="stylesheet" type="text/css" />
+        <script src="{{asset('js/modernizr.js')}}"></script>
+
+    </head>
+    <body>
+        <header>
+            <nav class="top-bar" data-topbar data-options="is_hover:false">
+                <ul class="title-area">
+                    <li class="name">
+                        <h1><a href="{{url('/')}}" title="Go to dashboard">{{site_name}}</a></h1>
+                    </li>
+                </ul>
+
+                <section class="top-bar-section">
+                    <!-- Right Nav Section -->
+                    <ul class="right">
+
+                        {% if user %}
+                        <li class="has-dropdown">
+                            <a>You are logged in as {{user.name}}</a>
+                            <ul class="dropdown">
+                                <li><a href="{{url('users/'~user.username)}}">Profile</a></li>
+                                <li><a href="{{url('logout')}}">Log out</a></li>
+                            </ul>
+                        </li>
+                        {% else %}
+                        <li><a href="{{url('login')}}">Log in</a></li>
+                        {% endif %}
+
+                    </ul>
+
+                    <!-- Left Nav Section -->
+                    <ul class="left">
+                        <li class="has-dropdown">
+                            <a>Assets</a>
+                            <ul class="dropdown">
+                                <li><a href="{{url('assets')}}">Search</a></li>
+                                <li><a href="{{url('assets/create')}}">New</a></li>
+                                <li><a href="{{url('assets/import')}}">Import</a></li>
+                            </ul>
+                        </li>
+                        <li class="has-dropdown">
+                            <a>Jobs</a>
+                            <ul class="dropdown">
+                                <li><a href="{{url('schedule')}}">Schedule</a></li>
+                                <li><a href="{{url('jobs')}}">Create</a></li>
+                            </ul>
+                        </li>
+                        {% if user.isAdmin() %}
+                        <li class="has-dropdown">
+                            <a>Admin</a>
+                            <ul class="dropdown">
+                                <li><a href="{{url('users')}}">Users</a></li>
+                                <li><a href="{{url('people')}}">People</a></li>
+                                <li><a href="{{url('crews')}}">Crews</a></li>
+                            </ul>
+                        </li>
+                        {% endif  %}
+                    </ul>
+                </section>
+            </nav>
+        </header>
+
+        <div id="content">
+            <h1>
+                {{title}}
+                {% if subtitle %}<small>{{subtitle}}</small>{% endif %}
+            </h1>
+
+            {% if alerts %}
+                <div class="hidden-print">
+                    {% for alert in alerts %}
+                        <div data-alert class="alert-box {{alert.status}}">
+                            {{alert.message}}
+                            <a href="#" class="close">&times;</a>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% block content %}{% endblock %}
+
+        </div>
+
+        <footer class="top-bar">
+            <section class="top-bar-section">
+                <!-- Right Nav Section -->
+                <ul class="right">
+                    <li>
+                        <a href="https://github.com/samwilson/asset-manager" target="_blank" title="Opens in new tab">
+                            {{app_title}} {{app_version}}
+                        </a>
+                    </li>
+                </ul>
+                <!-- Left Nav Section -->
+                <ul class="left">
+                </ul>
+            </section>
+        </footer>
+
+        {% for script in scripts %}
+            <script type="text/javascript" src="{{asset('js/'~script)}}"></script>
+        {% endfor %}
+        <script>$(document).foundation();</script>
+    </body>
+</html>

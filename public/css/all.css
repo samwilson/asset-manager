@@ -1,0 +1,19 @@
+.row.full-width { width:100%; max-width:100% }
+#content { margin:1em }
+
+.sub-nav { background-color:#f2f2f2 }
+
+pre.queries { margin:0 1em }
+
+select { height: auto }
+select[size], select[multiple] { background-image:none }
+
+.is-foreign-key { text-align:left }
+
+table tbody th,
+table tbody td { vertical-align:top }
+table tbody td.type-int { text-align:right }
+
+form.model-form abbr.required { color:#f04124; border-bottom:0 }
+
+a.disabled { cursor:not-allowed }

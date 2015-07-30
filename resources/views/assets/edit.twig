@@ -1,0 +1,41 @@
+{% extends "base" %}
+
+{% block content %}
+
+    <ul class="breadcrumbs">
+        <li><a href="{{url('')}}">Home</a></li>
+        <li><a href="{{url('assets')}}">Assets</a></li>
+        {% if asset.id %}
+        <li><a href="{{url('assets/'~asset.id)}}">{{asset.identifier}}</a></li>
+        <li class="current"><a>Edit</a></li>
+        {% else %}
+        <li class="current"><a>Create</a></li>
+        {% endif %}
+    </ul>
+
+    <h1>
+        {% if asset.id %}
+        Editing asset {{asset.id}}
+        {% else %}
+        Create new Asset
+        {% endif %}
+    </h1>
+
+    <form method="post" action="{{url('assets')}}">
+        <input type="hidden" name="_token" value="{{csrf_token()}}">
+        {% if asset.id %}<input type="hidden" name="id" value="{{asset.id}}">{% endif %}
+        <fieldset><legend>Identity</legend>
+            <p>
+                Identifier:
+                <input type="text" name="identifier" value="{{asset.identifier}}" required />
+            </p>
+        </fieldset>
+        <fieldset><legend>Categories</legend>
+
+        </fieldset>
+        <p>
+            <input type="submit" value="Save" class="button" />
+        </p>
+    </form>
+
+{% endblock %}

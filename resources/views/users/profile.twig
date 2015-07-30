@@ -1,0 +1,35 @@
+{% extends "base" %}
+{% block content %}
+
+    <h1>User Profile</h1>
+
+    <form action="{{url('users/'~user.username)}}" method="post">
+        <input type="hidden" name="_token" value="{{csrf_token()}}">
+
+        <fieldset><legend>Details</legend>
+            <p>
+                <label>Username: <input type="text" name="user_username" value="{{user.username}}" /></label>
+            </p>
+            <p>
+                <label>Name: <input type="text" name="user_name" value="{{user.name}}" /></label>
+            </p>
+            <p>
+                <label>Email: <input type="text" name="user_email" value="{{user.email}}" /></label>
+            </p>
+        </fieldset>
+
+        <fieldset><legend>Password</legend>
+            <p>
+                <label>Password: <input type="password" name="password" /></label>
+            </p>
+            <p>
+                <label>Confirmation: <input type="password" name="password_confirmation" /></label>
+            </p>
+        </fieldset>
+
+        <p>
+            <input type="submit" class="button" value="Save" />
+        </p>
+    </form>
+
+{% endblock %}

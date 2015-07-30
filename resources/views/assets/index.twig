@@ -1,0 +1,35 @@
+{% extends "base" %}
+
+{% block content %}
+
+    <ul class="breadcrumbs">
+        <li><a href="{{url('')}}">Home</a></li>
+        <li class="current"><a href="{{url('assets')}}">Assets</a></li>
+    </ul>
+
+    <h1>Assets</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Identifier</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for asset in assets %}
+                <tr>
+                    <td>
+                        {% if user.isClerk() %}
+                        <a href="{{url('assets/'~asset.id~'/edit')}}">Edit</a>
+                        {% endif %}
+                    </td>
+                    <th>
+                        <a href="{{url('assets/'~asset.id)}}" title="View asset details">{{asset.identifier}}</a>
+                    </th>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base" %}
+
+{% block content %}
+
+    <table>
+        <thead>
+            <tr>
+                <th>Crew</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for crew in crews %}
+                <tr>
+                    <th>{{crew.name}}</th>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

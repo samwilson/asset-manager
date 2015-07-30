@@ -1,0 +1,55 @@
+{% extends "base" %}
+{% block content %}
+
+    <ul class="breadcrumbs">
+        <li><a href="{{url('')}}">Home</a></li>
+        <li class="current"><a href="{{url('users')}}">Users</a></li>
+    </ul>
+
+    <h1>Users</h1>
+
+    <ol class="inline-list">
+        <li>{{trans_choice('roles.admin', administrators.count)}}:</li>
+            {% for user in administrators %}
+            <li>
+                <a href="{{url('users/'~user.username)}}">
+                    {{user.name}} <code>{{user.username}}</code>
+                </a>
+            </li>
+        {% endfor %}
+    </ol>
+
+    <ol class="inline-list">
+        <li>{{trans_choice('roles.manager', managers.count)}}:</li>
+            {% for user in managers %}
+            <li>
+                <a href="{{url('users/'~user.username)}}">
+                    {{user.name}} <code>{{user.username}}</code>
+                </a>
+            </li>
+        {% endfor %}
+    </ol>
+
+    <ol class="inline-list">
+        <li>{{trans_choice('roles.clerk', clerks.count)}}:</li>
+            {% for user in clerks %}
+            <li>
+                <a href="{{url('users/'~user.username)}}">
+                    {{user.name}} <code>{{user.username}}</code>
+                </a>
+            </li>
+        {% endfor %}
+    </ol>
+
+    <ol class="inline-list">
+        <li>{{trans('roles.none')}}:</li>
+            {% for user in no_role %}
+            <li>
+                <a href="{{url('users/'~user.username)}}">
+                    {{user.name}} <code>{{user.username}}</code>
+                </a>
+            </li>
+        {% endfor %}
+    </ol>
+
+{% endblock %}
