@@ -8,10 +8,12 @@ A system to manage fixed assets, comprising an asset register and a scheduling s
 
 ## Installation
 1. Download or clone into a web-accessible directory
-2. Copy `.env.example` to `.env` and edit the configuration variables therein
-3. Run `artisan upgrade`
-4. Log in as `admin` with `admin`
-5. Change your password, and configure the site
+2. Run `composer install`
+3. Copy `.env.example` to `.env` and edit the configuration variables therein
+4. Make sure your web server user can write to `storage/`
+5. Run `php artisan upgrade`
+6. Log in as `admin` with `admin`
+7. Change your password, and configure the site
 
 ## Reporting issues
 Please report all issues, bugs, feature requests, etc. at
