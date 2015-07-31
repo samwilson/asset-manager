@@ -75,16 +75,7 @@ class UsersController extends Controller {
 
     public function index() {
         $view = $this->getView('users.index');
-        $view->administrators = User::administrators();
-        $view->managers = User::whereHas('roles', function($query) {
-            $query->where('id', Role::MANAGER);
-        })->get();
-        $view->clerks = User::whereHas('roles', function($query) {
-            $query->where('id', Role::CLERK);
-        })->get();
-        $view->no_role = User::whereHas('roles', function($query) {
-            $query->where('id', Role::ADMIN);
-        })->get();
+        $view->users = User::orderBy('name', 'ASC')->paginate(20);
         return $view;
     }
 

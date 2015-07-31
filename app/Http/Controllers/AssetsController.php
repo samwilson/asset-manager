@@ -9,7 +9,7 @@ class AssetsController extends Controller {
 
     public function index() {
         $view = $this->getView('assets/index');
-        $view->assets = \App\Model\Asset::all();
+        $view->assets = \App\Model\Asset::paginate(30);
         return $view;
     }
 

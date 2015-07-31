@@ -117,6 +117,7 @@ return [
          * Third-party Service Providers...
          */
         TwigBridge\ServiceProvider::class,
+        Styde\BladePagination\ServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         /*
          * Application Service Providers...
