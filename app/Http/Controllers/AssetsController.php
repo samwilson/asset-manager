@@ -10,22 +10,26 @@ use App\Model\AssetCategory;
 class AssetsController extends Controller {
 
     public function index(Request $request) {
-        $view = $this->getView('assets/index');
 
         // Get search terms.
         $assetIdentifiers = preg_split('/(\n|\r)/', $request->input('identifiers', ''), NULL, PREG_SPLIT_NO_EMPTY);
-        $view->identifiers = array_map('trim', $assetIdentifiers);
+        $this->view->identifiers = array_map('trim', $assetIdentifiers);
+
+        // No assets at all?
+        if (Asset::count() === 0) {
+            $this->alert('info', trans('app.no-assets-yet'), false);
+        }
 
         // Build and execute query.
         $assets = Asset::query();
-        if (!empty($view->identifiers)) {
-            $assets->whereIn('identifier', $view->identifiers);
+        if (!empty($this->view->identifiers)) {
+            $assets->whereIn('identifier', $this->view->identifiers);
         }
 
         // Add extra view data, and return.
-        $view->assets = $assets->paginate(50);
-        $view->categories = AssetCategory::where('parent_id', NULL)->orderBy('name', 'ASC')->get();
-        return $view;
+        $this->view->assets = $assets->paginate(50);
+        $this->view->categories = AssetCategory::where('parent_id', NULL)->orderBy('name', 'ASC')->get();
+        return $this->view;
     }
 
     public function import() {
@@ -35,14 +39,13 @@ class AssetsController extends Controller {
 
     public function view($id) {
         $asset = \App\Model\Asset::where('id', $id)->first();
-        $view = $this->getView('assets.view');
-        $view->title = $asset->identifier;
-        $view->breadcrumbs = [
+        $this->view->title = $asset->identifier;
+        $this->view->breadcrumbs = [
             'assets' => 'Assets',
             'assets/'.$asset->id => $asset->identifier,
         ];
-        $view->asset = $asset;
-        return $view;
+        $this->view->asset = $asset;
+        return $this->view;
     }
 
     public function edit($id) {
@@ -58,9 +61,8 @@ class AssetsController extends Controller {
     }
 
     public function create() {
-        $view = $this->getView('assets.edit');
-        $view->asset = new \App\Model\Asset();
-        return $view;
+        $this->view->asset = new \App\Model\Asset();
+        return $this->view;
     }
 
     public function save(Request $request) {

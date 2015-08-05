@@ -142,6 +142,14 @@ class Upgrade extends \Illuminate\Console\Command {
                 $table->timestamps();
             });
         }
+        if (!Schema::hasTable('crews')) {
+            $this->info("Creating 'crews' table.");
+            Schema::create('crews', function(Blueprint $table) {
+                $table->increments('id');
+                $table->string('name')->unique();
+                $table->timestamps();
+            });
+        }
         if (!Schema::hasTable('asset_job_pack')) {
             $this->info("Creating 'asset_job_pack' table.");
             Schema::create('asset_job_pack', function(Blueprint $table) {

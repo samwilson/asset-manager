@@ -77,6 +77,17 @@
 
         <div id="content">
 
+            {% if alerts %}
+                <div class="hidden-print">
+                    {% for alert in alerts %}
+                        <div data-alert class="alert-box {{alert.status}}">
+                            {{alert.message|raw}}
+                            <a href="#" class="close">&times;</a>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
             {% if breadcrumbs %}
             <ul class="breadcrumbs">
                 <li><a href="{{url('/')}}">Home</a></li>
@@ -92,17 +103,6 @@
                 {{title}}
                 {% if subtitle %}<small>{{subtitle}}</small>{% endif %}
             </h1>
-
-            {% if alerts %}
-                <div class="hidden-print">
-                    {% for alert in alerts %}
-                        <div data-alert class="alert-box {{alert.status}}">
-                            {{alert.message}}
-                            <a href="#" class="close">&times;</a>
-                        </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
 
             {% block content %}{% endblock %}
 
