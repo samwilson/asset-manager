@@ -1,0 +1,8 @@
+<ol>
+    {% for cat in cats %}
+    <li>
+        {{cat.name}}
+        {{include('asset-categories/branch', {'cats':cat.getChildren()})}}
+    </li>
+    {% endfor %}
+</ol>

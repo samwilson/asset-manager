@@ -10,7 +10,7 @@
             {{site_name}}
         </title>
         <link href="{{asset('css/foundation.min.css')}}" rel="stylesheet" type="text/css" />
-        <link href="{{asset('css/all.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('css/app.css')}}" rel="stylesheet" type="text/css" />
         <script src="{{asset('js/modernizr.js')}}"></script>
 
     </head>
@@ -65,6 +65,8 @@
                                 <li><a href="{{url('users')}}">Users</a></li>
                                 <li><a href="{{url('people')}}">People</a></li>
                                 <li><a href="{{url('crews')}}">Crews</a></li>
+                                <li><a href="{{url('asset-categories')}}">Asset Categories</a></li>
+                                <li><a href="{{url('job-types')}}">Job Types</a></li>
                             </ul>
                         </li>
                         {% endif  %}
@@ -74,6 +76,18 @@
         </header>
 
         <div id="content">
+
+            {% if breadcrumbs %}
+            <ul class="breadcrumbs">
+                <li><a href="{{url('/')}}">Home</a></li>
+                {% for url,title in breadcrumbs %}
+                <li class="{% if loop.last %}current{% endif %}">
+                    <a href="{{url(url)}}">{{title}}</a>
+                </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+
             <h1>
                 {{title}}
                 {% if subtitle %}<small>{{subtitle}}</small>{% endif %}

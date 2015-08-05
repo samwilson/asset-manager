@@ -1,0 +1,26 @@
+{% extends "base" %}
+
+{% block content %}
+
+    <ul class="breadcrumbs">
+        <li><a href="{{url('')}}">Home</a></li>
+        <li><a href="{{url('assets')}}">Assets</a></li>
+        <li><a href="{{url('admin')}}">Admin</a></li>
+        <li class="current"><a href="{{url('asset-categories')}}">Categories</a></li>
+    </ul>
+
+    <form action="{{route('asset-categories.store')}}">
+        <fieldset><legend>Create</legend>
+            <label>New category: <input type="text" /></label>
+            <label>Parent:
+                <select name="parent_id">
+                    
+                </select>
+            </label>
+            <input type="submit" class="button" value="Save" />
+        </fieldset>
+    </form>
+
+    {{include('asset-categories/branch', {'cats':cat})}}
+
+{% endblock %}

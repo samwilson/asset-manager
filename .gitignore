@@ -3,5 +3,6 @@
 Homestead.yaml
 .env
 /nbproject/private/
-testdox.html
+/testdox.html
+/testdox.txt
 

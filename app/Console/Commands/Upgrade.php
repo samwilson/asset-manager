@@ -79,13 +79,87 @@ class Upgrade extends \Illuminate\Console\Command {
         // If there are no administrators, make the first user an admin.
         if (!User::administrators()) {
             $adminUser = User::first();
-            $this->info("Making ".$adminUser->name." an Administrator.");
+            $this->info("Making " . $adminUser->name . " an Administrator.");
             $adminUser->roles()->save($adminRole);
         }
         if (!Schema::hasTable('assets')) {
             Schema::create('assets', function(Blueprint $table) {
                 $table->increments('id');
                 $table->string('identifier')->unique();
+                $table->timestamps();
+            });
+        }
+        if (!Schema::hasTable('asset_categories')) {
+            $this->info("Creating 'asset_categories' table.");
+            Schema::create('asset_categories', function(Blueprint $table) {
+                $table->increments('id');
+                $table->string('name')->unique();
+                $table->integer('parent_id')->unsigned()->nullable();
+                $table->foreign('parent_id')->references('id')->on('asset_categories');
+                $table->timestamps();
+            });
+        }
+        if (!Schema::hasTable('custodians')) {
+            $this->info("Creating 'custodians' table.");
+            Schema::create('custodians', function(Blueprint $table) {
+                $table->increments('id');
+                $table->string('name')->unique();
+                $table->timestamps();
+            });
+        }
+        if (!Schema::hasTable('asset_custodian')) {
+            $this->info("Creating 'asset_custodian' table.");
+            Schema::create('asset_custodian', function(Blueprint $table) {
+                $table->integer('asset_id')->unsigned()->nullable();
+                $table->foreign('asset_id')->references('id')->on('assets');
+                $table->integer('custodian_id')->unsigned()->nullable();
+                $table->foreign('custodian_id')->references('id')->on('custodians');
+                $table->primary(['asset_id', 'custodian_id']);
+            });
+        }
+        if (!Schema::hasTable('job_types')) {
+            $this->info("Creating 'job_types' table.");
+            Schema::create('job_types', function(Blueprint $table) {
+                $table->increments('id');
+                $table->string('name')->unique();
+                $table->timestamps();
+            });
+        }
+        if (!Schema::hasTable('jobs')) {
+            $this->info("Creating 'jobs' table.");
+            Schema::create('jobs', function(Blueprint $table) {
+                $table->increments('id');
+                $table->string('name')->unique();
+                $table->integer('type_id')->unsigned()->nullable();
+                $table->foreign('type_id')->references('id')->on('job_types');
+                $table->timestamps();
+            });
+        }
+        if (!Schema::hasTable('job_packs')) {
+            $this->info("Creating 'job_packs' table.");
+            Schema::create('job_packs', function(Blueprint $table) {
+                $table->increments('id');
+                $table->timestamps();
+            });
+        }
+        if (!Schema::hasTable('asset_job_pack')) {
+            $this->info("Creating 'asset_job_pack' table.");
+            Schema::create('asset_job_pack', function(Blueprint $table) {
+                $table->integer('asset_id')->unsigned()->nullable();
+                $table->foreign('asset_id')->references('id')->on('assets');
+                $table->integer('job_pack_id')->unsigned()->nullable();
+                $table->foreign('job_pack_id')->references('id')->on('job_packs');
+                $table->primary(['asset_id', 'job_pack_id']);
+            });
+        }
+        if (!Schema::hasTable('scheduled_job_packs')) {
+            $this->info("Creating 'scheduled_job_packs' table.");
+            Schema::create('scheduled_job_packs', function(Blueprint $table) {
+                $table->increments('id');
+                $table->integer('job_pack_id')->unsigned();
+                $table->foreign('job_pack_id')->references('id')->on('job_packs');
+                $table->integer('crew_id')->unsigned();
+                $table->foreign('crew_id')->references('id')->on('crews');
                 $table->timestamps();
             });
         }

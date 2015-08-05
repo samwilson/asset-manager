@@ -2,17 +2,6 @@
 
 {% block content %}
 
-    <ul class="breadcrumbs">
-        <li><a href="{{url('')}}">Home</a></li>
-        <li><a href="{{url('assets')}}">Assets</a></li>
-        {% if asset.id %}
-        <li><a href="{{url('assets/'~asset.id)}}">{{asset.identifier}}</a></li>
-        <li class="current"><a>Edit</a></li>
-        {% else %}
-        <li class="current"><a>Create</a></li>
-        {% endif %}
-    </ul>
-
     <h1>
         {% if asset.id %}
         Editing asset {{asset.id}}
@@ -31,7 +20,7 @@
             </p>
         </fieldset>
         <fieldset><legend>Categories</legend>
-
+        {{include('categorytree', {"categories":categories})}}
         </fieldset>
         <p>
             <input type="submit" value="Save" class="button" />

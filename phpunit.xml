@@ -21,6 +21,7 @@
     </filter>
     <logging>
         <log type="testdox-html" target="testdox.html"/>
+        <log type="testdox-text" target="testdox.txt"/>
     </logging>
     <php>
         <env name="APP_ENV" value="testing"/>

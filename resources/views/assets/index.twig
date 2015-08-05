@@ -9,12 +9,33 @@
 
     <h1>Assets</h1>
 
+    <form action="{{url('assets')}}" method="post">
+        <input type="hidden" name="_token" value="{{csrf_token()}}">
+        <fieldset class="row full-width"><legend>{{trans('app.search')}}</legend>
+            <div class="large-3 columns">
+                <label>Identifiers (one per line): <textarea name="identifiers" rows="8">{{identifiers|join('\n')}}</textarea></label>
+            </div>
+            <div class="large-3 columns">
+                Categories:
+                {{include('categorytree', {"categories":categories})}}
+            </div>
+            <div class="large-3 columns"></div>
+            <div class="large-2 columns"></div>
+            <div class="large-1 columns">
+                <input type="submit" name="search" value="{{trans('app.search')}}" class="button" /><br />
+                <a href="{{url('assets')}}" class="button secondary">Reset</a>
+            </p>
+        </fieldset>
+    </form>
+
+    <p class="alert">{{assets.total|number_format}} Assets found.</p>
     {{ assets.render()|raw }}
     <table>
         <thead>
             <tr>
                 <th></th>
                 <th>Identifier</th>
+                <th>Categories</th>
             </tr>
         </thead>
         <tbody>
@@ -28,6 +49,11 @@
                     <th>
                         <a href="{{url('assets/'~asset.id)}}" title="View asset details">{{asset.identifier}}</a>
                     </th>
+                    <td>
+                        {% for cat in asset.categories %}
+                        
+                        {% endfor %}
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

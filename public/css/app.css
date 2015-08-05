@@ -1,0 +1,26 @@
+.row.full-width { width:100%; max-width:100% }
+#content { margin:1em }
+
+.sub-nav { background-color:#f2f2f2 }
+
+pre.queries { margin:0 1em }
+
+select { height: auto }
+select[size], select[multiple] { background-image:none }
+
+table tbody th,
+table tbody td { vertical-align:top }
+table tbody td.type-int { text-align:right }
+
+form.model-form abbr.required { color:#f04124; border-bottom:0 }
+
+a.disabled { cursor:not-allowed }
+
+ol.categorytree { margin:0 0.5em 0 1em; text-align:left; list-style-type:none }
+ol.categorytree .toggle { cursor:pointer }
+ol.categorytree label { background:0; border:0; font-weight:normal; display:inline!important }
+ol.categorytree input { display:inline; width:auto; margin:0 }
+ol.categorytree .description { font-size:smaller; color:#069; margin-left:2em }
+ol.categorytree .description p { margin:0 }
+ol.categorytree .description ol { list-style-type:decimal; margin:0 0 0 2em }
+ol.categorytree .description ul { list-style-type:circle; margin:0 0 0 2em }

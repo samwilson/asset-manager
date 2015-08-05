@@ -1,14 +1,6 @@
 {% extends "base" %}
 
 {% block content %}
-    
-    <ul class="breadcrumbs">
-        <li><a href="{{url('')}}">Home</a></li>
-        <li><a href="{{url('assets')}}">Assets</a></li>
-        <li class="current"><a href="{{url('assets'~asset.id)}}">{{asset.identifier}}</a></li>
-    </ul>
-
-    <h1>Asset: {{asset.identifier}}</h1>
 
     {% if user.isClerk() %}
     <p><a href="{{url('assets/'~asset.id~'/edit')}}" class="button tiny">Edit</a></p>
