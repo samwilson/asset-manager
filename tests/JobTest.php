@@ -1,15 +1,15 @@
 <?php
 
-use App\Model\JobPack;
+use App\Model\Job;
 
-class JobPackTest extends TestCase {
+class JobTest extends TestCase {
 
     /**
      * @testdox A Job Pack is a collection of Assets that must have a particular Job performed on them.
      * @test
      */
     public function basic() {
-        $jobPack = new JobPack();
+        $jobPack = new Job();
         $this->assertEquals(0, $jobPack->assets->count());
     }
 

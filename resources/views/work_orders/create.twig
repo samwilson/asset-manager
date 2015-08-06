@@ -1,0 +1,44 @@
+{% extends "base" %}
+{% block content %}
+
+<form method="post" action="{{url('work-orders/save')}}" class="row">
+    <input type="hidden" name="_token" value="{{csrf_token()}}" />
+    <input type="hidden" name="identifier" value="{{identifier}}" />
+    <input type="hidden" name="identifiers" value="{{identifiers|join('\n')}}" />
+    {% for cat in categoryIds %}
+    <input type="hidden" name="category_ids[]" value="{{cat}}" />
+    {% endfor %}
+
+    <p class="columns large-12">
+        You are about to create a Work Order of {{assets.count}} assets.
+    </p>
+    <p class="columns large-4">
+        <label>
+            Name (must be unique):
+            <input type="text" name="name" />
+        </label>
+    </p>
+    <p class="columns large-4">
+        <label>
+            Type:
+            <select name="work_order_type_id" required>
+                <option selected></option>
+                {% for type in work_order_types %}
+                <option value="{{type.id}}">{{type.name}}</option>
+                {% endfor %}
+            </select>
+        </label>
+    </p>
+    <p class="columns large-4">
+        <label>
+            Due date:
+            <input type="text" name="due_date" class="datepicker" />
+        </label>
+    </p>
+    <p class="columns large-12">
+        <input type="submit" name="save" value="Yes, create this Work Order" class="button" />
+        <input type="submit" name="search" value="No, return to Asset search" class="secondary button" data-new-action="{{url('assets')}}" />
+    </p>
+</form>
+
+{% endblock %}

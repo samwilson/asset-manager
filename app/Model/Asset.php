@@ -12,8 +12,16 @@ class Asset extends Model {
         $this->attributes['identifier'] = substr($value, 0, 150);
     }
 
-    public function custodians() {
-        return $this->belongsToMany('App\Model\Custodian');
+    public function contacts() {
+        return $this->belongsToMany('App\Model\Contact');
+    }
+
+    public function categories() {
+        return $this->belongsToMany('App\Model\Category');
+    }
+
+    public function workOrders() {
+        return $this->belongsToMany('App\Model\WorkOrder');
     }
 
 }

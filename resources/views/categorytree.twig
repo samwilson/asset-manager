@@ -1,18 +1,25 @@
+{% if categories %}
 <ol class="categorytree">
 
     {% for cat in categories %}
     <li class="category">
 
-        <a class="fa {% if cat.getChildren() %}toggle fa-plus-circle{% else %}fa-dot-circle-o{% endif %}"
-           title="Expand this item">
-        </a>
+        {% if cat.getChildren().count() == 0 %}
+        <span class="fa fa-dot-circle-o"></span>
+        {% else %}
+        <a class="fa toggle fa-plus-circle" title="Expand this item"></a>
+        {% endif %}
 
         <label>
-            <input type="checkbox" name="category_ids[]" value="{{cat.id}}" />
+            <input type="checkbox" name="category_ids[]"
+                   {% if selected.contains(cat.id) %}checked{% endif %}
+                   value="{{cat.id}}" />
             {{cat.name}}
         </label>
 
+        {% if cat.description %}
         <div class="description">{{cat.description}}</div>
+        {% endif %}
 
         {% if cat.getChildren() %}
         {{include('categorytree', {"categories":cat.getChildren()})}}
@@ -22,3 +29,4 @@
     {% endfor %}
 
 </ol>
+{% endif %}

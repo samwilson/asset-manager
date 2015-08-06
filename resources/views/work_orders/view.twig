@@ -1,0 +1,25 @@
+{% extends "base" %}
+{% block content %}
+
+    <table>
+        <tr><th>Name:</th><td>{{work_order.name}}</td></tr>
+        <tr><th>Due date:</th><td>{{work_order.due_date}}</td></tr>
+        <tr><th>Asset count:</th><td>{{work_order.assets.count}}</td></tr>
+    </table>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Asset</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for asset in assets %}
+            <tr>
+                <td>{{asset.identifier}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+{% endblock %}

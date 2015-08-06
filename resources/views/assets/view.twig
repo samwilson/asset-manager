@@ -3,7 +3,16 @@
 {% block content %}
 
     {% if user.isClerk() %}
-    <p><a href="{{url('assets/'~asset.id~'/edit')}}" class="button tiny">Edit</a></p>
+    <p><a href="{{url('assets/'~asset.id~'/edit')}}" class="small button">Edit</a></p>
     {% endif %}
+
+    <p>Categories:
+        {% for cat in asset.categories %}
+        <span class="label">{{cat.name}}</span>
+        {% endfor %}
+        {% if asset.categories.count == 0 %}
+        <em>None.</em>
+        {% endif %}
+    </p>
 
 {% endblock %}

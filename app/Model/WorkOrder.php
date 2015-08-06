@@ -4,10 +4,10 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class JobPack extends Model {
+class WorkOrder extends Model {
 
     public function type() {
-        return $this->belongsTo('App\Model\JobType');
+        return $this->belongsTo('App\Model\WorkOrderType');
     }
 
     public function assets() {

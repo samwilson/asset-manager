@@ -2,6 +2,16 @@ $(document).ready(function () {
     $(".focus-me").focus();
 
     /**
+     * If a submit button has a data-new-action attribute, change the action of the form.
+     */
+    $("form input:submit").on("click", function() {
+        var newAction = $(this).data("new-action");
+        if (newAction) {
+            $(this).closest("form").attr("action", newAction);
+        }
+    });
+
+    /**
      * Category Trees.
      */
     var catTreeWidth = $("ol.categorytree:first").width();

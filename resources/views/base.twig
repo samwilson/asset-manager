@@ -47,8 +47,9 @@
                             <a>Assets</a>
                             <ul class="dropdown">
                                 <li><a href="{{url('assets')}}">Search</a></li>
-                                <li><a href="{{url('assets/create')}}">New</a></li>
+                                <li><a href="{{url('assets/create')}}">Create</a></li>
                                 <li><a href="{{url('assets/import')}}">Import</a></li>
+                                <li><a href="{{url('contacts')}}">Contacts</a></li>
                             </ul>
                         </li>
                         <li class="has-dropdown">
@@ -65,7 +66,7 @@
                                 <li><a href="{{url('users')}}">Users</a></li>
                                 <li><a href="{{url('people')}}">People</a></li>
                                 <li><a href="{{url('crews')}}">Crews</a></li>
-                                <li><a href="{{url('asset-categories')}}">Asset Categories</a></li>
+                                <li><a href="{{url('categories')}}">Categories</a></li>
                                 <li><a href="{{url('job-types')}}">Job Types</a></li>
                             </ul>
                         </li>
@@ -113,9 +114,7 @@
                 <!-- Right Nav Section -->
                 <ul class="right">
                     <li>
-                        <a href="https://github.com/samwilson/asset-manager" target="_blank" title="Opens in new tab">
-                            {{app_title}} {{app_version}}
-                        </a>
+                        <a href="#" data-options="align:top" data-dropdown="software-links">{{app_title}} {{app_version}}</a>
                     </li>
                 </ul>
                 <!-- Left Nav Section -->
@@ -123,6 +122,23 @@
                 </ul>
             </section>
         </footer>
+        <ul id="software-links" class="f-dropdown" data-dropdown-content>
+            <li>
+                <a href="https://github.com/samwilson/asset-manager/stargazers" target="_blank" title="Star us! (opens in a new tab)">
+                    <img src="https://img.shields.io/github/stars/samwilson/asset-manager.svg?style=social" />
+                </a>
+            </li>
+            <li>
+                <a href="https://github.com/samwilson/asset-manager/issues" target="_blank" title="Report a new issue (opens in a new tab)">
+                    <img src="https://img.shields.io/github/issues/samwilson/asset-manager.svg" />
+                </a>
+            </li>
+            <li>
+                <a href="https://github.com/samwilson/asset-manager" target="_blank" title="Got to the AssetManager website (opens in a new tab)">
+                    Website
+                </a>
+            </li>
+        </ul>
 
         {% for script in scripts %}
             <script type="text/javascript" src="{{asset('js/'~script)}}"></script>

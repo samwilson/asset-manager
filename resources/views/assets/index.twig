@@ -10,14 +10,19 @@
     <h1>Assets</h1>
 
     <form action="{{url('assets')}}" method="post">
-        <input type="hidden" name="_token" value="{{csrf_token()}}">
-        <fieldset class="row full-width"><legend>{{trans('app.search')}}</legend>
+        <input type="hidden" name="_token" value="{{csrf_token()}}" />
+        <fieldset class="row full-width">
+            <legend>{{trans('app.search')}}</legend>
             <div class="large-3 columns">
-                <label>Identifiers (one per line): <textarea name="identifiers" rows="8">{{identifiers|join('\n')}}</textarea></label>
+                <label>Identifier contains: <input type="text" name="identifier" value="{{identifier}}" /></label>
+                <label>
+                    Identifier is one of (one per line):
+                    <textarea name="identifiers" rows="8">{{identifiers|join('\n')}}</textarea>
+                </label>
             </div>
             <div class="large-3 columns">
                 Categories:
-                {{include('categorytree', {"categories":categories})}}
+                {{include('categorytree', {"categories":categories, "selected":categoryIds})}}
             </div>
             <div class="large-3 columns"></div>
             <div class="large-2 columns"></div>
@@ -26,9 +31,18 @@
                 <a href="{{url('assets')}}" class="button secondary">Reset</a>
             </p>
         </fieldset>
+
+        {% if assets.total > 0 %}
+        <fieldset>
+            <legend>{{assets.total|number_format}} Result{% if assets.total != 1 %}s{% endif %}</legend>
+            <input type="submit" class="small button" data-new-action="{{url('assets/csv')}}" value="Get CSV" />
+            <input type="submit" class="small button" data-new-action="{{url('work-orders/create')}}" value="Create Work Order" />
+        </fieldset>
+        {% endif %}
+
     </form>
 
-    <p class="alert">{{assets.total|number_format}} Assets found.</p>
+    {% if assets.total > 0 %}
     {{ assets.render()|raw }}
     <table>
         <thead>
@@ -36,6 +50,7 @@
                 <th></th>
                 <th>Identifier</th>
                 <th>Categories</th>
+                <th>Contacts</th>
             </tr>
         </thead>
         <tbody>
@@ -51,12 +66,18 @@
                     </th>
                     <td>
                         {% for cat in asset.categories %}
-                        
+                        <span class="label secondary">{{cat.name}}</span>
                         {% endfor %}
+                    </td>
+                    <td>
+                        {% if asset.contacts.count > 0 %}
+                        {{asset.contacts.count}}
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+    {% endif %}
 
 {% endblock %}

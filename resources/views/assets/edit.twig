@@ -2,15 +2,7 @@
 
 {% block content %}
 
-    <h1>
-        {% if asset.id %}
-        Editing asset {{asset.id}}
-        {% else %}
-        Create new Asset
-        {% endif %}
-    </h1>
-
-    <form method="post" action="{{url('assets')}}">
+    <form method="post" action="{{url('assets/save')}}">
         <input type="hidden" name="_token" value="{{csrf_token()}}">
         {% if asset.id %}<input type="hidden" name="id" value="{{asset.id}}">{% endif %}
         <fieldset><legend>Identity</legend>
@@ -20,7 +12,7 @@
             </p>
         </fieldset>
         <fieldset><legend>Categories</legend>
-        {{include('categorytree', {"categories":categories})}}
+        {{include('categorytree', {"categories":categories, "selected":asset.categories})}}
         </fieldset>
         <p>
             <input type="submit" value="Save" class="button" />

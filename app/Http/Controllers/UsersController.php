@@ -9,13 +9,12 @@ use App\Model\Role;
 
 class UsersController extends Controller {
 
-    public function loginGet() {
-        $view = $this->getView('users.login');
-        $view->title = 'Log in';
+    public function login() {
+        $this->view->title = 'Log in';
         $adldap = config('adldap');
-        $view->adldap_enabled = $adldap['enabled'];
-        $view->adldap_suffix = $adldap['account_suffix'];
-        return $view;
+        $this->view->adldap_enabled = $adldap['enabled'];
+        $this->view->adldap_suffix = $adldap['account_suffix'];
+        return $this->view;
     }
 
     public function loginPost(Request $request) {
