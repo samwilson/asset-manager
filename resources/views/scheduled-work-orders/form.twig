@@ -1,0 +1,39 @@
+{% extends "base" %}
+{% block content %}
+
+<form method="post" action="{{url('work-orders/'~work_order.id~'/schedule/save')}}" class="row">
+    <input type="hidden" name="_token" value="{{csrf_token()}}" />
+    {% if swo.id %}
+    <input type="hidden" name="id" value="{{swo.id}}" />
+    {% endif %}
+    <p>
+        <label>
+            Crew:
+            <select name="crew_id" required>
+                <option></option>
+                {% for crew in crews %}
+                <option value="{{crew.id}}" {% if swo.crew_id == crew.id %}selected{% endif %}>
+                    {{crew.name}}
+                </option>
+                {% endfor %}
+            </select>
+        </label>
+    </p>
+    <div class="row">
+        <p class="large-6 columns">
+            <label>Start Date;
+            <input type="text" name="start_date" class="datepicker" value="{{swo.start_date}}" />
+            </label>
+        </p>
+        <p class="large-6 columns">
+            <label>End Date;
+            <input type="text" name="end_date" class="datepicker" value="{{swo.end_date}}" />
+            </label>
+        </p>
+    </div>
+    <p>
+        <input type="submit" value="Schedule" class="button" />
+    </p>
+</form>
+
+{% endblock %}

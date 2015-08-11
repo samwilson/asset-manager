@@ -96,8 +96,8 @@ class Upgrade extends \Illuminate\Console\Command {
             Schema::create('assets', function(Blueprint $table) {
                 $table->increments('id');
                 $table->string('identifier')->unique();
-                $table->decimal('latitude', 13, 10);
-                $table->decimal('longitude', 13, 10);
+                $table->decimal('latitude', 13, 10)->nullable();
+                $table->decimal('longitude', 13, 10)->nullable();
                 $table->timestamps();
             });
         }
@@ -129,10 +129,10 @@ class Upgrade extends \Illuminate\Console\Command {
             Schema::create('contacts', function(Blueprint $table) {
                 $table->increments('id');
                 $table->string('name')->unique();
-                $table->string('phone_1');
-                $table->string('phone_2');
-                $table->decimal('latitude', 13, 10);
-                $table->decimal('longitude', 13, 10);
+                $table->string('phone_1')->nullable();
+                $table->string('phone_2')->nullable();
+                $table->decimal('latitude', 13, 10)->nullable();
+                $table->decimal('longitude', 13, 10)->nullable();
                 $table->timestamps();
             });
         }

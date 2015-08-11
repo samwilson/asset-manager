@@ -1,7 +1,7 @@
 <?php
 
 use App\Model\Asset;
-use App\Model\Custodian;
+use App\Model\Contact;
 
 class AssetTest extends TestCase {
 
@@ -22,19 +22,19 @@ class AssetTest extends TestCase {
     }
 
     /**
-     * @testdox Assets can have Custodians, who may need to be contacted prior to Jobs being carried out.
+     * @testdox An Asset can have Contacts, who may need to be contacted prior to Jobs being carried out.
      * @test
      */
-    public function custodians() {
+    public function contacts() {
         $asset = new Asset();
         $asset->identifier = 'TEST123';
         $asset->save();
-        $custodian = new Custodian();
-        $custodian->name = 'Bill';
-        $custodian->save();
-        $asset->custodians()->attach($custodian->id);
-        $this->assertEquals(1, $asset->custodians->count());
-        $this->assertEquals(1, $custodian->assets->count());
+        $contact = new Contact();
+        $contact->name = 'Bill';
+        $contact->save();
+        $asset->contacts()->attach($contact->id);
+        $this->assertEquals(1, $asset->contacts->count());
+        $this->assertEquals(1, $contact->assets->count());
     }
 
 }

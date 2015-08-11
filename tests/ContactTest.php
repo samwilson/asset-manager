@@ -1,6 +1,6 @@
 <?php
 
-class CustodianTest extends TestCase {
+class ContactTest extends TestCase {
 
     /**
      * @testdox An Asset Custodian has a name, two optional phone numbers, and an optional street address.

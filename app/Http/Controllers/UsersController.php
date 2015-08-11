@@ -14,6 +14,10 @@ class UsersController extends Controller {
         $adldap = config('adldap');
         $this->view->adldap_enabled = $adldap['enabled'];
         $this->view->adldap_suffix = $adldap['account_suffix'];
+        $this->view->breadcrumbs = [
+            'users' => 'Users',
+            'login' => 'Log In',
+        ];
         return $this->view;
     }
 
@@ -24,7 +28,7 @@ class UsersController extends Controller {
         // Try to log in.
         if (Auth::attempt(['username' => $username, 'password' => $password])) {
             $this->alert('success', 'You are now logged in.', TRUE);
-            return redirect('/');
+            return redirect()->intended();
         }
 
         // If that fails, try Adldap.
@@ -73,9 +77,8 @@ class UsersController extends Controller {
     }
 
     public function index() {
-        $view = $this->getView('users.index');
-        $view->users = User::orderBy('name', 'ASC')->paginate(20);
-        return $view;
+        $this->view->users = User::orderBy('name', 'ASC')->paginate(20);
+        return $this->view;
     }
 
 }

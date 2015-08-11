@@ -24,8 +24,8 @@ abstract class Controller extends BaseController {
         $parts = explode('@', $route);
         $controllerParts = explode('\\', $parts[0]);
         $controllerName = array_pop($controllerParts);
-        $controller = snake_case(substr($controllerName, 0, -strlen('Controller')));
-        $action = snake_case($parts[1]);
+        $controller = str_slug(snake_case(substr($controllerName, 0, -strlen('Controller'))));
+        $action = str_slug(snake_case($parts[1]));
         $viewFile = "$controller.$action";
         if (!file_exists(app_path("../resources/views/$controller/$action.twig"))) {
             $this->view = view('home');
@@ -38,6 +38,7 @@ abstract class Controller extends BaseController {
         $this->view->site_name = config('app.site_name');
         $this->view->scripts = array(
             'jquery.js',
+            'jquery-ui.min.js',
             'foundation.min.js',
             'app.js',
         );

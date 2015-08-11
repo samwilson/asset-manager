@@ -9,8 +9,11 @@
             {% if title %}{{title}} :: {% endif %}
             {{site_name}}
         </title>
+
         <link href="{{asset('css/foundation.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('css/jquery-ui.min.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{asset('css/app.css')}}" rel="stylesheet" type="text/css" />
+
         <script src="{{asset('js/modernizr.js')}}"></script>
 
     </head>
@@ -46,17 +49,17 @@
                         <li class="has-dropdown">
                             <a>Assets</a>
                             <ul class="dropdown">
-                                <li><a href="{{url('assets')}}">Search</a></li>
+                                <li><a href="{{url('assets')}}">Index</a></li>
                                 <li><a href="{{url('assets/create')}}">Create</a></li>
                                 <li><a href="{{url('assets/import')}}">Import</a></li>
                                 <li><a href="{{url('contacts')}}">Contacts</a></li>
                             </ul>
                         </li>
                         <li class="has-dropdown">
-                            <a>Jobs</a>
+                            <a>Work Orders</a>
                             <ul class="dropdown">
-                                <li><a href="{{url('schedule')}}">Schedule</a></li>
-                                <li><a href="{{url('jobs')}}">Create</a></li>
+                                <li><a href="{{url('work-orders')}}">Index</a></li>
+                                <li><a href="{{url('jobs')}}">Jobs</a></li>
                             </ul>
                         </li>
                         {% if user.isAdmin() %}
@@ -124,18 +127,13 @@
         </footer>
         <ul id="software-links" class="f-dropdown" data-dropdown-content>
             <li>
-                <a href="https://github.com/samwilson/asset-manager/stargazers" target="_blank" title="Star us! (opens in a new tab)">
-                    <img src="https://img.shields.io/github/stars/samwilson/asset-manager.svg?style=social" />
+                <a href="https://github.com/samwilson/asset-manager" target="_blank" title="Got to the AssetManager website (opens in a new tab)">
+                    Website
                 </a>
             </li>
             <li>
                 <a href="https://github.com/samwilson/asset-manager/issues" target="_blank" title="Report a new issue (opens in a new tab)">
-                    <img src="https://img.shields.io/github/issues/samwilson/asset-manager.svg" />
-                </a>
-            </li>
-            <li>
-                <a href="https://github.com/samwilson/asset-manager" target="_blank" title="Got to the AssetManager website (opens in a new tab)">
-                    Website
+                    Issue Tracker
                 </a>
             </li>
         </ul>

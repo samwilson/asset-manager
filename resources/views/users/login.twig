@@ -4,7 +4,7 @@
     <form action="{{url('login')}}" method="post">
         <input type="hidden" name="_token" value="{{csrf_token()}}">
 
-        <div class="row collapse">
+        <div class="row">
             <div class="medium-2 columns">
                 <label class="right inline" for="username">Username:</label>
             </div>
@@ -14,7 +14,7 @@
                 <input type="text" name="username" value="{{old('username')}}" id="username" class="focus-me" />
             </div>
             <div class="medium-2 columns">
-                {% if adldap_suffix %}
+                {% if adldap_enabled and adldap_suffix %}
                 <span class="postfix" for="username">{{adldap_suffix}}</span>
                 {% endif %}
             </div>
@@ -22,7 +22,7 @@
             </div>
         </div>
 
-        <div class="row collapse">
+        <div class="row">
             <div class="medium-2 columns">
                 <label class="right inline" for="password">Password:</label>
             </div>

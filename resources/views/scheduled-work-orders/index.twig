@@ -5,13 +5,21 @@
     <table>
         <thead>
             <tr>
-                <th>Crew</th>
+                <th></th>
+                {% for date in dates %}
+                <th>{{date.format('D j M')}}</th>
+                {% endfor %}
             </tr>
         </thead>
         <tbody>
             {% for crew in crews %}
                 <tr>
                     <th>{{crew.name}}</th>
+                    {% for date in dates %}
+                    <th>
+                        {{date.format('D j M')}}
+                    </th>
+                    {% endfor %}
                 </tr>
             {% endfor %}
         </tbody>

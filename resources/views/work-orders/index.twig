@@ -1,0 +1,64 @@
+{% extends "base" %}
+
+{% block content %}
+
+    <ol class="inline-list">
+        <li><strong>Type:</strong></li>
+        {% for type in work_order_types %}
+        <li>
+            <a href="{{url('work-orders?type='~type.id)}}">
+                {% if type.id != selected_type %}
+                {{type.name}}
+                {% else %}
+                <em>{{type.name}}</em>
+                {% endif %}
+            </a>
+        </li>
+        {% endfor %}
+        {% if user.isAdmin() %}
+            <li><a href="{{url('work-order-types')}}">(Edit types)</a></li>
+        {% endif %}
+    </ol>
+
+    {% if work_orders.total > 0 %}
+    {{ work_orders.render()|raw }}
+    <table>
+        <thead>
+            <tr>
+                {% if user.isClerk() %}
+                <th></th>
+                {% endif %}
+                <th>Type</th>
+                <th>Name</th>
+                <th>Due Date</th>
+                <th>Asset Count</th>
+                <th>Schedule</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for wo in work_orders %}
+                <tr>
+                    {% if user.isClerk() %}
+                    <td>
+                        <a href="{{url('work-orders/'~wo.id~'/edit')}}" class="fa fa-pencil-square-o" title="Edit"></a>
+                        <a href="{{url('work-orders/'~wo.id~'/schedule')}}" class="fa fa-calendar-o" title="Schedule"></a>
+                    </td>
+                    {% endif %}
+                    <td>{{wo.type.name}}</td>
+                    <th>
+                        <a href="{{url('work-orders/'~wo.id)}}" title="View Work Order details">{{wo.name}}</a>
+                    </th>
+                    <td>{{wo.due_date}}</td>
+                    <td>{{wo.assets.count|number_format}}</td>
+                    <td>
+                        {% for swo in wo.schedules().current().get() %}
+                        {{swo.start_date}} {{swo.crew.name}}
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+{% endblock %}

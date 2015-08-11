@@ -1,5 +1,6 @@
 $(document).ready(function () {
     $(".focus-me").focus();
+    $("input.datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
 
     /**
      * If a submit button has a data-new-action attribute, change the action of the form.

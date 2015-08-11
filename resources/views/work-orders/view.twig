@@ -1,0 +1,65 @@
+{% extends "base" %}
+{% block content %}
+
+    {% if user.isClerk() %}
+    <ul class="inline-list">
+        <li><a href="{{url('work-orders/'~work_order.id~'/edit')}}" class="small button">Edit</a></li>
+        <li><a href="{{url('work-orders/'~work_order.id~'/schedule')}}" class="small button">Schedule</a></li>
+    </ul>
+    {% endif %}
+
+    <div class="row">
+        <div class="large-6 columns">
+            <table>
+                <caption>Metadata</caption>
+                <tr><th>Type:</th><td>{{work_order.type.name}}</td></tr>
+                <tr><th>Name:</th><td>{{work_order.name}}</td></tr>
+                <tr><th>Due date:</th><td>{{work_order.due_date}}</td></tr>
+                <tr><th>Asset count:</th><td>{{work_order.assets.count|number_format}}</td></tr>
+            </table>
+        </div>
+        <div class="large-6 columns">
+            {% if work_order.schedules.count == 0 %}
+            <p><em>Never scheduled.</em></p>
+            {% else %}
+            <table>
+                <caption>
+                    Schedule
+                    {% if user.isClerk() %}
+                    <a href="{{url('work-orders/'~work_order.id~'/schedule/create')}}" class="fa fa-plus-square-o">
+                    </a>
+                    {% endif %}
+                </caption>
+                {% for swo in schedules %}
+                <tr>
+                    <td>{{swo.crew.name}}</td>
+                    <td>{{swo.start_date}} to {{swo.end_date}}</td>
+                    {% if user.isClerk() %}
+                    <td>
+                        <a href="{{url('work-orders/'~work_order.id~'/schedule/'~swo.id~'/edit')}}" class="fa fa-pencil-square-o">
+                        </a>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </table>
+            {% endif %}
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Asset</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for asset in assets %}
+            <tr>
+                <td>{{asset.identifier}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
