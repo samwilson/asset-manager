@@ -188,13 +188,13 @@ class Upgrade extends \Illuminate\Console\Command {
             Schema::create('job_lists', function(Blueprint $table) {
                 $table->increments('id');
                 $table->string('name')->unique();
-                $table->integer('type_id')->unsigned()->nullable();
+                $table->integer('type_id')->unsigned();
                 $table->foreign('type_id')->references('id')->on('job_types');
                 $table->integer('crew_id')->unsigned()->nullable();
                 $table->foreign('crew_id')->references('id')->on('crews');
                 $table->date('start_date')->nullable();
-                $table->date('end_date')->nullable();
                 $table->date('due_date')->nullable();
+                $table->text('comments')->nullable();
                 $table->timestamps();
             });
         }

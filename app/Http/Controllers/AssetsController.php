@@ -17,6 +17,7 @@ class AssetsController extends Controller {
         $this->view->identifiers = array_map('trim', $assetIdentifiers);
         $this->view->identifier = trim($request->input('identifier'));
         $this->view->tagged = $request->input('tagged');
+        $this->view->not_tagged = $request->input('not_tagged');
         $this->view->categoryIds = collect($request->input('category_ids'));
 
         // No assets at all?

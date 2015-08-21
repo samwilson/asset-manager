@@ -31,4 +31,6 @@ https://github.com/samwilson/asset-manager/issues
 ## Kudos
 
 * http://laravel.com
+* http://parsedown.org/
 * http://aehlke.github.io/tag-it/
+* https://github.com/deringer/laravel-nullable-fields

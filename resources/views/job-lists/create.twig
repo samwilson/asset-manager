@@ -14,39 +14,7 @@
             You are about to create a Job List for {{assets.count|number_format}} assets.
         </p>
     </div>
-    <div class="row">
-        <p class="columns large-4">
-            <label>
-                Name (must be unique):
-                <input type="text" name="name" />
-            </label>
-        </p>
-        <p class="columns large-4">
-            <label>
-                Type:
-                <select name="type_id" required>
-                    <option selected></option>
-                    {% for type in job_types %}
-                    <option value="{{type.id}}">{{type.name}}</option>
-                    {% endfor %}
-                </select>
-            </label>
-        </p>
-        <p class="columns large-4">
-            <label>
-                Due date:
-                <input type="text" name="due_date" class="datepicker" />
-            </label>
-        </p>
-    </div>
-    <div class="row">
-        <p class="columns large-12">
-            <label>
-                Tags:
-                <input type="text" name="tags" class="tagit" />
-            </label>
-        </p>
-    </div>
+   {% include 'job-lists/form' %}
     <div class="row">
         <p class="columns large-12">
             <input type="submit" name="save" value="Yes, create this Job List" class="button" />

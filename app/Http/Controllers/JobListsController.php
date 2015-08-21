@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use DB;
 use Illuminate\Http\Request;
 use App\Model\Asset;
+use App\Model\Crew;
 use App\Model\JobList;
 use App\Model\Job;
 use App\Model\JobType;
+use App\Model\Tag;
 
 class JobListsController extends Controller {
 
@@ -44,6 +46,7 @@ class JobListsController extends Controller {
         $this->view->job_list = JobList::find($id);
         $this->view->title = 'Edit Job List #' . $this->view->job_list->id;
         $this->view->job_types = JobType::orderBy('name', 'ASC')->get();
+        $this->view->crews = Crew::orderBy('name', 'ASC')->get();
         $this->view->breadcrumbs = [
             'job-lists' => 'Job Lists',
             'job-lists/' . $this->view->job_list->id => $this->view->job_list->name,
@@ -57,7 +60,12 @@ class JobListsController extends Controller {
         $jobList = new JobList();
         $jobList->name = $request->input('name');
         $jobList->type_id = $request->input('type_id');
+        $jobList->due_date = $request->input('due_date');
+        $jobList->crew_id = $request->input('crew_id');
+        $jobList->comments = $request->input('comments');
         $jobList->save();
+        $jobList->tags()->sync(Tag::getIds($request->input('tags')));
+        // Then save all assets.
         $assets = $this->getAssets($request);
         foreach ($assets as $asset) {
             $job = new Job();
@@ -71,11 +79,16 @@ class JobListsController extends Controller {
     }
 
     public function saveExisting(Request $request, $id) {
+        DB::beginTransaction();
         $jobList = JobList::find($id);
         $jobList->name = $request->input('name');
         $jobList->type_id = $request->input('type_id');
         $jobList->due_date = $request->input('due_date');
+        $jobList->crew_id = $request->input('crew_id');
+        $jobList->comments = $request->input('comments');
         $jobList->save();
+        $jobList->tags()->sync(Tag::getIds($request->input('tags')));
+        DB::commit();
         return redirect('job-lists/' . $jobList->id);
     }
 

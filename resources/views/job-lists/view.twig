@@ -1,48 +1,29 @@
 {% extends "base" %}
 {% block content %}
-
     {% if user.isClerk() %}
-    <ul class="inline-list">
-        <li><a href="{{url('job-lists/'~job_list.id~'/edit')}}" class="small button">Edit</a></li>
-    </ul>
+        <ul class="inline-list">
+            <li><a href="{{url('job-lists/'~job_list.id~'/edit')}}" class="small button">Edit</a></li>
+        </ul>
     {% endif %}
 
-    <div class="row">
-        <div class="large-6 columns">
+
+    <div class="full-width row">
+        <div class="large-5 columns">
             <table>
-                <caption>Metadata</caption>
                 <tr><th>Type:</th><td>{{job_list.type.name}}</td></tr>
                 <tr><th>Name:</th><td>{{job_list.name}}</td></tr>
+                <tr><th>Tags:</th><td>
+                        {% for tag in job_list.tags %}
+                            <span class="secondary label">{{tag.name}}</span>
+                        {% endfor %}
+                    </td>
+                </tr>
                 <tr><th>Due date:</th><td>{{job_list.due_date}}</td></tr>
                 <tr><th>Asset count:</th><td>{{job_list.jobs.count|number_format}}</td></tr>
             </table>
         </div>
-        <div class="large-6 columns">
-            {% if job_list.jobs.count == 0 %}
-            <p><em>Never scheduled.</em></p>
-            {% else %}
-            <table>
-                <caption>
-                    Schedule
-                    {% if user.isClerk() %}
-                    <a href="{{url('work-orders/'~work_order.id~'/schedule/create')}}" class="fa fa-plus-square-o">
-                    </a>
-                    {% endif %}
-                </caption>
-                {% for swo in schedules %}
-                <tr>
-                    <td>{{swo.crew.name}}</td>
-                    <td>{{swo.start_date}} to {{swo.end_date}}</td>
-                    {% if user.isClerk() %}
-                    <td>
-                        <a href="{{url('work-orders/'~work_order.id~'/schedule/'~swo.id~'/edit')}}" class="fa fa-pencil-square-o">
-                        </a>
-                    </td>
-                    {% endif %}
-                </tr>
-                {% endfor %}
-            </table>
-            {% endif %}
+        <div class="large-7 columns">
+            {{job_list.comments|parsedown|raw}}
         </div>
     </div>
 
@@ -50,13 +31,19 @@
         <thead>
             <tr>
                 <th>Asset</th>
+                <th>Tags</th>
             </tr>
         </thead>
         <tbody>
             {% for job in job_list.jobs %}
-            <tr>
-                <td><a href="{{url('assets/'~job.id)}}">{{job.asset.identifier}}</a></td>
-            </tr>
+                <tr>
+                    <td><a href="{{url('assets/'~job.id)}}">{{job.asset.identifier}}</a></td>
+                    <td>
+                        {% for tag in job.asset.tags %}
+                            <span class="label secondary">{{tag.name}}</span>
+                        {% endfor %}
+                    </td>
+                </tr>
             {% endfor %}
         </tbody>
     </table>

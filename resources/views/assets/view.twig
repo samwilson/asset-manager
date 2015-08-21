@@ -6,11 +6,31 @@
     <p><a href="{{url('assets/'~asset.id~'/edit')}}" class="small button">Edit</a></p>
     {% endif %}
 
+    {{asset.comments|parsedown|raw}}
+
     <p>Tags:
         {% for tag in asset.tags %}
         <span class="secondary label">{{tag.name}}</span>
         {% endfor %}
     </p>
+
+    <table>
+        <caption><a href="{{url('job-lists')}}">Job Lists</a> that contain this Asset.</caption>
+        <thead>
+            <tr>
+                <th>Job List</th>
+                <th>Type</th>
+                <th>Start date</th>
+            </tr>
+        </thead>
+        {% for job in asset.jobs %}
+            <tr>
+                <td><a href="{{job.jobList.id}}">{{job.jobList.name}}</a></td>
+                <td>{{job.jobList.type.name}}</td>
+                <td>{{job.jobList.start_date}}</td>
+            </tr>
+        {% endfor %}
+    </table>
 
     <p>Categories:
         {% for cat in asset.categories %}

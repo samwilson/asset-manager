@@ -14,6 +14,9 @@ table tbody td.type-int { text-align:right }
 
 form.model-form abbr.required { color:#f04124; border-bottom:0 }
 
+form textarea.markdown { margin-bottom:0 }
+form small.markdown { margin-bottom:1rem; font-size:smaller; border:1px solid #ccc; border-top:0; background-color:#efefef; display:block; padding:0.3rem }
+
 a.disabled { cursor:not-allowed }
 
 ol.categorytree { margin:0 0.5em 0 1em; text-align:left; list-style-type:none }

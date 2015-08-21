@@ -21,7 +21,7 @@
         {{include('categorytree', {"categories":categories, "selected":asset.categories})}}
         </fieldset>
         <p>
-            <label>Comments: <textarea name="comments" rows="10">{{asset.comments}}</textarea></label>
+            <label>Comments: <textarea name="comments" rows="10" class="markdown">{{asset.comments}}</textarea></label>
         </p>
         <p>
             <input type="submit" value="Save" class="button" />

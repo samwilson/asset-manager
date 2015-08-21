@@ -4,8 +4,12 @@ namespace App\Model;
 
 class Crew extends \Illuminate\Database\Eloquent\Model {
 
-    public function scheduledWorkOrders() {
-        return $this->hasMany('App\Model\ScheduledWorkOrder');
+    public function jobLists() {
+        return $this->belongsToMany('App\Model\JobList');
+    }
+
+    public function members() {
+        return $this->hasMany('App\Model\People');
     }
 
 }

@@ -34,11 +34,18 @@ $(document).ready(function () {
     $("ol.categorytree:first").width(catTreeWidth);
 
     /**
-     * Tag auto-completing
+     * Tag auto-completing.
      */
     $(":input.tagit").tagit({
         "allowSpaces": true,
         "autocomplete": {"source": baseUrl+"/tags.json"}
     });
+
+    /**
+     * Markdown help note.
+     */
+    $(":input.markdown").after($("<small class='markdown'>You can use "
+        + "<a href='https://help.github.com/articles/markdown-basics/' title='Read about Markdown (opens in new tab)' target='_blank'>"
+        + "Markdown</a> syntax here.</small>"));
 
 });

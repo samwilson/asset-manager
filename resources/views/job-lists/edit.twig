@@ -4,31 +4,8 @@
 <form method="post" action="{{url('job-lists/'~job_list.id~'/edit')}}" class="row">
     <input type="hidden" name="_token" value="{{csrf_token()}}" />
 
-    <p class="columns large-4">
-        <label>
-            Name (must be unique):
-            <input type="text" name="name" value="{{job_list.name}}" />
-        </label>
-    </p>
-    <p class="columns large-4">
-        <label>
-            Type:
-            <select name="type_id" required>
-                <option selected></option>
-                {% for type in job_types %}
-                <option value="{{type.id}}" {% if job_list.type.id == type.id %}selected{% endif %}>
-                    {{type.name}}
-                </option>
-                {% endfor %}
-            </select>
-        </label>
-    </p>
-    <p class="columns large-4">
-        <label>
-            Due date:
-            <input type="text" name="due_date" class="datepicker" value="{{job_list.due_date}}" />
-        </label>
-    </p>
+    {% include 'job-lists/form' %}
+
     <p class="columns large-12">
         <input type="submit" name="save" value="Save" class="button" />
         <a class="secondary button" href="{{url('job-lists/'~job_list.id)}}">Cancel</a>

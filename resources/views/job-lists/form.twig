@@ -1,0 +1,53 @@
+<div class="row">
+    <p class="columns large-4">
+        <label>
+            Name (must be unique):
+            <input type="text" name="name" value="{{job_list.name}}" />
+        </label>
+    </p>
+    <p class="columns large-4">
+        <label>
+            Type:
+            <select name="type_id" required>
+                <option selected></option>
+                {% for type in job_types %}
+                    <option value="{{type.id}}" {%if job_list.type_id==type.id%}selected{%endif%}>{{type.name}}</option>
+                {% endfor %}
+            </select>
+        </label>
+    </p>
+    <p class="columns large-4">
+        <label>
+            Due date:
+            <input type="text" name="due_date" class="datepicker" value="{{job_list.due_date}}" />
+        </label>
+    </p>
+</div>
+<div class="row">
+    <p class="columns large-12">
+        <label>
+            Tags:
+            <input type="text" name="tags" class="tagit" value="{{job_list.tagsAsString()}}" />
+        </label>
+    </p>
+</div>
+<div class="row">
+    <p class="columns large-4">
+        <label>
+            Crew:
+            <select name="crew_id">
+                <option></option>
+                {% for crew in crews %}
+                    <option value="{{crew.id}}" {%if job_list.crew_id==crew.id%}selected{%endif%}>{{crew.name}}</option>
+                {% endfor %}
+            </select>
+        </label>
+        <label>
+            Start date:
+            <input type="text" name="start_date" class="datepicker" value="{{job_list.start_date}}" />
+        </label>
+    </p>
+    <p class="columns large-8">
+        <label>Comments: <textarea name="comments" rows="10" class="markdown">{{job_list.comments}}</textarea></label>
+    </p>
+</div>

@@ -2,9 +2,9 @@
 
 namespace App\Model;
 
-use Illuminate\Database\Eloquent\Model;
+class JobList extends Taggable {
 
-class JobList extends Model {
+    protected $nullable = ['crew_id', 'start_date', 'due_date', 'comments'];
 
     public function type() {
         return $this->belongsTo('App\Model\JobType');
