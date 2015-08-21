@@ -27,3 +27,8 @@ scheduling system for managing work performed on the assets.
 
 Please report all issues, bugs, feature requests, etc. at
 https://github.com/samwilson/asset-manager/issues
+
+## Kudos
+
+* http://laravel.com
+* http://aehlke.github.io/tag-it/

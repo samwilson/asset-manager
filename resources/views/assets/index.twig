@@ -20,11 +20,10 @@
                     <textarea name="identifiers" rows="8">{{identifiers|join('\n')}}</textarea>
                 </label>
             </div>
-            <div class="large-3 columns">
-                Categories:
-                {{include('categorytree', {"categories":categories, "selected":categoryIds})}}
+            <div class="large-6 columns">
+                <label>Tagged: <input type="text" name="tagged" class="tagit" value="{{tagged}}" /></label>
+                <label><em>Not</em> tagged: <input type="text" name="not_tagged" class="tagit" value="{{not_tagged}}" /></label>
             </div>
-            <div class="large-3 columns"></div>
             <div class="large-2 columns"></div>
             <div class="large-1 columns">
                 <input type="submit" name="search" value="{{trans('app.search')}}" class="button" /><br />
@@ -35,8 +34,9 @@
         {% if assets.total > 0 %}
         <fieldset>
             <legend>{{assets.total|number_format}} Result{% if assets.total != 1 %}s{% endif %}</legend>
+            <input type="submit" class="small button" data-new-action="{{url('assets/map')}}" value="View on map" />
             <input type="submit" class="small button" data-new-action="{{url('assets/csv')}}" value="Get CSV" />
-            <input type="submit" class="small button" data-new-action="{{url('work-orders/create')}}" value="Create Work Order" />
+            <input type="submit" class="small button" data-new-action="{{url('job-lists/create')}}" value="Create Job List" />
         </fieldset>
         {% endif %}
 
@@ -49,7 +49,7 @@
             <tr>
                 <th></th>
                 <th>Identifier</th>
-                <th>Categories</th>
+                <th>Tags</th>
                 <th>Contacts</th>
             </tr>
         </thead>
@@ -65,8 +65,8 @@
                         <a href="{{url('assets/'~asset.id)}}" title="View asset details">{{asset.identifier}}</a>
                     </th>
                     <td>
-                        {% for cat in asset.categories %}
-                        <span class="label secondary">{{cat.name}}</span>
+                        {% for tag in asset.tags %}
+                        <span class="label secondary">{{tag.name}}</span>
                         {% endfor %}
                     </td>
                     <td>

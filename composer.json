@@ -9,7 +9,8 @@
         "yohang/calendr": "1.*",
         "phayes/geophp": "1.*",
         "adldap2/adldap2": "*",
-        "styde/blade-pagination": "5.1.*@dev"
+        "styde/blade-pagination": "5.1.*@dev",
+        "erusev/parsedown": "1.*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "~2.0"

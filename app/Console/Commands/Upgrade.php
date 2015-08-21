@@ -23,7 +23,7 @@ class Upgrade extends \Illuminate\Console\Command {
         $this->users();
         $this->assets();
         $this->contacts();
-        $this->workOrdersAndCrews();
+        $this->jobLists();
         $this->call('up');
     }
 
@@ -56,8 +56,7 @@ class Upgrade extends \Illuminate\Console\Command {
                 $table->timestamps();
             });
         }
-        $adminRole = Role::find(Role::ADMIN);
-        if (!$adminRole) {
+        if (!Role::find(Role::ADMIN)) {
             $this->info("Creating admin role.");
             Role::firstOrCreate(['id' => Role::ADMIN, 'name' => trans_choice('roles.admin', 1)]);
         }
@@ -98,6 +97,7 @@ class Upgrade extends \Illuminate\Console\Command {
                 $table->string('identifier')->unique();
                 $table->decimal('latitude', 13, 10)->nullable();
                 $table->decimal('longitude', 13, 10)->nullable();
+                $table->text('comments')->nullable();
                 $table->timestamps();
             });
         }
@@ -119,6 +119,24 @@ class Upgrade extends \Illuminate\Console\Command {
                 $table->integer('category_id')->unsigned();
                 $table->foreign('category_id')->references('id')->on('categories');
                 $table->primary(['asset_id', 'category_id']);
+            });
+        }
+        if (!Schema::hasTable('tags')) {
+            $this->info("Creating 'tags' table.");
+            Schema::create('tags', function(Blueprint $table) {
+                $table->increments('id');
+                $table->string('name')->unique();
+                $table->timestamps();
+            });
+        }
+        if (!Schema::hasTable('asset_tag')) {
+            $this->info("Creating 'asset_tag' table.");
+            Schema::create('asset_tag', function(Blueprint $table) {
+                $table->integer('asset_id')->unsigned();
+                $table->foreign('asset_id')->references('id')->on('assets');
+                $table->integer('tag_id')->unsigned();
+                $table->foreign('tag_id')->references('id')->on('tags');
+                $table->primary(['asset_id', 'tag_id']);
             });
         }
     }
@@ -148,34 +166,13 @@ class Upgrade extends \Illuminate\Console\Command {
         }
     }
 
-    protected function workOrdersAndCrews() {
-        if (!Schema::hasTable('work_order_types')) {
-            $this->info("Creating 'work_order_types' table.");
-            Schema::create('work_order_types', function(Blueprint $table) {
+    protected function jobLists() {
+        if (!Schema::hasTable('job_types')) {
+            $this->info("Creating 'job_types' table.");
+            Schema::create('job_types', function(Blueprint $table) {
                 $table->increments('id');
                 $table->string('name')->unique();
                 $table->timestamps();
-            });
-        }
-        if (!Schema::hasTable('work_orders')) {
-            $this->info("Creating 'work_orders' table.");
-            Schema::create('work_orders', function(Blueprint $table) {
-                $table->increments('id');
-                $table->string('name')->unique();
-                $table->integer('work_order_type_id')->unsigned()->nullable();
-                $table->foreign('work_order_type_id')->references('id')->on('work_order_types');
-                $table->date('due_date')->nullable();
-                $table->timestamps();
-            });
-        }
-        if (!Schema::hasTable('asset_work_order')) {
-            $this->info("Creating 'asset_work_order' table.");
-            Schema::create('asset_work_order', function(Blueprint $table) {
-                $table->integer('asset_id')->unsigned();
-                $table->foreign('asset_id')->references('id')->on('assets');
-                $table->integer('work_order_id')->unsigned();
-                $table->foreign('work_order_id')->references('id')->on('work_orders');
-                $table->primary(['asset_id', 'work_order_id']);
             });
         }
         if (!Schema::hasTable('crews')) {
@@ -186,17 +183,53 @@ class Upgrade extends \Illuminate\Console\Command {
                 $table->timestamps();
             });
         }
-        if (!Schema::hasTable('scheduled_work_orders')) {
-            $this->info("Creating 'scheduled_work_orders' table.");
-            Schema::create('scheduled_work_orders', function(Blueprint $table) {
+        if (!Schema::hasTable('job_lists')) {
+            $this->info("Creating 'job_lists' table.");
+            Schema::create('job_lists', function(Blueprint $table) {
                 $table->increments('id');
-                $table->integer('work_order_id')->unsigned();
-                $table->foreign('work_order_id')->references('id')->on('work_orders');
-                $table->integer('crew_id')->unsigned();
+                $table->string('name')->unique();
+                $table->integer('type_id')->unsigned()->nullable();
+                $table->foreign('type_id')->references('id')->on('job_types');
+                $table->integer('crew_id')->unsigned()->nullable();
                 $table->foreign('crew_id')->references('id')->on('crews');
-                $table->date('start_date');
+                $table->date('start_date')->nullable();
                 $table->date('end_date')->nullable();
+                $table->date('due_date')->nullable();
                 $table->timestamps();
+            });
+        }
+        if (!Schema::hasTable('job_list_tag')) {
+            $this->info("Creating 'job_list_tag' table.");
+            Schema::create('job_list_tag', function(Blueprint $table) {
+                $table->integer('job_list_id')->unsigned();
+                $table->foreign('job_list_id')->references('id')->on('job_lists');
+                $table->integer('tag_id')->unsigned();
+                $table->foreign('tag_id')->references('id')->on('tags');
+                $table->primary(['job_list_id', 'tag_id']);
+            });
+        }
+        if (!Schema::hasTable('jobs')) {
+            $this->info("Creating 'jobs' table.");
+            Schema::create('jobs', function(Blueprint $table) {
+                $table->increments('id');
+                $table->integer('job_list_id')->unsigned()->nullable();
+                $table->foreign('job_list_id')->references('id')->on('job_lists');
+                $table->integer('asset_id')->unsigned()->nullable();
+                $table->foreign('asset_id')->references('id')->on('assets');
+                $table->date('date_added')->comment('Date added to Job List.');
+                $table->date('date_removed')->nullable()->comment('Date removed from Job List.');
+                $table->date('date_resolved')->nullable()->comment('Date of completion or failure.');
+                $table->timestamps();
+            });
+        }
+        if (!Schema::hasTable('job_tag')) {
+            $this->info("Creating 'job_tag' table.");
+            Schema::create('job_tag', function(Blueprint $table) {
+                $table->integer('job_id')->unsigned();
+                $table->foreign('job_id')->references('id')->on('jobs');
+                $table->integer('tag_id')->unsigned();
+                $table->foreign('tag_id')->references('id')->on('tags');
+                $table->primary(['job_id', 'tag_id']);
             });
         }
     }

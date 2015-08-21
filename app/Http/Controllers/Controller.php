@@ -15,6 +15,9 @@ abstract class Controller extends BaseController {
     /** @var \Illuminate\View\View */
     protected $view;
 
+    /** @var \App\Model\User */
+    protected $user;
+
     public function __construct() {
         $this->instantiate_view();
     }
@@ -28,7 +31,7 @@ abstract class Controller extends BaseController {
         $action = str_slug(snake_case($parts[1]));
         $viewFile = "$controller.$action";
         if (!file_exists(app_path("../resources/views/$controller/$action.twig"))) {
-            $this->view = view('home');
+            $this->view = view('base');
         } else {
             $this->view = view($viewFile);
         }
@@ -40,9 +43,11 @@ abstract class Controller extends BaseController {
             'jquery.js',
             'jquery-ui.min.js',
             'foundation.min.js',
+            'tag-it.min.js',
             'app.js',
         );
-        $this->view->user = Auth::user();
+        $this->user = Auth::user();
+        $this->view->user = $this->user;
         $this->view->tab = 'schedule';
         $this->view->alerts = \Session::get('alerts', array());
     }

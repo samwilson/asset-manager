@@ -12,6 +12,18 @@ class Asset extends Model {
         $this->attributes['identifier'] = substr($value, 0, 150);
     }
 
+    public function tags() {
+        return $this->belongsToMany('App\Model\Tag');
+    }
+
+    public function tagsAsString() {
+        $tags = array();
+        foreach ($this->tags()->orderBy('name', 'ASC')->get() as $tag) {
+            $tags[] = $tag->name;
+        }
+        return join(', ', $tags);
+    }
+
     public function contacts() {
         return $this->belongsToMany('App\Model\Contact');
     }

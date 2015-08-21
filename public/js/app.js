@@ -33,4 +33,12 @@ $(document).ready(function () {
     });
     $("ol.categorytree:first").width(catTreeWidth);
 
+    /**
+     * Tag auto-completing
+     */
+    $(":input.tagit").tagit({
+        "allowSpaces": true,
+        "autocomplete": {"source": baseUrl+"/tags.json"}
+    });
+
 });

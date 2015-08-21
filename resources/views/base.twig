@@ -12,9 +12,11 @@
 
         <link href="{{asset('css/foundation.min.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{asset('css/jquery-ui.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('css/jquery.tagit.css')}}" rel="stylesheet" type="text/css">
         <link href="{{asset('css/app.css')}}" rel="stylesheet" type="text/css" />
 
         <script src="{{asset('js/modernizr.js')}}"></script>
+        <script>var baseUrl="{{url('/')}}";</script>
 
     </head>
     <body>
@@ -50,16 +52,16 @@
                             <a>Assets</a>
                             <ul class="dropdown">
                                 <li><a href="{{url('assets')}}">Index</a></li>
+                                <li><a href="{{url('assets/map')}}">Map</a></li>
                                 <li><a href="{{url('assets/create')}}">Create</a></li>
                                 <li><a href="{{url('assets/import')}}">Import</a></li>
                                 <li><a href="{{url('contacts')}}">Contacts</a></li>
                             </ul>
                         </li>
                         <li class="has-dropdown">
-                            <a>Work Orders</a>
+                            <a>Jobs</a>
                             <ul class="dropdown">
-                                <li><a href="{{url('work-orders')}}">Index</a></li>
-                                <li><a href="{{url('jobs')}}">Jobs</a></li>
+                                <li><a href="{{url('job-lists')}}">Job Lists</a></li>
                             </ul>
                         </li>
                         {% if user.isAdmin() %}

@@ -4,9 +4,9 @@
 
     <ol class="inline-list">
         <li><strong>Type:</strong></li>
-        {% for type in work_order_types %}
+        {% for type in job_types %}
         <li>
-            <a href="{{url('work-orders?type='~type.id)}}">
+            <a href="{{url('job-lists?type='~type.id)}}">
                 {% if type.id != selected_type %}
                 {{type.name}}
                 {% else %}
@@ -16,12 +16,12 @@
         </li>
         {% endfor %}
         {% if user.isAdmin() %}
-            <li><a href="{{url('work-order-types')}}">(Edit types)</a></li>
+            <li><a href="{{url('job-types')}}">(Edit types)</a></li>
         {% endif %}
     </ol>
 
-    {% if work_orders.total > 0 %}
-    {{ work_orders.render()|raw }}
+    {% if job_lists.total > 0 %}
+    {{ job_lists.render()|raw }}
     <table>
         <thead>
             <tr>
@@ -32,29 +32,24 @@
                 <th>Name</th>
                 <th>Due Date</th>
                 <th>Asset Count</th>
-                <th>Schedule</th>
+                <th>Crew</th>
             </tr>
         </thead>
         <tbody>
-            {% for wo in work_orders %}
+            {% for job_list in job_lists %}
                 <tr>
                     {% if user.isClerk() %}
                     <td>
-                        <a href="{{url('work-orders/'~wo.id~'/edit')}}" class="fa fa-pencil-square-o" title="Edit"></a>
-                        <a href="{{url('work-orders/'~wo.id~'/schedule')}}" class="fa fa-calendar-o" title="Schedule"></a>
+                        <a href="{{url('job-lists/'~job_list.id~'/edit')}}" class="fa fa-pencil-square-o" title="Edit"></a>
                     </td>
                     {% endif %}
-                    <td>{{wo.type.name}}</td>
+                    <td>{{job_list.type.name}}</td>
                     <th>
-                        <a href="{{url('work-orders/'~wo.id)}}" title="View Work Order details">{{wo.name}}</a>
+                        <a href="{{url('job-lists/'~job_list.id)}}" title="View Job List details">{{job_list.name}}</a>
                     </th>
-                    <td>{{wo.due_date}}</td>
-                    <td>{{wo.assets.count|number_format}}</td>
-                    <td>
-                        {% for swo in wo.schedules().current().get() %}
-                        {{swo.start_date}} {{swo.crew.name}}
-                        {% endfor %}
-                    </td>
+                    <td>{{job_list.due_date}}</td>
+                    <td>{{job_list.jobs.count|number_format}}</td>
+                    <td>{{job_list.crew.name}}</td>
                 </tr>
             {% endfor %}
         </tbody>

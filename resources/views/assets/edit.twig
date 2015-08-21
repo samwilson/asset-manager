@@ -7,15 +7,27 @@
         {% if asset.id %}<input type="hidden" name="id" value="{{asset.id}}">{% endif %}
         <fieldset><legend>Identity</legend>
             <p>
-                Identifier:
+                <label>Identifier:
                 <input type="text" name="identifier" value="{{asset.identifier}}" required />
+                </label>
+            </p>
+            <p>
+                <label>Tags:
+                <input type="text" name="tags" value="{{asset.tagsAsString()}}" class="tagit" />
+                </label>
             </p>
         </fieldset>
         <fieldset><legend>Categories</legend>
         {{include('categorytree', {"categories":categories, "selected":asset.categories})}}
         </fieldset>
         <p>
+            <label>Comments: <textarea name="comments" rows="10">{{asset.comments}}</textarea></label>
+        </p>
+        <p>
             <input type="submit" value="Save" class="button" />
+            <a href="{%if asset.id %}{{url('/assets/'~asset.id)}}{%else%}{{url('assets')}}{%endif%}" class="secondary button">
+                Cancel
+            </a>
         </p>
     </form>
 

@@ -6,6 +6,12 @@
     <p><a href="{{url('assets/'~asset.id~'/edit')}}" class="small button">Edit</a></p>
     {% endif %}
 
+    <p>Tags:
+        {% for tag in asset.tags %}
+        <span class="secondary label">{{tag.name}}</span>
+        {% endfor %}
+    </p>
+
     <p>Categories:
         {% for cat in asset.categories %}
         <span class="label">{{cat.name}}</span>
@@ -14,5 +20,52 @@
         <em>None.</em>
         {% endif %}
     </p>
+
+    <div class="row">
+        <form action="{{url('contacts/create-for-asset')}}" method="post">
+            <table>
+                <caption>Contacts</caption>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for contact in asset.contacts %}
+                    <tr>
+                        <td>{{contact.name}}</td>
+                        <td>
+                            {{contact.phone_1}}
+                            {% if contact.phone_2 %}or {{contact.phone_2}}{% endif %}
+                        </td>
+                        <td>
+                            
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                {% if user.isClerk() %}
+                <tfoot>
+                    <tr>
+                        <td>
+                            <input type="text" name="name" required />
+                        </td>
+                        <td>
+                            <input type="text" name="phone_1" required />
+                            <input type="text" name="phone_2" />
+                        </td>
+                        <td>
+                            <input type="hidden" name="_token" value="{{csrf_token()}}">
+                            <input type="hidden" name="asset_id" value="{{asset.id}}" />
+                            <input type="submit" value="Create" class="button" />
+                        </td>
+                    </tr>
+                </tfoot>
+                {% endif %}
+            </table>
+        </form>
+    </div>
 
 {% endblock %}

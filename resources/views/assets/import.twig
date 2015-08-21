@@ -1,0 +1,15 @@
+{% extends "base.twig" %}
+
+{% block content %}
+
+    <form action="{{url('/assets/import')}}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="_token" value="{{csrf_token()}}">
+        <p><label>Select CSV file: <input type="file" name="file" /></label></p>
+        <p><label>Tag imported assets with: <input type="text" name="tags" class="tagit" /></label></p>
+        <p>
+            <input type="submit" value="Import" class="button" />
+            <a href="{{url('/assets')}}" class="secondary button">Cancel</a>
+        </p>
+    </form>
+
+{% endblock %}
