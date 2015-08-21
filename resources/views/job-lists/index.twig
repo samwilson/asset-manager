@@ -15,9 +15,6 @@
             </a>
         </li>
         {% endfor %}
-        {% if user.isAdmin() %}
-            <li><a href="{{url('job-types')}}">(Edit types)</a></li>
-        {% endif %}
     </ol>
 
     {% if job_lists.total > 0 %}

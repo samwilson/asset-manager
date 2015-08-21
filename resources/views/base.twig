@@ -61,7 +61,9 @@
                         <li class="has-dropdown">
                             <a>Jobs</a>
                             <ul class="dropdown">
-                                <li><a href="{{url('job-lists')}}">Job Lists</a></li>
+                                <li><a href="{{url('job-lists/scheduled')}}">Scheduled</a></li>
+                                <li><a href="{{url('job-lists/unscheduled')}}">Unscheduled</a></li>
+                                <li><a href="{{url('job-lists')}}">Search</a></li>
                             </ul>
                         </li>
                         {% if user.isAdmin() %}

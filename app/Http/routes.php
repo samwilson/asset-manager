@@ -35,6 +35,7 @@ Route::post('job-lists/save', 'JobListsController@saveNew');
 Route::get('job-lists/{id}', 'JobListsController@view')->where(['id' => '[0-9]+']);
 Route::get('job-lists/{id}/edit', 'JobListsController@edit')->where(['id' => '[0-9]+']);
 Route::post('job-lists/{id}/edit', 'JobListsController@saveExisting')->where(['id' => '[0-9]+']);
+Route::get('job-lists/scheduled', 'JobListsController@scheduled');
 
 // Scheduled Work Orders.
 Route::get('work-orders/{woid}/schedule/create', 'ScheduledWorkOrdersController@form')->where(['woid' => '[0-9]+']);

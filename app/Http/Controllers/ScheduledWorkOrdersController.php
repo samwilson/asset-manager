@@ -9,23 +9,6 @@ use App\Model\ScheduledWorkOrder;
 
 class ScheduledWorkOrdersController extends Controller {
 
-    public function index(Request $reqest) {
-        $this->view->title = "Work Order Schedule";
-        $this->view->breadcrumbs = [
-            'work-orders' => 'Work Orders',
-            'work-orders/schedule' => 'Schedule',
-        ];
-        $startDate = new \DateTime($reqest->input('start_date'));
-        $endDate = new \DateTime($reqest->input('end_date'));
-        if ($startDate->diff($endDate, true)->d < 7) {
-            $endDate->add(new \DateInterval('P14D'));
-        }
-        $datePeriod = new \DatePeriod($startDate, new \DateInterval('P1D'), $endDate);
-        $this->view->dates = $datePeriod;
-        $this->view->crews = Crew::query()->orderBy('name')->get();
-        return $this->view;
-    }
-
     public function crew($crewId) {
         $crew = Crew::find($crewId);
         $this->view->scheduled_work_orders = $crew->scheduledWorkOrders()->current()->get();

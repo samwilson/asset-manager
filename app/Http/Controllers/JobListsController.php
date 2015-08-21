@@ -127,4 +127,21 @@ class JobListsController extends Controller {
         return $assets->get();
     }
 
+    public function scheduled(Request $reqest) {
+        $this->view->title = "Job Schedule";
+        $this->view->breadcrumbs = [
+            'job-lists' => 'Job Lists',
+            'job-lists/schedule' => 'Schedule',
+        ];
+        $startDate = new \DateTime($reqest->input('start_date'));
+        $endDate = new \DateTime($reqest->input('end_date'));
+        if ($startDate->diff($endDate, true)->d < 7) {
+            $endDate->add(new \DateInterval('P14D'));
+        }
+        $datePeriod = new \DatePeriod($startDate, new \DateInterval('P1D'), $endDate);
+        $this->view->dates = $datePeriod;
+        $this->view->crews = Crew::query()->orderBy('name')->get();
+        return $this->view;
+    }
+
 }

@@ -10,6 +10,10 @@ class JobList extends Taggable {
         return $this->belongsTo('App\Model\JobType');
     }
 
+    public function crew() {
+        return $this->belongsTo('App\Model\Crew');
+    }
+
     public function jobs() {
         return $this->hasMany('App\Model\Job');
     }
