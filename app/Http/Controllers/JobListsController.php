@@ -33,6 +33,9 @@ class JobListsController extends Controller {
 
     public function create(Request $request) {
         $this->view->assets = $this->getAssets($request);
+        $this->view->tagged = $request->input('tagged');
+        $this->view->crews = Crew::orderBy('name', 'ASC')->get();
+        $this->view->job_types = JobType::orderBy('name', 'ASC')->get();
         $this->view->title = "Create a Job List";
         $this->view->breadcrumbs = [
             'job-lists' => 'Job Lists',
@@ -60,11 +63,12 @@ class JobListsController extends Controller {
         $jobList = new JobList();
         $jobList->name = $request->input('name');
         $jobList->type_id = $request->input('type_id');
+        $jobList->start_date = $request->input('start_date');
         $jobList->due_date = $request->input('due_date');
         $jobList->crew_id = $request->input('crew_id');
         $jobList->comments = $request->input('comments');
         $jobList->save();
-        $jobList->tags()->sync(Tag::getIds($request->input('tags')));
+        $jobList->tags()->sync(Tag::getIds($request->input('tagged')));
         // Then save all assets.
         $assets = $this->getAssets($request);
         foreach ($assets as $asset) {
@@ -83,6 +87,7 @@ class JobListsController extends Controller {
         $jobList = JobList::find($id);
         $jobList->name = $request->input('name');
         $jobList->type_id = $request->input('type_id');
+        $jobList->start_date = $request->input('start_date');
         $jobList->due_date = $request->input('due_date');
         $jobList->crew_id = $request->input('crew_id');
         $jobList->comments = $request->input('comments');
@@ -110,6 +115,7 @@ class JobListsController extends Controller {
         $identifiers = array_map('trim', $assetIdentifiers);
         $identifier = trim($request->input('identifier'));
         $categoryIds = collect($request->input('category_ids'));
+        $tagged = $request->input('tagged');
 
         // Build and execute query.
         $assets = Asset::query();
@@ -123,6 +129,9 @@ class JobListsController extends Controller {
             $assets->whereHas('categories', function ($query) {
                 $query->whereIn('id', $categoryIds);
             })->get();
+        }
+        if ($tagged) {
+            $assets->tagged($tagged);
         }
         return $assets->get();
     }
@@ -139,6 +148,13 @@ class JobListsController extends Controller {
             $endDate->add(new \DateInterval('P14D'));
         }
         $datePeriod = new \DatePeriod($startDate, new \DateInterval('P1D'), $endDate);
+        $this->view->start_date = $startDate->format('Y-m-d');
+        $this->view->end_date = $endDate->format('Y-m-d');
+
+        $this->view->job_lists = JobList::whereBetween('start_date', [$startDate, $endDate])
+                ->groupBy('crew_id')
+                ->get();
+
         $this->view->dates = $datePeriod;
         $this->view->crews = Crew::query()->orderBy('name')->get();
         return $this->view;

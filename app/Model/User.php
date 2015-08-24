@@ -27,6 +27,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->isAdmin() || $this->hasRole(Role::CLERK);
     }
 
+    public function isManager() {
+        return $this->isAdmin() || $this->hasRole(Role::MANAGER);
+    }
+
     public function isAdmin() {
         return $this->hasRole(Role::ADMIN);
     }

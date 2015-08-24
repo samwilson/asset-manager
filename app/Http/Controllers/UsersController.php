@@ -32,21 +32,23 @@ class UsersController extends Controller {
         }
 
         // If that fails, try Adldap.
-        $adldap = new \adLDAP\adLDAP(config('adldap'));
-        if ($adldap->authenticate($username, $password)) {
-            $user = \App\Model\User::firstOrCreate(['username' => $username]);
-            $user->password = bcrypt($password);
-            $info = $adldap->user()->info($username);
-            if (empty($user->name) && isset($info[0]['displayname'][0])) {
-                $user->name = $info[0]['displayname'][0];
+        $adldapConfig = config('adldap');
+        if ($adldapConfig['enabled']) {
+            $adldap = new \Adldap\Adldap($adldapConfig);
+            if (empty($adldap->getConfiguration()->getAdminUsername())) {
+                $adldap->getConfiguration()->setAdminUsername($username);
+                $adldap->getConfiguration()->setAdminPassword($password);
             }
-            if (empty($user->email) && isset($info[0]['mail'][0])) {
-                $user->email = $info[0]['mail'][0];
+            if ($adldap->authenticate($username, $password)) {
+                $user = \App\Model\User::firstOrCreate(['username' => $username]);
+                $ldapUser = $adldap->users()->find('='.$username);
+                $user->name = $ldapUser->getDisplayName();
+                $user->email = $ldapUser->getEmail();
+                $user->save();
+                Auth::login($user);
+                $this->alert('success', 'You are now logged in.', TRUE);
+                return redirect('/');
             }
-            $user->save();
-            Auth::login($user);
-            $this->alert('success', 'You are now logged in.', TRUE);
-            return redirect('/');
         }
 
         // If we're still here, authentication has failed.

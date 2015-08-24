@@ -18,6 +18,7 @@
                         {% endfor %}
                     </td>
                 </tr>
+                <tr><th>Start date:</th><td>{{job_list.start_date}}</td></tr>
                 <tr><th>Due date:</th><td>{{job_list.due_date}}</td></tr>
                 <tr><th>Asset count:</th><td>{{job_list.jobs.count|number_format}}</td></tr>
             </table>

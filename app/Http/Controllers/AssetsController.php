@@ -35,11 +35,7 @@ class AssetsController extends Controller {
                 $assets->where('identifier', 'LIKE', '%' . $this->view->identifier . '%');
             }
             if ($this->view->tagged) {
-                foreach (explode(',', $this->view->tagged) as $tag) {
-                    $assets->whereHas('tags', function ($query) use ($tag) {
-                        $query->where('name', $tag);
-                    });
-                }
+                $assets->tagged($this->view->tagged);
             }
             if ($this->view->categoryIds->count() > 0) {
                 $assets->whereHas('categories', function ($query) {
@@ -47,6 +43,9 @@ class AssetsController extends Controller {
                 })->get();
             }
             $this->view->assets = $assets->paginate(50);
+            if ($this->view->assets->total() === 0) {
+                $this->alert('success', 'No assets found with the given criteria.', false);
+            }
         }
 
         // Add extra view data, and return.
@@ -98,6 +97,10 @@ class AssetsController extends Controller {
     }
 
     public function edit($id) {
+        if (!$this->user || !$this->user->isClerk()) {
+            $this->alert('warning', 'Only Clerks are allowed to edit Assets.');
+            return redirect("assets/$id");
+        }
         $this->view->asset = Asset::where('id', $id)->first();
         $this->view->categories = Category::where('parent_id', NULL)->orderBy('name', 'ASC')->get();
         $this->view->breadcrumbs = [
@@ -110,6 +113,10 @@ class AssetsController extends Controller {
     }
 
     public function create() {
+        if (!$this->user || !$this->user->isClerk()) {
+            $this->alert('info', 'Only Managers can create assets.');
+            return redirect('/assets');
+        }
         $this->view->title = 'Create Asset';
         $this->view->breadcrumbs = [
             'assets' => 'Assets',

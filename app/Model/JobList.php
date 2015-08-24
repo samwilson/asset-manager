@@ -18,4 +18,25 @@ class JobList extends Taggable {
         return $this->hasMany('App\Model\Job');
     }
 
+    /**
+     * @return float
+     */
+    public function percentComplete() {
+        return round((10 / $this->jobs->count()) * 100);
+    }
+
+    /**
+     * @return float
+     */
+    public function percentIncomplete() {
+        return 100 - $this->percentComplete();
+    }
+
+    public function status() {
+        if (!is_null($this->crew_id)) {
+            return 'Scheduled';
+        }
+        return 'Unscheduled';
+    }
+
 }

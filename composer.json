@@ -8,7 +8,7 @@
         "rcrowe/twigbridge": "0.*@dev",
         "yohang/calendr": "1.*",
         "phayes/geophp": "1.*",
-        "adldap2/adldap2": "*",
+        "adldap2/adldap2": "5.*",
         "styde/blade-pagination": "5.1.*@dev",
         "erusev/parsedown": "1.*",
         "iatstuti/laravel-nullable-fields": "~0.1"

@@ -2,24 +2,54 @@
 
 {% block content %}
 
+    <form action="{{url('job-lists/scheduled')}}" method="get">
+        <p class="row">
+            <span class="large-2 columns">
+                <label class="inline right">Start date:</label>
+            </span>
+            <span class="large-2 columns">
+                <input type="text" class="datepicker" name="start_date" value="{{start_date}}" />
+            </span>
+            <span class="large-2 columns">
+                <label class="inline right">End date:</label>
+            </span>
+            <span class="large-2 columns">
+                <input type="text" class="datepicker" name="end_date" value="{{end_date}}" />
+            </span>
+            <span class="large-4 columns">
+                <input type="submit" class="button" value="Search" />
+            </span>
+        </p>
+    </form>
+
     <table>
         <caption></caption>
         <thead>
             <tr>
                 <th></th>
-                {% for date in dates %}
-                <th>{{date.format('D j M')}}</th>
-                {% endfor %}
+                    {% for date in dates %}
+                    <th>{{date.format('D j M')}}</th>
+                    {% endfor %}
             </tr>
         </thead>
         <tbody>
-            {% for crew in crews %}
+            {% for jl in job_lists %}
                 <tr>
-                    <th>{{crew.name}}</th>
-                    {% for date in dates %}
-                    <th>
-                        {{date.format('D j M')}}
-                    </th>
+                    <th>{{jl.crew.name}}</th>
+                        {% for date in dates %}
+                        <td>
+                            {% if jl.start_date == date.format('Y-m-d') %}
+                                <a href="{{url('job-lists/'~jl.id)}}">
+                                    {{jl.type.name}}: {{jl.name}}
+                                </a>
+                                (x / {{jl.jobs.count|number_format}})
+                                <a  data-tooltip aria-haspopup="true" class="has-tip fa fa-info-circle" title="{{jl.comments}}"></a>
+                                <div class="progress alert">
+                                    <span class="meter" style="width:{{jl.percentIncomplete()}}%">
+                                    </span>
+                                </div>
+                            {% endif %}
+                        </td>
                     {% endfor %}
                 </tr>
             {% endfor %}
