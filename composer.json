@@ -1,6 +1,7 @@
 {
     "name": "samwilson/asset-manager",
     "description": "An asset managment system.",
+    "license": "GPL-3.0+",
     "type": "project",
     "require": {
         "php": ">=5.5.9",

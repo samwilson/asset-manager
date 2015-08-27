@@ -1,20 +1,18 @@
 {% extends "base" %}
 {% block content %}
 
-    <h1>User Profile</h1>
-
-    <form action="{{url('users/'~user.username)}}" method="post">
+    <form action="{{url('users/'~the_user.username)}}" method="post" class="row">
         <input type="hidden" name="_token" value="{{csrf_token()}}">
 
         <fieldset><legend>Details</legend>
             <p>
-                <label>Username: <input type="text" name="user_username" value="{{user.username}}" /></label>
+                <label>Username: <input type="text" name="username" value="{{the_user.username}}" /></label>
             </p>
             <p>
-                <label>Name: <input type="text" name="user_name" value="{{user.name}}" /></label>
+                <label>Name: <input type="text" name="name" value="{{the_user.name}}" /></label>
             </p>
             <p>
-                <label>Email: <input type="text" name="user_email" value="{{user.email}}" /></label>
+                <label>Email: <input type="text" name="email" value="{{the_user.email}}" /></label>
             </p>
         </fieldset>
 
@@ -25,6 +23,22 @@
             <p>
                 <label>Confirmation: <input type="password" name="password_confirmation" /></label>
             </p>
+        </fieldset>
+
+        <fieldset><legend>Roles</legend>
+            <ul class="inline-list">
+            {% for role in roles %}
+                <li>
+                    <label>
+                        <input type="checkbox" value="{{role.id}}"
+                               name="roles[]" {% if the_user.hasRole(role.id) %}checked{% endif %}
+                               {% if not user.isAdmin() %}disabled{% endif %} />
+                        {{role.name}}
+                    </label>
+                </li>
+            {% endfor %}
+            </ul>
+            {% if not user.isAdmin() %}<p><em>Only Administrators can change role allocations.</em></p>{% endif %}
         </fieldset>
 
         <p>

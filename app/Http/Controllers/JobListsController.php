@@ -32,7 +32,13 @@ class JobListsController extends Controller {
     }
 
     public function create(Request $request) {
+        if (!$this->user || !$this->user->isClerk()) {
+            $this->alert('warning', 'Only Clerks are allowed to create Job Lists.');
+            return redirect("assets");
+        }
         $this->view->assets = $this->getAssets($request);
+        $this->view->identifier = $request->input('identifier');
+        $this->view->identifiers = $request->input('identifiers');
         $this->view->tagged = $request->input('tagged');
         $this->view->crews = Crew::orderBy('name', 'ASC')->get();
         $this->view->job_types = JobType::orderBy('name', 'ASC')->get();
@@ -46,6 +52,10 @@ class JobListsController extends Controller {
     }
 
     public function edit($id) {
+        if (!$this->user || !$this->user->isClerk()) {
+            $this->alert('warning', 'Only Clerks are allowed to edit Job Lists.');
+            return redirect("job-lists/$id");
+        }
         $this->view->job_list = JobList::find($id);
         $this->view->title = 'Edit Job List #' . $this->view->job_list->id;
         $this->view->job_types = JobType::orderBy('name', 'ASC')->get();
@@ -151,13 +161,39 @@ class JobListsController extends Controller {
         $this->view->start_date = $startDate->format('Y-m-d');
         $this->view->end_date = $endDate->format('Y-m-d');
 
-        $this->view->job_lists = JobList::whereBetween('start_date', [$startDate, $endDate])
-                ->groupBy('crew_id')
+        $this->view->job_lists = [];
+        $jobLists = JobList::whereBetween('start_date', [$this->view->start_date, $this->view->end_date])
+                ->groupBy(['crew_id', 'start_date'])
                 ->get();
+        foreach ($jobLists as $jl) {
+            if (!isset($this->view->job_lists[$jl->crew->name])) {
+                $this->view->job_lists[$jl->crew->name] = [];
+            }
+            $this->view->job_lists[$jl->crew->name][$jl->start_date] = $jl;
+        }
 
         $this->view->dates = $datePeriod;
         $this->view->crews = Crew::query()->orderBy('name')->get();
         return $this->view;
+    }
+
+    public function geojson(Request $request, $id) {
+        $jobList = JobList::find($id);
+        $out = [];
+        foreach ($jobList->jobs()->with('asset')->get() as $job) {
+            $out[] = [
+                "type" => "Feature",
+                "properties" => [
+                    "name" => $job->asset->identifier,
+                //"popupContent" => "This is where the Rockies play!",
+                ],
+                "geometry" => [
+                    "type" => "Point",
+                    "coordinates" => [$job->asset->longitude, $job->asset->latitude],
+                ]
+            ];
+        }
+        return \Response::json($out);
     }
 
 }

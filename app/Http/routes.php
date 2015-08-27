@@ -8,13 +8,14 @@ Route::get('/tags.json', 'TagsController@json');
 Route::get('login', 'UsersController@login');
 Route::post('login', 'UsersController@loginPost');
 Route::get('logout', 'UsersController@logout');
-Route::get('users/{username}', 'UsersController@profileGet');
+Route::get('users/{username}', 'UsersController@profile');
 Route::post('users/{username}', 'UsersController@profilePost');
 Route::get('users', 'UsersController@index');
 
 // Assets.
 Route::get('assets', 'AssetsController@index');
 Route::post('assets', 'AssetsController@index');
+Route::get('assets/map', 'AssetsController@map');
 Route::get('assets/{id}', 'AssetsController@view')->where(['id' => '[0-9]+']);
 Route::get('assets/{id}/edit', 'AssetsController@edit')->where(['id' => '[0-9]+']);
 Route::get('assets/create', 'AssetsController@create');
@@ -33,6 +34,7 @@ Route::get('job-lists/create', 'JobListsController@create');
 Route::post('job-lists/create', 'JobListsController@create');
 Route::post('job-lists/save', 'JobListsController@saveNew');
 Route::get('job-lists/{id}', 'JobListsController@view')->where(['id' => '[0-9]+']);
+Route::get('job-lists/{id}.geojson', 'JobListsController@geojson')->where(['id' => '[0-9]+']);
 Route::get('job-lists/{id}/edit', 'JobListsController@edit')->where(['id' => '[0-9]+']);
 Route::post('job-lists/{id}/edit', 'JobListsController@saveExisting')->where(['id' => '[0-9]+']);
 Route::get('job-lists/scheduled', 'JobListsController@scheduled');

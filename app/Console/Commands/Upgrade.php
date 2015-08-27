@@ -220,6 +220,7 @@ class Upgrade extends \Illuminate\Console\Command {
                 $table->date('date_removed')->nullable()->comment('Date removed from Job List.');
                 $table->date('date_resolved')->nullable()->comment('Date of completion or failure.');
                 $table->timestamps();
+                $table->unique(['job_list_id', 'asset_id']);
             });
         }
         if (!Schema::hasTable('job_tag')) {

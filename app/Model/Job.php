@@ -27,4 +27,14 @@ class Job extends \Illuminate\Database\Eloquent\Model {
                         });
     }
 
+    public function status() {
+        if ($this->date_removed) {
+            return 'Cancelled';
+        }
+        if ($this->date_resolved) {
+            return 'Complete';
+        }
+        return 'Incomplete';
+    }
+
 }

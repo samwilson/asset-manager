@@ -8,6 +8,10 @@ use App\Model\Asset;
 
 class ContactsController extends \App\Http\Controllers\Controller {
 
+    public function index(Request $request) {
+        return $this->view;
+    }
+
     public function createForAsset(Request $request) {
         // Get the Asset.
         $assetId = $request->input('asset_id');

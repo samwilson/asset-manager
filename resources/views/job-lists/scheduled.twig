@@ -33,25 +33,25 @@
             </tr>
         </thead>
         <tbody>
-            {% for jl in job_lists %}
-                <tr>
-                    <th>{{jl.crew.name}}</th>
-                        {% for date in dates %}
-                        <td>
-                            {% if jl.start_date == date.format('Y-m-d') %}
-                                <a href="{{url('job-lists/'~jl.id)}}">
-                                    {{jl.type.name}}: {{jl.name}}
-                                </a>
-                                (x / {{jl.jobs.count|number_format}})
-                                <a  data-tooltip aria-haspopup="true" class="has-tip fa fa-info-circle" title="{{jl.comments}}"></a>
-                                <div class="progress alert">
-                                    <span class="meter" style="width:{{jl.percentIncomplete()}}%">
-                                    </span>
-                                </div>
-                            {% endif %}
-                        </td>
-                    {% endfor %}
-                </tr>
+            {% for crew_name,jls in job_lists %}
+            <tr>
+                <th>{{crew_name}}</th>
+                {% for date in dates %}
+                <td>
+                    {% set jl = attribute(jls, date.format('Y-m-d')) %}
+                    {% if jl %}
+                        <a href="{{url('job-lists/'~jl.id)}}">
+                            <strong>{{jl.type.name}}:</strong> {{jl.name}}
+                        </a>
+                        <a  data-tooltip aria-haspopup="true" class="has-tip fa fa-info-circle" title="{{jl.comments}}"></a>
+                        <span class="nowrap">(x / {{jl.jobs.count|number_format}})</span>
+                        <div class="progress alert">
+                            <span class="meter" style="width:{{jl.percentIncomplete()}}%"></span>
+                        </div>
+                    {% endif %}
+                </td>
+                {% endfor %}
+            </tr>
             {% endfor %}
         </tbody>
     </table>

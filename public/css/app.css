@@ -1,6 +1,8 @@
 .row.full-width { width:100%; max-width:100% }
 #content { margin:1em }
 
+.nowrap { white-space:nowrap }
+
 .sub-nav { background-color:#f2f2f2 }
 
 pre.queries { margin:0 1em }
@@ -27,3 +29,5 @@ ol.categorytree .description { font-size:smaller; color:#069; margin-left:2em }
 ol.categorytree .description p { margin:0 }
 ol.categorytree .description ol { list-style-type:decimal; margin:0 0 0 2em }
 ol.categorytree .description ul { list-style-type:circle; margin:0 0 0 2em }
+
+.map { height:450px; border:1px solid #ddd }

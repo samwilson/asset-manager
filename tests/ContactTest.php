@@ -32,7 +32,7 @@ class ContactTest extends TestCase {
      * @test
      */
     public function contacts() {
-        $
+        
     }
 
 }

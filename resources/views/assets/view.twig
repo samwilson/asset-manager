@@ -1,18 +1,26 @@
 {% extends "base" %}
 
+{% block subtitle %}
+    {% if user.isClerk() %}
+        <small><a href="{{url('assets/'~asset.id~'/edit')}}" class="fa fa-edit"></a></small>
+    {% endif %}
+{% endblock %}
+
 {% block content %}
 
-    {% if user.isClerk() %}
-    <p><a href="{{url('assets/'~asset.id~'/edit')}}" class="small button">Edit</a></p>
-    {% endif %}
-
-    {{asset.comments|parsedown|raw}}
-
-    <p>Tags:
-        {% for tag in asset.tags %}
-        <span class="secondary label">{{tag.name}}</span>
-        {% endfor %}
-    </p>
+    <div class="full-width row">
+        <div class="large-6 columns">
+            {{asset.comments|parsedown|raw}}
+            <p>Tags:
+                {% for tag in asset.tags %}
+                <span class="secondary label">{{tag.name}}</span>
+                {% endfor %}
+            </p>
+        </div>
+        <div class="large-6 columns">
+            <div id="asset-location-map" class="map" data-latitude="{{asset.latitude}}" data-longitude="{{asset.longitude}}"></div>
+        </div>
+    </div>
 
     <table>
         <caption><a href="{{url('job-lists')}}">Job Lists</a> that contain this Asset.</caption>
@@ -21,13 +29,15 @@
                 <th>Job List</th>
                 <th>Type</th>
                 <th>Start date</th>
+                <th>Status</th>
             </tr>
         </thead>
         {% for job in asset.jobs %}
             <tr>
-                <td><a href="{{job.jobList.id}}">{{job.jobList.name}}</a></td>
+                <td><a href="{{url('job-lists/'~job.jobList.id)}}">{{job.jobList.name}}</a></td>
                 <td>{{job.jobList.type.name}}</td>
                 <td>{{job.jobList.start_date}}</td>
+                <td>{{job.jobList.status()}}</td>
             </tr>
         {% endfor %}
     </table>

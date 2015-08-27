@@ -1,14 +1,18 @@
 {% extends "base" %}
-{% block content %}
-    {% if user.isClerk() %}
-        <ul class="inline-list">
-            <li><a href="{{url('job-lists/'~job_list.id~'/edit')}}" class="small button">Edit</a></li>
-        </ul>
-    {% endif %}
 
+{% block subtitle %}
+    {% if user.isClerk() %}
+        <small>
+            <a href="{{url('job-lists/'~job_list.id~'/edit')}}" class="fa fa-edit"></a>
+        </small>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
 
     <div class="full-width row">
         <div class="large-5 columns">
+            {{job_list.comments|parsedown|raw}}
             <table>
                 <tr><th>Type:</th><td>{{job_list.type.name}}</td></tr>
                 <tr><th>Name:</th><td>{{job_list.name}}</td></tr>
@@ -24,7 +28,7 @@
             </table>
         </div>
         <div class="large-7 columns">
-            {{job_list.comments|parsedown|raw}}
+            <div class="map" id="job-list-map" data-geojson="{{url('job-lists/'~job_list.id~'.geojson')}}"></div>
         </div>
     </div>
 
@@ -33,17 +37,19 @@
             <tr>
                 <th>Asset</th>
                 <th>Tags</th>
+                <th>Status</th>
             </tr>
         </thead>
         <tbody>
             {% for job in job_list.jobs %}
                 <tr>
-                    <td><a href="{{url('assets/'~job.id)}}">{{job.asset.identifier}}</a></td>
+                    <td><a href="{{url('assets/'~job.asset.id)}}">{{job.asset.identifier}}</a></td>
                     <td>
                         {% for tag in job.asset.tags %}
                             <span class="label secondary">{{tag.name}}</span>
                         {% endfor %}
                     </td>
+                    <td>{{job.status()}}</td>
                 </tr>
             {% endfor %}
         </tbody>

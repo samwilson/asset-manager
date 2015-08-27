@@ -41,7 +41,7 @@ class UsersController extends Controller {
             }
             if ($adldap->authenticate($username, $password)) {
                 $user = \App\Model\User::firstOrCreate(['username' => $username]);
-                $ldapUser = $adldap->users()->find('='.$username);
+                $ldapUser = $adldap->users()->find($username);
                 $user->name = $ldapUser->getDisplayName();
                 $user->email = $ldapUser->getEmail();
                 $user->save();
@@ -62,23 +62,47 @@ class UsersController extends Controller {
         return redirect('/login');
     }
 
-    public function profileGet($username) {
+    public function profile($username) {
         $user = \App\Model\User::where('username', $username)->first();
         if (!$user) {
             $this->alert('info', "User '$username' not found.");
+            return redirect('users');
         }
-        $view = $this->getView('users.profile');
-        $view->the_user = $user;
-        return $view;
+        $isOwn = ($this->user && $this->user->id === $user->id);
+        $isAdmin = ($this->user && $this->user->isAdmin());
+        if (!$isOwn && !$isAdmin) {
+            return redirect('users/' . $this->user->username);
+        }
+        $this->view->the_user = $user;
+        $this->view->roles = Role::orderBy('name', 'ASC')->get();
+        $this->view->title = 'User profile';
+        $this->view->breadcrumbs = [
+            'users' => 'Users',
+            'users/' . $user->username => $user->name,
+        ];
+        return $this->view;
     }
 
-    public function profilePost($username) {
+    public function profilePost(Request $request, $username) {
         $user = \App\Model\User::where('username', $username)->first();
+        $isOwn = ($this->user && $this->user->id === $user->id);
+        $isAdmin = ($this->user && $this->user->isAdmin());
+        if (!$isOwn && !$isAdmin) {
+            return redirect('users/' . $this->user->username);
+        }
+        $user->username = $request->input('username');
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->save();
+        if ($isAdmin) {
+            $user->roles()->sync($request->input('roles'));
+        }
         $this->alert('success', 'User profile information saved.');
-        return redirect('users/' . $user->username);
+        return redirect('users');
     }
 
     public function index() {
+        $this->view->roles = Role::orderBy('name', 'ASC')->get();
         $this->view->users = User::orderBy('name', 'ASC')->paginate(20);
         return $this->view;
     }

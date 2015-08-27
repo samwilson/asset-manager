@@ -15,14 +15,20 @@
                 <th>Username</th>
                 <th>Name</th>
                 <th>Email</th>
+                {% for role in roles %}
+                <th>{{role.name}}</th>
+                {% endfor %}
             </tr>
         </thead>
         <tbody>
             {% for user in users %}
                 <tr>
-                    <td><a href="{{url('users')}}">{{user.username}}</a></td>
+                    <td><a href="{{url('users/'~user.username)}}">{{user.username}}</a></td>
                     <td>{{user.name}}</td>
                     <td>{{user.email}}</td>
+                    {% for role in roles %}
+                    <td>{% if user.hasRole(role.id) %}<span class="fa fa-check"></span>{% endif %}</td>
+                    {% endfor %}
                 </tr>
             {% endfor %}
         </tbody>

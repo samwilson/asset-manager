@@ -10,6 +10,15 @@ use App\Model\Tag;
 
 class AssetsController extends Controller {
 
+    public function map(Request $request) {
+        $this->view->title = 'Asset map';
+        $this->view->breadcrumbs = [
+            'assets' => 'Assets',
+            'assets/map' => 'Map',
+        ];
+        return $this->view;
+    }
+
     public function index(Request $request) {
 
         // Get search terms.
@@ -79,15 +88,23 @@ class AssetsController extends Controller {
         $tagIds = Tag::getIds($request->input('tags'));
         while ($csv->next()) {
             $identifier = $csv->get('Identifier');
-            $asset = Asset::firstOrCreate(['identifier' => $identifier]);
-            $asset->tags()->attach($tagIds);
+            $asset = Asset::firstOrNew(['identifier' => $identifier]);
+            $asset->latitude = $csv->get('Latitude', true);
+            $asset->longitude = $csv->get('Longitude', true);
+            $asset->comments = $csv->get('Comments', true);
+            $asset->save();
+            $asset->addTags($tagIds);
         }
         return redirect('/assets');
     }
 
     public function view($id) {
-        $asset = \App\Model\Asset::where('id', $id)->first();
-        $this->view->title = $asset->identifier;
+        $asset = Asset::find($id);
+        if (!$asset) {
+            $this->alert('warning', "Asset #$id does not exist.");
+            return redirect('assets');
+        }
+        $this->view->title = 'Asset '.$asset->identifier;
         $this->view->breadcrumbs = [
             'assets' => 'Assets',
             'assets/' . $asset->id => $asset->identifier,
@@ -101,7 +118,8 @@ class AssetsController extends Controller {
             $this->alert('warning', 'Only Clerks are allowed to edit Assets.');
             return redirect("assets/$id");
         }
-        $this->view->asset = Asset::where('id', $id)->first();
+        $this->view->asset = Asset::find($id);
+        $this->view->title = 'Editing Asset '.$this->view->asset->identifier;
         $this->view->categories = Category::where('parent_id', NULL)->orderBy('name', 'ASC')->get();
         $this->view->breadcrumbs = [
             'assets' => 'Assets',
@@ -134,6 +152,8 @@ class AssetsController extends Controller {
         }
         $asset = Asset::firstOrNew(['id' => $request->input('id')]);
         $asset->identifier = $request->input('identifier');
+        $asset->latitude = $request->input('latitude');
+        $asset->longitude = $request->input('longitude');
         $asset->comments = $request->input('comments');
         $asset->save();
         $asset->tags()->sync(Tag::getIds($request->input('tags')));

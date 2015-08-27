@@ -22,7 +22,7 @@ class AssetTest extends TestCase {
     }
 
     /**
-     * @testdox An Asset can have Contacts, who may need to be contacted prior to Jobs being carried out.
+     * @testdox Assets have zero or more Contacts.
      * @test
      */
     public function contacts() {
@@ -35,6 +35,21 @@ class AssetTest extends TestCase {
         $asset->contacts()->attach($contact->id);
         $this->assertEquals(1, $asset->contacts->count());
         $this->assertEquals(1, $contact->assets->count());
+    }
+
+    /**
+     * @testdox Assets can be tagged.
+     * @test
+     */
+    public function tags() {
+        $asset = new Asset();
+        $asset->identifier = 'TEST123';
+        $asset->save();
+        $this->assertEquals(0, $asset->tags->count());
+        $asset->addTags('One,Two');
+        $this->assertEquals(2, $asset->tags->count());
+        $asset->addTags('One,Two,Three');
+        $this->assertEquals(3, $asset->tags->count());
     }
 
 }

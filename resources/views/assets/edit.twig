@@ -17,8 +17,17 @@
                 </label>
             </p>
         </fieldset>
-        <fieldset><legend>Categories</legend>
-        {{include('categorytree', {"categories":categories, "selected":asset.categories})}}
+        <fieldset>
+            <legend>Location</legend>
+            <div class="full-width row">
+                <div class="large-6 columns">
+                    <label>Latitude: <input type="text" name="latitude" value="{{asset.latitude}}" /></label>
+                    <label>Longitude: <input type="text" name="longitude" value="{{asset.longitude}}" /></label>
+                </div>
+                <div class="large-6 columns">
+                    <div id="asset-location-map" class="map" data-latitude="{{asset.latitude}}" data-longitude="{{asset.longitude}}"></div>
+                </div>
+            </div>
         </fieldset>
         <p>
             <label>Comments: <textarea name="comments" rows="10" class="markdown">{{asset.comments}}</textarea></label>
