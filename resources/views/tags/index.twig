@@ -1,0 +1,23 @@
+{% extends "base" %}
+
+{% block content %}
+
+<ol>
+    {% for tag in tags %}
+        <li>
+            <label>
+                <input type="checkbox" name="tags[]" value="{{tag.id}}" />
+                {{tag.name}}
+            </label>
+        </li>
+    {% endfor %}
+</ol>
+
+<p>
+    With selected:
+    <input type="submit" name="rename" value="Rename" class="button" />
+    <input type="submit" name="merge" value="Merge" class="button" />
+    <input type="submit" name="delete" value="Delete" class="button" />
+</p>
+
+{% endblock %}

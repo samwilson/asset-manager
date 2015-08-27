@@ -39,10 +39,8 @@ Route::get('job-lists/{id}/edit', 'JobListsController@edit')->where(['id' => '[0
 Route::post('job-lists/{id}/edit', 'JobListsController@saveExisting')->where(['id' => '[0-9]+']);
 Route::get('job-lists/scheduled', 'JobListsController@scheduled');
 
-// Scheduled Work Orders.
-Route::get('work-orders/{woid}/schedule/create', 'ScheduledWorkOrdersController@form')->where(['woid' => '[0-9]+']);
-Route::post('work-orders/{woid}/schedule/save', 'ScheduledWorkOrdersController@save')->where(['woid' => '[0-9]+']);
-Route::get('work-orders/{woid}/schedule/{sid}/edit', 'ScheduledWorkOrdersController@form')->where(['woid' => '[0-9]+', 'sid' => '[0-9]+']);
-//Route::post('work-orders/{woid}/schedule/{sid}/edit', 'ScheduledWorkOrdersController@save')->where(['woid' => '[0-9]+', 'sid' => '[0-9]+']);
-Route::get('scheduled-work-orders', 'ScheduledWorkOrdersController@index');
-Route::get('m/{id}', 'ScheduledWorkOrdersController@crew')->where(['id' => '[0-9]+']);
+// Job Types.
+Route::get('job-types', 'JobTypesController@index');
+
+// Tags.
+Route::get('tags', 'TagsController@index');

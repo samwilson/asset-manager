@@ -8,6 +8,12 @@ use App\Model\Tag;
 
 class TagsController extends Controller {
 
+    public function index() {
+        $this->view->title = 'Tags';
+        $this->view->tags = \App\Model\Tag::orderBy('name')->get();
+        return $this->view;
+    }
+
     public function json(Request $request) {
         $tags = Tag::where('name', 'LIKE', '%' . $request->input('term') . '%')->get();
         $out = array();

@@ -39,7 +39,8 @@ class UsersController extends Controller {
                 $adldap->getConfiguration()->setAdminUsername($username);
                 $adldap->getConfiguration()->setAdminPassword($password);
             }
-            if ($adldap->authenticate($username, $password)) {
+            try {
+                $adldap->authenticate($username, $password);
                 $user = \App\Model\User::firstOrCreate(['username' => $username]);
                 $ldapUser = $adldap->users()->find($username);
                 $user->name = $ldapUser->getDisplayName();
@@ -48,6 +49,8 @@ class UsersController extends Controller {
                 Auth::login($user);
                 $this->alert('success', 'You are now logged in.', TRUE);
                 return redirect('/');
+            } catch (\Adldap\Exceptions\AdldapException $ex) {
+                // Invalid credentials.
             }
         }
 
@@ -93,6 +96,11 @@ class UsersController extends Controller {
         $user->username = $request->input('username');
         $user->name = $request->input('name');
         $user->email = $request->input('email');
+        if ($request->input('password') !== $request->input('password_confirmation')) {
+            $this->alert('warning', 'Your passwords did not match. Not changed.');
+        } else {
+            $user->password = bcrypt($request->input('password'));
+        }
         $user->save();
         if ($isAdmin) {
             $user->roles()->sync($request->input('roles'));

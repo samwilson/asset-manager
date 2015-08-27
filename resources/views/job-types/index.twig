@@ -1,0 +1,19 @@
+{% extends "base" %}
+
+{% block content %}
+
+    <ol>
+        {% for type in job_types%}
+            <li>
+                {{type.name}}
+                <a href="{{url('job-types/'~type.id~'/edit')}}" class="fa fa-edit"></a>
+            </li>
+        {% endfor %}
+        <li>
+            <form>
+                <label class="inline"><input type="text" name="name" /></label>
+            </form>
+        </li>
+    </ol>
+
+{% endblock %}
