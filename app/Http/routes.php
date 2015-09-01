@@ -41,6 +41,7 @@ Route::get('job-lists/scheduled', 'JobListsController@scheduled');
 
 // Job Types.
 Route::get('job-types', 'JobTypesController@index');
+Route::get('job-types/{id}/edit', 'JobTypesController@edit')->where(['id' => '[0-9]+']);
 
 // Tags.
 Route::get('tags', 'TagsController@index');

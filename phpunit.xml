@@ -20,8 +20,8 @@
         </whitelist>
     </filter>
     <logging>
-        <log type="testdox-html" target="testdox.html"/>
-        <log type="testdox-text" target="testdox.txt"/>
+        <log type="testdox-html" target="tests/testdox.html"/>
+        <log type="testdox-text" target="tests/testdox.txt"/>
     </logging>
     <php>
         <env name="APP_ENV" value="testing"/>

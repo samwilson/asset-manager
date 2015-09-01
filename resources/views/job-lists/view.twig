@@ -32,7 +32,9 @@
         </div>
     </div>
 
+    <h2>Jobs ({{jobs.total|number_format}})</h2>
     <table>
+        <caption>{{jobs.render()|raw}}</caption>
         <thead>
             <tr>
                 <th>Asset</th>
@@ -41,7 +43,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for job in job_list.jobs %}
+            {% for job in jobs %}
                 <tr>
                     <td><a href="{{url('assets/'~job.asset.id)}}">{{job.asset.identifier}}</a></td>
                     <td>

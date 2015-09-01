@@ -116,6 +116,7 @@ class JobListsController extends Controller {
             'job-lists' => 'Job Lists',
             'job-lists/' . $jobList->id => $jobList->name,
         ];
+        $this->view->jobs = $jobList->jobs()->paginate(50);
         return $this->view;
     }
 

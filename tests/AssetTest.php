@@ -2,6 +2,7 @@
 
 use App\Model\Asset;
 use App\Model\Contact;
+use App\Model\Tag;
 
 class AssetTest extends TestCase {
 
@@ -45,10 +46,14 @@ class AssetTest extends TestCase {
         $asset = new Asset();
         $asset->identifier = 'TEST123';
         $asset->save();
+        $this->assertEquals(0, Tag::count());
         $this->assertEquals(0, $asset->tags->count());
         $asset->addTags('One,Two');
+        $asset->load('tags');
+        $this->assertEquals(2, Tag::count());
         $this->assertEquals(2, $asset->tags->count());
         $asset->addTags('One,Two,Three');
+        $asset->load('tags');
         $this->assertEquals(3, $asset->tags->count());
     }
 

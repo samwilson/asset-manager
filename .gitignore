@@ -1,8 +1,8 @@
 /vendor
 /node_modules
-Homestead.yaml
-.env
+/Homestead.yaml
+/.env
 /nbproject/private/
 /testdox.html
 /testdox.txt
-
+/tests/testdox.html

@@ -16,12 +16,13 @@ abstract class Taggable extends Model {
     public function addTags($tags) {
         $tagIds = (is_string($tags)) ? Tag::getIds($tags) : $tags;
         $data = [];
-        $sql = 'INSERT IGNORE INTO asset_tag (asset_id,tag_id) VALUES';
+        $tableName = snake_case(class_basename($this)).'_tag';
+        $sql = 'INSERT IGNORE INTO `' . $tableName . '` (`asset_id`,`tag_id`) VALUES';
         for ($i=0; $i<count($tagIds); $i++) {
             $tagId = array_values($tagIds)[$i];
-            $data[":asset_$i"] = $this->id;
-            $data[":tag_$i"] = $tagId;
-            $sql .= " (:asset_$i,:tag_$i), ";
+            $data["asset$i"] = $this->id;
+            $data["tag$i"] = $tagId;
+            $sql .= " (:asset$i,:tag$i), ";
         }
         $sql = rtrim($sql, ' ,');
         \DB::insert($sql, $data);

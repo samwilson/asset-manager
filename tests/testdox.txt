@@ -1,0 +1,22 @@
+Asset
+ [x] Assets have a unique alphanumeric identifier of up to 150 characters.
+ [x] Assets have zero or more Contacts.
+ [x] Assets can be tagged.
+
+Category
+ [x] An Asset Category has a unique name, and optionally a parent (and therefore also children).
+ [x] Categories can be nested to any depth.
+
+Contact
+ [x] A Contact has a name and two optional phone numbers. They are allocated an ID number.
+ [x] Contacts can be related to any number of assets.
+ [x] Every time a Contact is contacted, details of the interaction can be recorded.
+ [x] A Job Type can require a Contact to be contacted, so a Contact can have a list of outstanding required contact-attempts.
+
+JobList
+ [x] A Job List is a collection of Assets that must have some Tasks performed on them.
+ [x] It is possible to retrieve a list of the Assets in the Work Order that have not yet had their Contacts contacted.
+
+JobType
+ [x] Job Types are identified by a name.
+

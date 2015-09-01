@@ -17,7 +17,9 @@ class JobTypesController extends Controller {
     }
 
     public function edit($id) {
-        
+        $this->view->title = 'Job Type';
+        $this->view->job_type = \App\Model\JobType::find($id);
+        return $this->view;
     }
 
 }

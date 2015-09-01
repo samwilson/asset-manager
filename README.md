@@ -4,8 +4,15 @@ AssetManager
 A system to manage fixed assets: comprising an asset register, and a job
 scheduling system for managing work performed on the assets.
 
-* Licence: GPL
 * Homepage: https://github.com/samwilson/asset-manager
+* Tests: [![Build Status](https://img.shields.io/travis/samwilson/asset-manager.svg?style=flat-square)](https://travis-ci.org/samwilson/asset-manager)
+* Licence: [![GPL](https://img.shields.io/github/license/samwilson/asset-manager.svg?style=flat-square)](https://github.com/samwilson/asset-manager/blob/master/LICENSE.txt)
+
+## Features
+
+For a complete list, see the [Testdox report](https://github.com/samwilson/asset-manager/blob/master/tests/testdox.txt)
+(this file is included in version control to make it easier to see when new features are added;
+please review its history if you're interested).
 
 ## Installing
 
