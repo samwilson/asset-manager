@@ -2,13 +2,6 @@
 
 {% block content %}
 
-    <ul class="breadcrumbs">
-        <li><a href="{{url('')}}">Home</a></li>
-        <li class="current"><a href="{{url('assets')}}">Assets</a></li>
-    </ul>
-
-    <h1>Assets</h1>
-
     <form action="{{url('assets')}}" method="post">
         <input type="hidden" name="_token" value="{{csrf_token()}}" />
         <fieldset class="row full-width">

@@ -1,0 +1,30 @@
+{% extends "base" %}
+
+{% block subtitle %}
+    {% if user.isClerk() %}
+        <small>
+            <a href="{{url('contacts/create')}}" class="fa fa-plus" title="Create a new Contact record"></a>
+        </small>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+
+    <table>
+        {% for contact in contacts %}
+            <tr>
+                <td>{{contact.name}}</td>
+                <td>{{contact.phone_1}}</td>
+                <td>{{contact.phone_2}}</td>
+                <td>
+                    <ul>
+                    {% for asset in contact.assets %}
+                    <li><a href="{{url('assets/'~asset.id)}}">{{asset.identifier}}</a></li>
+                    {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}

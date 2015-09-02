@@ -9,6 +9,20 @@ use App\Model\Asset;
 class ContactsController extends \App\Http\Controllers\Controller {
 
     public function index(Request $request) {
+        $this->view->title = 'Contacts';
+        $this->view->breadcrumbs = [
+            'contacts' => 'Contacts',
+        ];
+        $this->view->contacts = Contact::paginate(50);
+        return $this->view;
+    }
+
+    public function create() {
+        $this->view->title = 'Create a new Contact';
+        $this->view->breadcrumbs = [
+            'contacts' => 'Contacts',
+            'contacts/create' => 'Create',
+        ];
         return $this->view;
     }
 

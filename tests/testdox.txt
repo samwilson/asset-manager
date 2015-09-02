@@ -19,4 +19,5 @@ JobList
 
 JobType
  [x] Job Types are identified by a name.
+ [ ] Some Job Types require Contacts to be contacted prior to work being carried out.
 

@@ -14,21 +14,21 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase {
     public function setUp() {
         parent::setUp();
         \Artisan::call('upgrade');
-        DB::beginTransaction();
+        //DB::beginTransaction();
     }
 
     public function tearDown() {
-        /*
+        
         $col = 'Tables_in_' . getenv('DB_DATABASE');
         DB::statement("SET FOREIGN_KEY_CHECKS=0");
         foreach (DB::select("SHOW TABLES") as $table) {
             $tableName = $table->$col;
-            //DB::statement("DROP TABLE IF EXISTS `$tableName`");
-            DB::statement("TRUNCATE `$tableName`");
+            DB::statement("DROP TABLE IF EXISTS `$tableName`");
+            //DB::statement("TRUNCATE `$tableName`");
         }
         DB::statement("SET FOREIGN_KEY_CHECKS=1");
-        */
-        DB::rollBack();
+
+        //DB::rollBack();
         parent::tearDown();
     }
 

@@ -59,6 +59,10 @@ class AssetsController extends Controller {
 
         // Add extra view data, and return.
         $this->view->categories = Category::where('parent_id', NULL)->orderBy('name', 'ASC')->get();
+        $this->view->title = 'Assets';
+        $this->view->breadcrumbs = [
+            'assets' => 'Assets',
+        ];
         return $this->view;
     }
 

@@ -16,14 +16,23 @@
                 <span class="secondary label">{{tag.name}}</span>
                 {% endfor %}
             </p>
+            <p>Categories:
+                {% for cat in asset.categories %}
+                <span class="label">{{cat.name}}</span>
+                {% endfor %}
+                {% if asset.categories.count == 0 %}
+                <em>None.</em>
+                {% endif %}
+            </p>
         </div>
         <div class="large-6 columns">
             <div id="asset-location-map" class="map" data-latitude="{{asset.latitude}}" data-longitude="{{asset.longitude}}"></div>
         </div>
     </div>
 
+    <h2>Job Lists</h2>
+    <p><a href="{{url('job-lists')}}">Job Lists</a> that contain this Asset.</p>
     <table>
-        <caption><a href="{{url('job-lists')}}">Job Lists</a> that contain this Asset.</caption>
         <thead>
             <tr>
                 <th>Job List</th>
@@ -42,19 +51,29 @@
         {% endfor %}
     </table>
 
-    <p>Categories:
-        {% for cat in asset.categories %}
-        <span class="label">{{cat.name}}</span>
-        {% endfor %}
-        {% if asset.categories.count == 0 %}
-        <em>None.</em>
-        {% endif %}
-    </p>
+    <h2>Contacts</h2>
+    <dl>
+    {% for contact in asset.contacts %}
+        <dt>
+            <a href="{{url('contacts/'~contact.id)}}">{{contact.name}}</a>
+            {{contact.phone_1}}
+            {% if contact.phone_2 %}or {{contact.phone_2}}{% endif %}
+            <ol>
+            {% for attempt in asset %}
+                <li>
+                    {{attempt.date_and_time}} by {{attempt.user.name}}:
+                    <span class="fa fa-check">Contact made</span>
+                    ({{attempt.comments}})
+                </li>
+            {% endfor %}
+            </ol>
+        </dt>
+    {% endfor %}
+    </dl>
 
     <div class="row">
         <form action="{{url('contacts/create-for-asset')}}" method="post">
             <table>
-                <caption>Contacts</caption>
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -63,18 +82,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for contact in asset.contacts %}
-                    <tr>
-                        <td>{{contact.name}}</td>
-                        <td>
-                            {{contact.phone_1}}
-                            {% if contact.phone_2 %}or {{contact.phone_2}}{% endif %}
-                        </td>
-                        <td>
-                            
-                        </td>
-                    </tr>
-                    {% endfor %}
                 </tbody>
                 {% if user.isClerk() %}
                 <tfoot>

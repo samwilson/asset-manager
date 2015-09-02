@@ -1,0 +1,43 @@
+{% extends "base" %}
+
+{% block content %}
+
+    <form action="">
+        <input type="hidden" name="_token" value="{{csrf_token()}}">
+        <p class="row">
+            <span class="large-12 columns">
+                <label>
+                    Name:
+                    <input type="text" name="name" value="" />
+                </label>
+            </span>
+        </p>
+        <p class="row">
+            <span class="large-6 columns">
+                <label>
+                    Phone number 1:
+                    <input type="text" name="phone_1" value="" />
+                </label>
+            </span>
+            <span class="large-6 columns">
+                <label>
+                    Phone number 2:
+                    <input type="text" name="phone_2" value="" />
+                </label>
+            </span>
+        </p>
+        <p class="row">
+            <span class="large-12 columns">
+                <label>
+                    Assets:
+                    <input type="text" name="assets" class="tagit" value="" data-url="{{url('assets.json')}}" />
+                </label>
+            </span>
+        </p>
+        <p class="row">
+            <span class="large-12 columns">
+                <input type="submit" value="Save" class="button" />
+            </span>
+        </p>
+    </form>
+{% endblock %}

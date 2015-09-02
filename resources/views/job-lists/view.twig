@@ -22,7 +22,13 @@
                         {% endfor %}
                     </td>
                 </tr>
-                <tr><th>Start date:</th><td>{{job_list.start_date}}</td></tr>
+                <tr>
+                    <th>Start date:</th>
+                    <td>
+                        {% if job_list.start_date %}{{job_list.start_date}}
+                        {% else %}<em>Not scheduled</em>{% endif %}
+                    </td>
+                </tr>
                 <tr><th>Due date:</th><td>{{job_list.due_date}}</td></tr>
                 <tr><th>Asset count:</th><td>{{job_list.jobs.count|number_format}}</td></tr>
             </table>

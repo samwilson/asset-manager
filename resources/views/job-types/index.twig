@@ -5,8 +5,16 @@
     <ol>
         {% for type in job_types%}
             <li>
-                {{type.name}}
-                <a href="{{url('job-types/'~type.id~'/edit')}}" class="fa fa-edit"></a>
+                {% if user.isAdmin() %}
+                    <a href="{{url('job-types/'~type.id~'/edit')}}">
+                    {{type.name}}
+                    </a>
+                {% else %}
+                    {{type.name}}
+                {% endif %}
+                {% if type.contact_required %}
+                    <span class="label">Contact required</span>
+                {% endif %}
             </li>
         {% endfor %}
         <li>

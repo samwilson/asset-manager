@@ -26,6 +26,8 @@ Route::post('assets/import', 'AssetsController@importPost');
 // Contacts.
 Route::get('contacts', 'ContactsController@index');
 Route::get('contacts/{id}', 'ContactsController@view')->where(['id' => '[0-9]+']);
+Route::get('contacts/create', 'ContactsController@create');
+Route::post('contacts/create', 'ContactsController@createPost');
 Route::post('contacts/create-for-asset', 'ContactsController@createForAsset');
 
 // Job Lists.

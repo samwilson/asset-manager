@@ -18,6 +18,10 @@ class Job extends \Illuminate\Database\Eloquent\Model {
         return $this->belongsTo('App\Model\Asset');
     }
 
+    public function contactAttempts() {
+        return $this->hasMany('App\Model\ContactAttempt');
+    }
+
     public function scopeCurrent($query) {
         return $query
                         ->where('start_date', '<=', DB::raw('CURRENT_DATE'))
@@ -27,12 +31,28 @@ class Job extends \Illuminate\Database\Eloquent\Model {
                         });
     }
 
+    public function contactRequired() {
+        return $this->jobList->type->contact_required;
+    }
+
+    public function contactMade() {
+        foreach ($this->contactAttempts as $attempt) {
+            if ($attempt->contact_made) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public function status() {
         if ($this->date_removed) {
             return 'Cancelled';
         }
         if ($this->date_resolved) {
             return 'Complete';
+        }
+        if ($this->contactRequired() && !$this->contactMade()) {
+            return 'Contact attempt required';
         }
         return 'Incomplete';
     }

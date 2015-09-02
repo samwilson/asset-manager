@@ -164,6 +164,22 @@ class Upgrade extends \Illuminate\Console\Command {
                 $table->primary(['asset_id', 'contact_id']);
             });
         }
+        if (!Schema::hasTable('contact_attempts')) {
+            $this->info("Creating 'contact_attempts' table.");
+            Schema::create('contact_attempts', function(Blueprint $table) {
+                $table->increments('id');
+                $table->integer('job_id')->unsigned();
+                $table->foreign('job_id')->references('id')->on('jobs');
+                $table->integer('contact_id')->unsigned();
+                $table->foreign('contact_id')->references('id')->on('contacts');
+                $table->integer('user_id')->unsigned();
+                $table->foreign('user_id')->references('id')->on('users');
+                $table->dateTime('date_and_time_attempted');
+                $table->boolean('contact_made')->default(false);
+                $table->text('comments');
+                $table->timestamps();
+            });
+        }
     }
 
     protected function jobLists() {
