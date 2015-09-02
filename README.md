@@ -5,8 +5,8 @@ A system to manage fixed assets: comprising an asset register, and a job
 scheduling system for managing work performed on the assets.
 
 * Homepage: https://github.com/samwilson/asset-manager
-* Tests: [![Build Status](https://img.shields.io/travis/samwilson/asset-manager.svg?style=flat-square)](https://travis-ci.org/samwilson/asset-manager)
-* Licence: [![GPL](https://img.shields.io/github/license/samwilson/asset-manager.svg?style=flat-square)](https://github.com/samwilson/asset-manager/blob/master/LICENSE.txt)
+* Tests: [![Build Status](https://img.shields.io/travis/samwilson/asset-manager.svg)](https://travis-ci.org/samwilson/asset-manager)
+* License: [![GPL-3.0+](https://img.shields.io/github/license/samwilson/asset-manager.svg)](https://github.com/samwilson/asset-manager/blob/master/LICENSE.html)
 
 ## Features
 
