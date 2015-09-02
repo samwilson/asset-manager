@@ -42,7 +42,7 @@
                 <tr>
                     {% if user.isClerk() %}
                     <td>
-                        <a href="{{url('job-lists/'~job_list.id~'/edit')}}" class="fa fa-pencil-square-o" title="Edit"></a>
+                        <a href="{{url('job-lists/'~job_list.id~'/edit')}}" title="Edit">[Edit]</a>
                     </td>
                     {% endif %}
                     <td>{{job_list.type.name}}</td>

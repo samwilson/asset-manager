@@ -27,7 +27,7 @@
                     <td>{{user.name}}</td>
                     <td>{{user.email}}</td>
                     {% for role in roles %}
-                    <td>{% if user.hasRole(role.id) %}<span class="fa fa-check"></span>{% endif %}</td>
+                    <td>{% if user.hasRole(role.id) %}<span class="ui-icon ui-icon-check"></span>{% endif %}</td>
                     {% endfor %}
                 </tr>
             {% endfor %}

@@ -3,7 +3,7 @@
 {% block subtitle %}
     {% if user.isClerk() %}
         <small>
-            <a href="{{url('job-lists/'~job_list.id~'/edit')}}" class="fa fa-edit"></a>
+            <a href="{{url('job-lists/'~job_list.id~'/edit')}}">[Edit]</a>
         </small>
     {% endif %}
 {% endblock %}

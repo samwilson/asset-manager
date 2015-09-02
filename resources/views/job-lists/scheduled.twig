@@ -43,7 +43,7 @@
                         <a href="{{url('job-lists/'~jl.id)}}">
                             <strong>{{jl.type.name}}:</strong> {{jl.name}}
                         </a>
-                        <a  data-tooltip aria-haspopup="true" class="has-tip fa fa-info-circle" title="{{jl.comments}}"></a>
+                        <a  data-tooltip aria-haspopup="true" class="has-tip ui-icon ui-icon-info" title="{{jl.comments}}"></a>
                         <span class="nowrap">(x / {{jl.jobs.count|number_format}})</span>
                         <div class="progress alert">
                             <span class="meter" style="width:{{jl.percentIncomplete()}}%"></span>

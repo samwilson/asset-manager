@@ -2,7 +2,7 @@
 
 {% block subtitle %}
     {% if user.isClerk() %}
-        <small><a href="{{url('assets/'~asset.id~'/edit')}}" class="fa fa-edit"></a></small>
+        <small><a href="{{url('assets/'~asset.id~'/edit')}}">[Edit]</a></small>
     {% endif %}
 {% endblock %}
 
@@ -62,7 +62,7 @@
             {% for attempt in asset %}
                 <li>
                     {{attempt.date_and_time}} by {{attempt.user.name}}:
-                    <span class="fa fa-check">Contact made</span>
+                    Contact made
                     ({{attempt.comments}})
                 </li>
             {% endfor %}

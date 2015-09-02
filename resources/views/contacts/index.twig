@@ -3,7 +3,9 @@
 {% block subtitle %}
     {% if user.isClerk() %}
         <small>
-            <a href="{{url('contacts/create')}}" class="fa fa-plus" title="Create a new Contact record"></a>
+            <a href="{{url('contacts/create')}}" title="Create a new Contact record">
+                [New]
+            </a>
         </small>
     {% endif %}
 {% endblock %}
