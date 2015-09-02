@@ -18,7 +18,7 @@ before_script:
 
 install:
   - composer install
-  - echo "DB_DATABASE=assetmanager_test\nDB_USERNAME=root\nDB_PASSWORD=" > $TRAVIS_BUILD_DIR/.env
+  - echo -e "DB_USERNAME=root\nDB_PASSWORD=" > $TRAVIS_BUILD_DIR/.env
   - cat $TRAVIS_BUILD_DIR/.env
 
 script:
