@@ -9,7 +9,7 @@ class JobType extends Model {
     }
 
     public function getContactRequiredAttribute($value) {
-        return $value === 1;
+        return $value === true;
     }
 
 }
