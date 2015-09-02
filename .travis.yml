@@ -13,10 +13,8 @@ addons:
 before_install:
   - echo "extension = ldap.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 
-before_script:
-  - mysql -e 'create database assetmanager_test;'
-
 install:
+  - mysql -e 'create database assetmanager_test;'
   - composer install
   - echo -e "DB_USERNAME=root\nDB_PASSWORD=" > $TRAVIS_BUILD_DIR/.env
 

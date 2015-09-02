@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-class Role extends \Illuminate\Database\Eloquent\Model {
+class Role extends Model {
 
     const ADMIN = 1;
     const MANAGER = 2;

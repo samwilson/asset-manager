@@ -34,11 +34,14 @@ $(document).ready(function () {
     $("ol.categorytree:first").width(catTreeWidth);
 
     /**
-     * Tag auto-completing.
+     * Tag (and other tag-like) auto-completing.
      */
-    $(":input.tagit").tagit({
-        "allowSpaces": true,
-        "autocomplete": {"source": baseUrl + "/tags.json"}
+    $(":input.tagit").each(function(){
+        var sourceUrl = ($(this).data("url")) ? $(this).data("url") : baseUrl + "/tags.json";
+        $(this).tagit({
+            "allowSpaces": true,
+            "autocomplete": {"source": sourceUrl}
+        });
     });
 
     /**

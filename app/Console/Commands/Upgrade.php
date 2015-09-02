@@ -184,6 +184,17 @@ class Upgrade extends \Illuminate\Console\Command {
                 $table->timestamps();
             });
         }
+        if (!Schema::hasTable('crew_members')) {
+            $this->info("Creating 'crew_members' table.");
+            Schema::create('crew_members', function(Blueprint $table) {
+                $table->increments('id');
+                $table->integer('crew_id')->unsigned()->nullable();
+                $table->foreign('crew_id')->references('id')->on('crews');
+                $table->integer('user_id')->unsigned()->nullable();
+                $table->foreign('user_id')->references('id')->on('users');
+                $table->timestamps();
+            });
+        }
         if (!Schema::hasTable('job_lists')) {
             $this->info("Creating 'job_lists' table.");
             Schema::create('job_lists', function(Blueprint $table) {

@@ -1,0 +1,23 @@
+{% extends "base" %}
+{% block content %}
+
+    <form action="{{url('crews/'~crew.id~'/edit')}}" method="post">
+        <input type="hidden" name="_token" value="{{csrf_token()}}">
+        <p>
+            <label>
+                Name:
+                <input type="text" value="{{crew.name}}" name="name" />
+            </label>
+        </p>
+        <p>
+            <label>
+                Members:
+                <input type="text" value="{{members}}" name="members" class="tagit" data-url="{{url('users.json')}}" />
+            </label>
+        </p>
+        <p>
+            <input type="submit" value="Save" class="button" />
+        </p>
+    </form>
+    
+{% endblock %}

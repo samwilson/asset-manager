@@ -11,6 +11,14 @@ Route::get('logout', 'UsersController@logout');
 Route::get('users/{username}', 'UsersController@profile');
 Route::post('users/{username}', 'UsersController@profilePost');
 Route::get('users', 'UsersController@index');
+Route::get('users.json', 'UsersController@json');
+
+// Crews.
+Route::get('crews', 'CrewsController@index');
+Route::get('crews/create', 'CrewsController@create');
+Route::post('crews/create', 'CrewsController@createPost');
+Route::get('crews/{id}/edit', 'CrewsController@edit');
+Route::post('crews/{id}/edit', 'CrewsController@save');
 
 // Assets.
 Route::get('assets', 'AssetsController@index');

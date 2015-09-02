@@ -9,7 +9,7 @@ class Crew extends \Illuminate\Database\Eloquent\Model {
     }
 
     public function members() {
-        return $this->hasMany('App\Model\People');
+        return $this->hasMany('App\Model\CrewMember');
     }
 
 }

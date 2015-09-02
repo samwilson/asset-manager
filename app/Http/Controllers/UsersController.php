@@ -115,4 +115,16 @@ class UsersController extends Controller {
         return $this->view;
     }
 
+    public function json(Request $request) {
+        $term = '%' . $request->input('term') . '%';
+        $users = User::where('name', 'LIKE', $term)
+                ->orWhere('username','LIKE', $term)
+                ->get();
+        $out = array();
+        foreach ($users as $user) {
+            $out[] = array('label' => $user->username);
+        }
+        return \Response::json($out);
+    }
+
 }

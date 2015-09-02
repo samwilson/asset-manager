@@ -1,0 +1,18 @@
+{% extends "base" %}
+{% block content %}
+    <dl>
+        {% for crew in crews %}
+            <dt>
+                <code>{{crew.id}}</code> {{crew.name}}
+                {% if user.isAdmin() %}
+                    <small><a href="{{url('crews/'~crew.id~'/edit')}}">[Edit]</a></small>
+                {% endif %}
+            </dt>
+            <dd>
+                {% for user in crew.members %}
+                    {{user.name}}
+                {% endfor %}
+            </dd>
+        {% endfor %}
+    </dl>
+{% endblock %}
