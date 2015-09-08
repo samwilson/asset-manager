@@ -1,0 +1,48 @@
+{% extends "mobile" %}
+
+{% block content %}
+
+    <div data-role="page">
+        <div data-role="header">
+            <h1>{{app_title}}</h1>
+        </div>
+        <div role="main" class="ui-content">
+            <p>
+                Welcome to {{app_title}}.
+                Below are the {{user.crewMemberships.count}} crews of which you are a member, and your current job lists.
+            </p>
+            <ul data-role="listview" data-count-theme="b">
+                {% for member in user.crewMemberships %}
+                    <li data-role="list-divider">
+                        <h2>
+                            {{member.crew.name}}
+                            <small>
+                                &mdash;
+                                {{member.crew.jobLists.count|number_format}}
+                                Job List{% if member.crew.jobLists.count != 1 %}s{% endif %}
+                            </small>
+                        </h2>
+                        <p>
+                            Members: {% for member in member.crew.members %}
+                                <span>{{member.user.name}}</span>
+                            {% endfor %}
+                        </p>
+                        {{member.crew.comments|parsedown|raw}}
+                    </li>
+                    {% for jobList in member.crew.jobLists %}
+                        <li>
+                            <a href="{{url('m/'~jobList.id)}}">
+                                {{jobList.name}}
+                                <span class="ui-li-count">{{jobList.jobs.count|number_format}}</span>
+                            </a>
+                        </li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+        <div data-role="footer">
+
+        </div>
+    </div>
+
+{% endblock %}

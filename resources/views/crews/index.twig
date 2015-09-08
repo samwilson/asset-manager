@@ -1,18 +1,54 @@
 {% extends "base" %}
+
+{% block subtitle %}
+    <small><a href="{{url('crews/create')}}">[New]</a></small>
+{% endblock %}
+
 {% block content %}
-    <dl>
-        {% for crew in crews %}
-            <dt>
-                <code>{{crew.id}}</code> {{crew.name}}
-                {% if user.isAdmin() %}
-                    <small><a href="{{url('crews/'~crew.id~'/edit')}}">[Edit]</a></small>
-                {% endif %}
-            </dt>
-            <dd>
-                {% for user in crew.members %}
-                    {{user.name}}
+
+{% for crew in crews %}
+
+    <p>
+        <strong>
+            <code>{{crew.id}}</code>
+            {% if user.isAdmin() %}
+                <a href="{{url('crews/'~crew.id~'/edit')}}">{{crew.name}}</a>
+            {% else %}
+                {{crew.name}}
+            {% endif %}
+        </strong>
+        {% spaceless %}
+        ({% for member in crew.members %}
+            {% if loop.length > 1 and loop.last %} and {% elseif not loop.first %}, {% endif %}
+            <a href="{{url('users/'~member.user.username)}}">{{member.user.name}}</a>
+        {% endfor %})
+        {% endspaceless %}
+    </p>
+
+    {{crew.comments|parsedown|raw}}
+
+    <div class="row full-width">
+        {% for month in months %}
+        <div class="large-2 columns">
+        <table class="calendar">
+            <caption>{{month.format('F Y')}}</caption>
+            {% for week in month %}
+            <tr>
+                {% for day in week %}
+                <td class="{{day.format('D')}} {% if not crew.availableOn(day.getBegin()) %}lowlight{% endif %}">
+                    {% if month.contains(day.getBegin()) %}
+                        {{day.format('j')}}
+                    {% endif %}
+                </td>
                 {% endfor %}
-            </dd>
+            </tr>
+            {% endfor %}
+        </table>
+        </div>
         {% endfor %}
-    </dl>
+    </div>
+
+    <hr />
+{% endfor %}
+
 {% endblock %}

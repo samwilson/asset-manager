@@ -197,4 +197,11 @@ class JobListsController extends Controller {
         return \Response::json($out);
     }
 
+    public function mobileUser() {
+        if (!$this->user) {
+            return redirect('login?return_to=/m');
+        }
+        return $this->view;
+    }
+
 }

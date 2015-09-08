@@ -181,6 +181,7 @@ class Upgrade extends \Illuminate\Console\Command {
             Schema::create('crews', function(Blueprint $table) {
                 $table->increments('id');
                 $table->string('name')->unique();
+                $table->text('comments');
                 $table->timestamps();
             });
         }
@@ -192,6 +193,18 @@ class Upgrade extends \Illuminate\Console\Command {
                 $table->foreign('crew_id')->references('id')->on('crews');
                 $table->integer('user_id')->unsigned()->nullable();
                 $table->foreign('user_id')->references('id')->on('users');
+                $table->timestamps();
+                $table->unique(['crew_id', 'user_id']);
+            });
+        }
+        if (!Schema::hasTable('crew_dates')) {
+            $this->info("Creating 'crew_dates' table.");
+            Schema::create('crew_dates', function(Blueprint $table) {
+                $table->increments('id');
+                $table->integer('crew_id')->unsigned()->nullable();
+                $table->foreign('crew_id')->references('id')->on('crews');
+                $table->date('start_date')->nullable();
+                $table->date('end_date')->nullable();
                 $table->timestamps();
             });
         }

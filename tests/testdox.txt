@@ -13,6 +13,10 @@ Contact
  [x] Every time a Contact is contacted, details of the interaction can be recorded.
  [x] A Job Type can require a Contact to be contacted, so a Contact can have a list of outstanding required contact-attempts.
 
+Crew
+ [x] A crew is initially available to work at any time.
+ [x] Crews' dates (of non-availability) are those date periods during which they cannot work.
+
 JobList
  [x] A Job List is a collection of Assets that must have some Tasks performed on them.
  [x] It is possible to retrieve a list of the Assets in the Work Order that have not yet had their Contacts contacted.

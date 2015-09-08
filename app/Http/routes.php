@@ -16,7 +16,7 @@ Route::get('users.json', 'UsersController@json');
 // Crews.
 Route::get('crews', 'CrewsController@index');
 Route::get('crews/create', 'CrewsController@create');
-Route::post('crews/create', 'CrewsController@createPost');
+Route::post('crews/create', 'CrewsController@save');
 Route::get('crews/{id}/edit', 'CrewsController@edit');
 Route::post('crews/{id}/edit', 'CrewsController@save');
 
@@ -55,3 +55,7 @@ Route::get('job-types/{id}/edit', 'JobTypesController@edit')->where(['id' => '[0
 
 // Tags.
 Route::get('tags', 'TagsController@index');
+
+// Mobile.
+Route::get('m', 'JobListsController@mobileUser');
+Route::get('m/{id}', 'JobsController@mobile');

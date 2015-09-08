@@ -31,3 +31,8 @@ ol.categorytree .description ol { list-style-type:decimal; margin:0 0 0 2em }
 ol.categorytree .description ul { list-style-type:circle; margin:0 0 0 2em }
 
 .map { height:450px; border:1px solid #ddd }
+
+table.calendar { border-collapse:collapse }
+table.calendar tr td { padding:0 0.2em; border:1px solid #999; text-align:right }
+table.calendar tr td.Sat, table.calendar tr td.Sun { background-color:#c3eaf3 }
+table.calendar tr td.lowlight { background-color:#bbb; color:#777 }
