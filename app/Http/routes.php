@@ -8,6 +8,7 @@ Route::get('/tags.json', 'TagsController@json');
 Route::get('login', 'UsersController@login');
 Route::post('login', 'UsersController@loginPost');
 Route::get('logout', 'UsersController@logout');
+Route::post('users/create', 'UsersController@create');
 Route::get('users/{username}', 'UsersController@profile');
 Route::post('users/{username}', 'UsersController@profilePost');
 Route::get('users', 'UsersController@index');

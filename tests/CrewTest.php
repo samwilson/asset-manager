@@ -42,6 +42,8 @@ class CrewTest extends TestCase {
         $this->assertEquals(2, $crew->crewDates->count());
         $this->assertFalse($crew->availableOn('2015-09-10'));
         $this->assertFalse($crew->availableOn('2015-09-12'));
+        $this->assertFalse($crew->availableOn('2015-09-20'));
+        $this->assertTrue($crew->availableOn('2015-09-21'));
 
         // Open end date.
         $date3 = new CrewDate();
@@ -58,6 +60,8 @@ class CrewTest extends TestCase {
         $this->assertFalse($crew->availableOn('2015-08-01'));
         $this->assertFalse($crew->availableOn('2015-09-10'));
         $this->assertFalse($crew->availableOn('2015-09-12'));
+        $this->assertFalse($crew->availableOn('2015-09-20'));
+        $this->assertTrue($crew->availableOn('2015-09-21'));
         $this->assertTrue($crew->availableOn('2015-10-04'));
         $this->assertFalse($crew->availableOn('2015-10-06'));
     }

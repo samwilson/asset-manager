@@ -41,7 +41,7 @@ class UsersController extends Controller {
             }
             try {
                 $adldap->authenticate($username, $password);
-                $user = \App\Model\User::firstOrCreate(['username' => $username]);
+                $user = User::firstOrCreate(['username' => $username]);
                 $ldapUser = $adldap->users()->find($username);
                 $user->name = $ldapUser->getDisplayName();
                 $user->email = $ldapUser->getEmail();
@@ -66,17 +66,14 @@ class UsersController extends Controller {
     }
 
     public function profile($username) {
-        $user = \App\Model\User::where('username', $username)->first();
-        if (!$user) {
-            $this->alert('info', "User '$username' not found.");
-            return redirect('users');
-        }
+        $user = User::firstOrNew(['username' => $username]);
         $isOwn = ($this->user && $this->user->id === $user->id);
         $isAdmin = ($this->user && $this->user->isAdmin());
         if (!$isOwn && !$isAdmin) {
             return redirect('users/' . $this->user->username);
         }
         $this->view->the_user = $user;
+        $this->view->user_dates = $user->userDates()->orderBy('start_date', 'DESC')->get();
         $this->view->roles = Role::orderBy('name', 'ASC')->get();
         $this->view->title = 'User profile';
         $this->view->breadcrumbs = [
@@ -87,7 +84,7 @@ class UsersController extends Controller {
     }
 
     public function profilePost(Request $request, $username) {
-        $user = \App\Model\User::where('username', $username)->first();
+        $user = User::firstOrNew(['username' => $username]);
         $isOwn = ($this->user && $this->user->id === $user->id);
         $isAdmin = ($this->user && $this->user->isAdmin());
         if (!$isOwn && !$isAdmin) {
@@ -102,23 +99,49 @@ class UsersController extends Controller {
             $user->password = bcrypt($request->input('password'));
         }
         $user->save();
-        if ($isAdmin) {
+
+        // Roles.
+        if ($isAdmin && $request->input('roles')) {
             $user->roles()->sync($request->input('roles'));
         }
+
+        // Save availability dates.
+        \DB::table('user_dates')->where('user_id', '=', $user->id)->delete();
+        foreach ($request->input('dates') as $d) {
+            if (empty($d['start_date']) && empty($d['end_date'])) {
+                continue;
+            }
+            $date = new \App\Model\UserDate();
+            $date->user_id = $user->id;
+            $date->start_date = $d['start_date'];
+            $date->end_date = $d['end_date'];
+            $date->save();
+        }
+
         $this->alert('success', 'User profile information saved.');
         return redirect('users');
     }
 
-    public function index() {
+    public function index(Request $request) {
+        if ($request->input('username')) {
+            return redirect('users/' . $request->input('username'));
+        }
+        $this->view->title = 'Users';
+        $this->view->breadcrumbs = [
+            'users' => 'Users',
+        ];
         $this->view->roles = Role::orderBy('name', 'ASC')->get();
         $this->view->users = User::orderBy('name', 'ASC')->paginate(20);
+        $start = new \DateTime();
+        $end = new \DateTime('1 month');
+        $this->view->dates = new \DatePeriod($start, new \DateInterval('P1D'), $end);
         return $this->view;
     }
 
     public function json(Request $request) {
         $term = '%' . $request->input('term') . '%';
         $users = User::where('name', 'LIKE', $term)
-                ->orWhere('username','LIKE', $term)
+                ->orWhere('username', 'LIKE', $term)
                 ->get();
         $out = array();
         foreach ($users as $user) {

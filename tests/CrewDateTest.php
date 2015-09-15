@@ -31,6 +31,7 @@ class CrewDateTest extends TestCase {
         $this->assertTrue($date2->availableOn('2015-09-09'));
         $this->assertFalse($date2->availableOn('2015-09-10'));
         $this->assertFalse($date2->availableOn('2015-09-12'));
+        $this->assertFalse($date2->availableOn('2015-09-20'));
 
         // Open end date.
         $date3 = new CrewDate();
@@ -46,6 +47,7 @@ class CrewDateTest extends TestCase {
         $this->assertTrue($date2->availableOn('2015-09-09'));
         $this->assertFalse($date2->availableOn('2015-09-10'));
         $this->assertFalse($date2->availableOn('2015-09-12'));
+        $this->assertFalse($date2->availableOn('2015-09-20'));
         $this->assertTrue($date3->availableOn('2015-10-04'));
         $this->assertFalse($date3->availableOn('2015-10-06'));
     }

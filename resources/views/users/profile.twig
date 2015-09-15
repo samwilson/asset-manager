@@ -41,6 +41,27 @@
             {% if not user.isAdmin() %}<p><em>Only Administrators can change role allocations.</em></p>{% endif %}
         </fieldset>
 
+        <fieldset><legend>Dates of non-availability</legend>
+            <p>
+                These are the dates that this user is <em>not</em> available.
+            </p>
+            <table>
+                <tr>
+                    <td>New:</td>
+                    <td><input type="text" class="datepicker" name="dates[0][start_date]" placeholder="Start date" /></td>
+                    <td><input type="text" class="datepicker" name="dates[0][end_date]" placeholder="End date" /></td>
+                </tr>
+                {% for date in user_dates %}
+                <tr>
+                    <td></td>
+                    <td><input type="text" class="datepicker" name="dates[{{date.id}}][start_date]" value="{{date.start_date}}" placeholder="Start date" /></td>
+                    <td><input type="text" class="datepicker" name="dates[{{date.id}}][end_date]"  value="{{date.end_date}}" placeholder="End date" /></td>
+                </tr>
+                {% endfor %}
+            </table>
+            <p>Either the start date or the end date can be left empty, to indicate on-going non-availability.</p>
+        </fieldset>
+
         <p>
             <input type="submit" class="button" value="Save" />
         </p>

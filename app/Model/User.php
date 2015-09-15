@@ -22,6 +22,10 @@ class User extends \Illuminate\Database\Eloquent\Model implements Authenticatabl
         return $this->hasMany('App\Model\CrewMember');
     }
 
+    public function userDates() {
+        return $this->hasMany('App\Model\UserDate');
+    }
+
     public function hasRole($roleId) {
         return $this->roles->where('id', $roleId)->count() > 0;
     }
@@ -46,6 +50,22 @@ class User extends \Illuminate\Database\Eloquent\Model implements Authenticatabl
         return self::whereHas('roles', function($query) {
                     $query->where('id', Role::ADMIN);
                 })->get();
+    }
+
+//    public function setUsernameAttribute($value) {
+//        $prohibited = ['create'];
+//        if (in_array($value, $prohibited)) {
+//            return false;
+//        }
+//        $this->attributes['username'] = $value;
+//    }
+
+    public function availableOn($date) {
+        $available = true;
+        foreach ($this->userDates as $d) {
+             $available = $available && $d->availableOn($date);
+        }
+        return $available;
     }
 
 }

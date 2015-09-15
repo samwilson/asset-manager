@@ -15,13 +15,12 @@
                 <input type="text" value="{{members}}" name="members" class="tagit" data-url="{{url('users.json')}}" />
             </label>
         </p>
-        <fieldset>
-            <legend>Dates of unavailability</legend>
+        <fieldset><legend>Dates of unavailability</legend>
             <p>
-                These are the dates that this <em>crew</em> is not available;
+                These are the dates that this crew is <em>not</em> available;
                 individual crew members have their availability defined separately.
             </p>
-            <table class="calendar">
+            <table>
                 {% for date in crew_dates %}
                 <tr>
                     <td><input type="text" class="datepicker" name="dates[{{date.id}}][start_date]" value="{{date.start_date}}" placeholder="Start date" /></td>
@@ -33,7 +32,7 @@
                     <td><input type="text" class="datepicker" name="dates[0][end_date]" placeholder="End date" /></td>
                 </tr>
             </table>
-            <p>Either the start date or the end date can be left empty, to indicate on-going availability.</p>
+            <p>Either the start date or the end date can be left empty, to indicate on-going non-availability.</p>
         </fieldset>
         <p>
             <label>Comments: <textarea name="comments" rows="10" class="markdown">{{crew.comments}}</textarea></label>
