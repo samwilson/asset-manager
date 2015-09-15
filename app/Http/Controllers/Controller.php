@@ -46,6 +46,7 @@ abstract class Controller extends BaseController {
             'tag-it.min.js',
             'app.js',
         );
+        $this->view->return_to = substr(\Request::url(), strlen(url()));
         $this->user = Auth::user();
         $this->view->user = $this->user;
         $this->view->tab = 'schedule';

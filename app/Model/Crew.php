@@ -31,15 +31,11 @@ class Crew extends \Illuminate\Database\Eloquent\Model {
     }
 
     public function availableOn($date) {
-        if ($this->crewDates->count() == 0) {
-            return true;
-        }
+        $available = true;
         foreach ($this->crewDates as $d) {
-            if ($d->availableOn($date)) {
-                return true;
-            }
+             $available = $available && $d->availableOn($date);
         }
-        return false;
+        return $available;
     }
 
 }

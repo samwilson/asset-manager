@@ -87,6 +87,17 @@ class Upgrade extends \Illuminate\Console\Command {
             $this->info("Making " . $adminUser->name . " an Administrator.");
             $adminUser->roles()->save($adminRole);
         }
+        if (!Schema::hasTable('user_dates')) {
+            $this->info("Creating 'user_dates' table.");
+            Schema::create('user_dates', function(Blueprint $table) {
+                $table->increments('id');
+                $table->integer('user_id')->unsigned()->nullable();
+                $table->foreign('user_id')->references('id')->on('users');
+                $table->date('start_date')->nullable();
+                $table->date('end_date')->nullable();
+                $table->timestamps();
+            });
+        }
     }
 
     protected function assets() {

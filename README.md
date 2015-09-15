@@ -8,12 +8,6 @@ scheduling system for managing work performed on the assets.
 * [![Build Status](https://img.shields.io/travis/samwilson/asset-manager.svg)](https://travis-ci.org/samwilson/asset-manager)
 * [![GPL-3.0+](https://img.shields.io/github/license/samwilson/asset-manager.svg)](https://github.com/samwilson/asset-manager/blob/master/LICENSE.html)
 
-## Features
-
-For a complete list, see the [Testdox report](https://github.com/samwilson/asset-manager/blob/master/tests/testdox.txt)
-(this file is included in version control to make it easier to see when new features are added;
-please review its history if you're interested).
-
 ## Installing
 
 1. Clone into a web-accessible directory: `git clone https://github.com/samwilson/asset-manager.git ~/public_html/am`

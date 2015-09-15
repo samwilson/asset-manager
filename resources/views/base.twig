@@ -43,7 +43,7 @@
                             </ul>
                         </li>
                         {% else %}
-                        <li><a href="{{url('login')}}">Log in</a></li>
+                        <li><a href="{{url('login?return_to='~return_to)}}">Log in</a></li>
                         {% endif %}
 
                     </ul>

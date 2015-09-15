@@ -20,13 +20,16 @@ class CrewsController extends Controller {
         $this->view->months = [];
         $now = new \DateTime('First day of this month');
         for ($i = 0; $i < 6; $i++) {
-            $now->add(new \DateInterval('P' . $i . 'M'));
             $this->view->months[] = $calendar->getMonth($now);
+            $now->add(new \DateInterval('P1M'));
         }
         return $this->view;
     }
 
     public function create() {
+        if (!$this->user || !$this->user->isAdmin()) {
+            return redirect('crews');
+        }
         $this->view->title = 'Create a new Crew';
         $this->view->breadcrumbs = [
             'crews' => 'Crews',
@@ -51,6 +54,7 @@ class CrewsController extends Controller {
         }
         $this->view->members = join(',', $members);
         $this->view->crew = $crew;
+        $this->view->crew_dates = $crew->crewDates()->orderBy('start_date')->get();
         return $this->view;
     }
 
@@ -58,6 +62,8 @@ class CrewsController extends Controller {
         if (!$this->user->isAdmin()) {
             return redirect('crews');
         }
+        \DB::beginTransaction();
+
         $crew = Crew::findOrNew($id);
         $crew->name = $request->input('name');
         $crew->comments = $request->input('comments');
@@ -76,7 +82,11 @@ class CrewsController extends Controller {
         }
 
         // Save availability dates.
+        \DB::table('crew_dates')->where('crew_id', '=', $crew->id)->delete();
         foreach ($request->input('dates') as $d) {
+            if (empty($d['start_date']) && empty($d['end_date'])) {
+                continue;
+            }
             $date = new \App\Model\CrewDate();
             $date->crew_id = $crew->id;
             $date->start_date = $d['start_date'];
@@ -84,6 +94,7 @@ class CrewsController extends Controller {
             $date->save();
         }
 
+        \DB::commit();
         return redirect('crews');
     }
 

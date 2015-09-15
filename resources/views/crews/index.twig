@@ -1,7 +1,9 @@
 {% extends "base" %}
 
 {% block subtitle %}
+    {% if user.isAdmin() %}
     <small><a href="{{url('crews/create')}}">[New]</a></small>
+    {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -35,11 +37,13 @@
             {% for week in month %}
             <tr>
                 {% for day in week %}
-                <td class="{{day.format('D')}} {% if not crew.availableOn(day.getBegin()) %}lowlight{% endif %}">
                     {% if month.contains(day.getBegin()) %}
+                    <td class="{{day.format('D')}} {% if not crew.availableOn(day.getBegin()) %}lowlight{% endif %}">
                         {{day.format('j')}}
+                    </td>
+                    {% else %}
+                        <td></td>
                     {% endif %}
-                </td>
                 {% endfor %}
             </tr>
             {% endfor %}
