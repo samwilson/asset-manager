@@ -51,58 +51,64 @@
         {% endfor %}
     </table>
 
-    <h2>Contacts</h2>
-    <dl>
-    {% for contact in asset.contacts %}
-        <dt>
-            <a href="{{url('contacts/'~contact.id)}}">{{contact.name}}</a>
-            {{contact.phone_1}}
-            {% if contact.phone_2 %}or {{contact.phone_2}}{% endif %}
-            <ol>
-            {% for attempt in asset %}
-                <li>
-                    {{attempt.date_and_time}} by {{attempt.user.name}}:
-                    Contact made
-                    ({{attempt.comments}})
-                </li>
-            {% endfor %}
-            </ol>
-        </dt>
-    {% endfor %}
-    </dl>
+    <div id="contacts">
+        <h2>Contacts</h2>
+        <div class="full-width row">
+            <div class="large-6 columns">
+                <ul>
+                {% for contact in asset.contacts %}
+                    <li>
+                        <a href="{{url('contacts/'~contact.id)}}">{{contact.name}}</a>
+                        {{contact.phone_1}}
+                        {% if contact.phone_2 %}or {{contact.phone_2}}{% endif %}
+                        <ol>
+                        {% for attempt in asset %}
+                            <li>
+                            {{attempt.date_and_time}} by {{attempt.user.name}}:
+                            Contact made ({{attempt.comments}})
+                            </li>
+                        {% endfor %}
+                        </ol>
+                    </li>
+                {% endfor %}
+                </ul>
+            </div>
 
-    <div class="row">
-        <form action="{{url('contacts/create-for-asset')}}" method="post">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Phone</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-                {% if user.isClerk() %}
-                <tfoot>
-                    <tr>
-                        <td>
-                            <input type="text" name="name" required />
-                        </td>
-                        <td>
-                            <input type="text" name="phone_1" required />
-                            <input type="text" name="phone_2" />
-                        </td>
-                        <td>
-                            <input type="hidden" name="_token" value="{{csrf_token()}}">
-                            <input type="hidden" name="asset_id" value="{{asset.id}}" />
-                            <input type="submit" value="Create" class="button" />
-                        </td>
-                    </tr>
-                </tfoot>
-                {% endif %}
-            </table>
-        </form>
-    </div>
+            <div class="large-6 columns">
+                <form action="{{url('contacts/create-for-asset')}}" method="post">
+                    <table>
+                        <caption>Add new contact</caption>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Phone numbers</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                        {% if user.isClerk() %}
+                        <tfoot>
+                            <tr>
+                                <td>
+                                    <input type="text" name="name" required />
+                                </td>
+                                <td>
+                                    <input type="text" name="phone_1" required />
+                                    <input type="text" name="phone_2" />
+                                </td>
+                                <td>
+                                    <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                    <input type="hidden" name="asset_id" value="{{asset.id}}" />
+                                    <input type="submit" value="Create" class="button" />
+                                </td>
+                            </tr>
+                        </tfoot>
+                        {% endif %}
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div><!-- #contacts -->
 
 {% endblock %}

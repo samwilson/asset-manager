@@ -13,6 +13,8 @@ Route::get('users/{username}', 'UsersController@profile');
 Route::post('users/{username}', 'UsersController@profilePost');
 Route::get('users', 'UsersController@index');
 Route::get('users.json', 'UsersController@json');
+Route::get('remind', 'UsersController@remind');
+Route::post('remind', 'UsersController@remindPost');
 
 // Crews.
 Route::get('crews', 'CrewsController@index');

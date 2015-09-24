@@ -36,6 +36,13 @@ table.calendar { border-collapse:collapse }
 table.calendar tr th,
 table.calendar tr td { padding:0 0.2em; border:1px solid #999; text-align:right }
 table.calendar tr th { text-align:center }
+table.calendar tr th.day { width:22px }
 table.calendar .Sat,
 table.calendar .Sun { background-color:#c3eaf3 }
 table.calendar tr td.lowlight { background-color:#bbb; color:#777 }
+
+.controller-users.action-index form label,
+.controller-users.action-index form input { display:inline }
+.controller-users.action-index form input#username { width:40em }
+
+.controller-assets.action-view #contacts td { vertical-align:top }

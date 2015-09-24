@@ -32,22 +32,13 @@ class CrewDateTest extends TestCase {
         $this->assertFalse($date2->availableOn('2015-09-10'));
         $this->assertFalse($date2->availableOn('2015-09-12'));
         $this->assertFalse($date2->availableOn('2015-09-20'));
+        $this->assertTrue($date2->availableOn('2015-09-21'));
 
         // Open end date.
         $date3 = new CrewDate();
         $date3->crew_id = $crew->id;
         $date3->start_date = '2015-10-05';
         $date3->save();
-        $this->assertTrue($date3->availableOn('2015-10-04'));
-        $this->assertFalse($date3->availableOn('2015-10-06'));
-
-        // All previous availabilities should still hold.
-        $this->assertFalse($date1->availableOn('2015-08-01'));
-        $this->assertTrue($date1->availableOn('2015-09-08'));
-        $this->assertTrue($date2->availableOn('2015-09-09'));
-        $this->assertFalse($date2->availableOn('2015-09-10'));
-        $this->assertFalse($date2->availableOn('2015-09-12'));
-        $this->assertFalse($date2->availableOn('2015-09-20'));
         $this->assertTrue($date3->availableOn('2015-10-04'));
         $this->assertFalse($date3->availableOn('2015-10-06'));
     }

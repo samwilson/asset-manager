@@ -87,14 +87,25 @@ class Upgrade extends \Illuminate\Console\Command {
             $this->info("Making " . $adminUser->name . " an Administrator.");
             $adminUser->roles()->save($adminRole);
         }
-        if (!Schema::hasTable('user_dates')) {
-            $this->info("Creating 'user_dates' table.");
-            Schema::create('user_dates', function(Blueprint $table) {
+        if (!Schema::hasTable('unavailability_types')) {
+            $this->info("Creating 'unavailability_types' table.");
+            Schema::create('unavailability_types', function(Blueprint $table) {
+                $table->increments('id');
+                $table->string('name')->unique();
+                $table->string('background_colour');
+                $table->string('colour');
+            });
+        }
+        if (!Schema::hasTable('user_unavailabilities')) {
+            $this->info("Creating 'user_unavailabilities' table.");
+            Schema::create('user_unavailabilities', function(Blueprint $table) {
                 $table->increments('id');
                 $table->integer('user_id')->unsigned()->nullable();
                 $table->foreign('user_id')->references('id')->on('users');
                 $table->date('start_date')->nullable();
                 $table->date('end_date')->nullable();
+                $table->integer('type_id')->unsigned()->nullable();
+                $table->foreign('type_id')->references('id')->on('unavailability_types');
                 $table->timestamps();
             });
         }
@@ -208,14 +219,16 @@ class Upgrade extends \Illuminate\Console\Command {
                 $table->unique(['crew_id', 'user_id']);
             });
         }
-        if (!Schema::hasTable('crew_dates')) {
-            $this->info("Creating 'crew_dates' table.");
-            Schema::create('crew_dates', function(Blueprint $table) {
+        if (!Schema::hasTable('crew_unavailabilities')) {
+            $this->info("Creating 'crew_unavailabilities' table.");
+            Schema::create('crew_unavailabilities', function(Blueprint $table) {
                 $table->increments('id');
                 $table->integer('crew_id')->unsigned()->nullable();
                 $table->foreign('crew_id')->references('id')->on('crews');
                 $table->date('start_date')->nullable();
                 $table->date('end_date')->nullable();
+                $table->integer('type_id')->unsigned()->nullable();
+                $table->foreign('type_id')->references('id')->on('unavailability_types');
                 $table->timestamps();
             });
         }

@@ -1,18 +1,22 @@
 {% extends "base" %}
 {% block content %}
 
-    <form action="{{url('users')}}" method="get">
+    <form action="{{url('users')}}" method="get" id="new-user-form">
         <p>
-            <label class="inline">
-                New user:
-                <input type="text" name="username" placeholder="Enter username here" />
-            </label>
+            <label for="username">New user:</label>
+            <input type="text" name="username" id="username" placeholder="Enter username here" />
+            <input type="submit" value="Create" />
         </p>
     </form>
 
     {{users.render()|raw}}
     <table class="calendar">
         <thead>
+            <tr>
+                <th colspan="3">Details</th>
+                <th colspan="{{roles|length}}">Roles</th>
+                <th colspan="{{day_count}}">Availability</th>
+            </tr>
             <tr>
                 <th>Username</th>
                 <th>Name</th>
@@ -21,7 +25,7 @@
                 <th>{{role.name}}</th>
                 {% endfor %}
                 {% for day in dates %}
-                <th class="{{day.format('D j')}}">{{day.format('D j')}}</th>
+                <th class="day {{day.format('D j')}}">{{day.format('j')}}</th>
                 {% endfor %}
             </tr>
         </thead>
@@ -35,7 +39,9 @@
                     <td>{% if user.hasRole(role.id) %}<span class="ui-icon ui-icon-check"></span>{% endif %}</td>
                     {% endfor %}
                     {% for day in dates %}
-                    <td class="{% if not user.availableOn(day) %}lowlight{% endif %} {{day.format('D j')}}"></th>
+                    <td class="{% if not user.availableOn(day) %}lowlight{% endif %} {{day.format('D j')}}">
+                        &nbsp;
+                    </th>
                     {% endfor %}
                 </tr>
             {% endfor %}

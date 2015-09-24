@@ -42,7 +42,7 @@ class ContactsController extends \App\Http\Controllers\Controller {
         $contact->save();
         // Then connect the two.
         $asset->contacts()->attach($contact->id);
-        return redirect('assets/'.$asset->id);
+        return redirect("assets/$asset->id#contacts");
     }
 
     public function edit() {

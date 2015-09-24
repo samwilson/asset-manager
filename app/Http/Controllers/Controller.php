@@ -35,6 +35,8 @@ abstract class Controller extends BaseController {
         } else {
             $this->view = view($viewFile);
         }
+        $this->view->controller = $controller;
+        $this->view->action = $action;
         $this->view->app_env = env('APP_ENV');
         $this->view->app_version = config('app.version');
         $this->view->app_title = config('app.title');

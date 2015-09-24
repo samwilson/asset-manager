@@ -1,0 +1,31 @@
+{% extends "base" %}
+{% block content %}
+
+    <form action="{{url('remind')}}" method="post" id="login-form">
+        <input type="hidden" name="_token" value="{{csrf_token()}}">
+
+        <div class="row collapse">
+            <div class="medium-2 columns">
+                <label class="right inline" for="username">Username:</label>
+            </div>
+            <div class="medium-1 columns">&nbsp;</div>
+            <div class="medium-5 columns">
+                <input type="text" name="username" value="{{username}}" id="username" class="focus-me" />
+            </div>
+            <div class="medium-2 columns">
+            </div>
+        </div>
+
+        <div class="row collapse">
+            <div class="medium-3 columns">
+                &nbsp;
+            </div>
+            <div class="medium-5 columns">
+                <input type="submit" class="button" value="Get reminder" />
+            </div>
+            <div class="medium-4 columns"></div>
+        </div>
+
+    </form>
+
+{% endblock %}

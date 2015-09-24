@@ -9,7 +9,7 @@ use App\Model\Role;
 
 class UsersController extends Controller {
 
-    public function login() {
+    public function login(Request $request) {
         $this->view->title = 'Log in';
         $adldap = config('adldap');
         $this->view->adldap_enabled = $adldap['enabled'];
@@ -18,11 +18,13 @@ class UsersController extends Controller {
             'users' => 'Users',
             'login' => 'Log In',
         ];
+        $this->view->username = $request->session()->get('username');
         return $this->view;
     }
 
     public function loginPost(Request $request) {
         $username = $request->input('username');
+        $request->session()->set('username', $username);
         $password = $request->input('password');
 
         // Try to log in.
@@ -40,7 +42,10 @@ class UsersController extends Controller {
                 $adldap->getConfiguration()->setAdminPassword($password);
             }
             try {
-                $adldap->authenticate($username, $password);
+                $authed = $adldap->authenticate($username, $password);
+//                if (!$authed) {
+//                    
+//                }
                 $user = User::firstOrCreate(['username' => $username]);
                 $ldapUser = $adldap->users()->find($username);
                 $user->name = $ldapUser->getDisplayName();
@@ -65,12 +70,28 @@ class UsersController extends Controller {
         return redirect('/login');
     }
 
+    public function remind(Request $request) {
+        $this->view->breadcrumbs = [
+            'users' => 'Users',
+            'login' => 'Log In',
+            'remind' => 'Password reminder',
+        ];
+        $this->view->title = 'Password reminder';
+        return $this->view;
+    }
+
+    public function remindPost(Request $request) {
+        $this->alert('success', 'Please check your email.');
+        return redirect('');
+    }
+
     public function profile($username) {
         $user = User::firstOrNew(['username' => $username]);
         $isOwn = ($this->user && $this->user->id === $user->id);
         $isAdmin = ($this->user && $this->user->isAdmin());
         if (!$isOwn && !$isAdmin) {
-            return redirect('users/' . $this->user->username);
+            $this->alert('warning', "You are not allowed to view other users' profiles.", false);
+            return $this->view;
         }
         $this->view->the_user = $user;
         $this->view->user_dates = $user->userDates()->orderBy('start_date', 'DESC')->get();
@@ -126,15 +147,20 @@ class UsersController extends Controller {
         if ($request->input('username')) {
             return redirect('users/' . $request->input('username'));
         }
+        if (!$this->user || !$this->user->isAdmin()) {
+            $this->alert('warning', "You are not allowed to view users' profiles.", false);
+            return $this->view;
+        }
         $this->view->title = 'Users';
         $this->view->breadcrumbs = [
             'users' => 'Users',
         ];
         $this->view->roles = Role::orderBy('name', 'ASC')->get();
         $this->view->users = User::orderBy('name', 'ASC')->paginate(20);
-        $start = new \DateTime();
+        $start = new \DateTime('today');
         $end = new \DateTime('1 month');
         $this->view->dates = new \DatePeriod($start, new \DateInterval('P1D'), $end);
+        $this->view->day_count = iterator_count($this->view->dates);
         return $this->view;
     }
 

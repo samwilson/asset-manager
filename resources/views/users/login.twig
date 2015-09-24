@@ -10,7 +10,7 @@
             </div>
             <div class="medium-1 columns">&nbsp;</div>
             <div class="medium-5 columns">
-                <input type="text" name="username" value="{{old('username')}}" id="username" class="focus-me" />
+                <input type="text" name="username" value="{{username}}" id="username" {% if not username %}class="focus-me"{% endif %} />
             </div>
             <div class="medium-2 columns">
                 {% if adldap_enabled and adldap_suffix %}
@@ -27,7 +27,7 @@
             </div>
             <div class="medium-1 columns">&nbsp;</div>
             <div class="medium-5 columns">
-                <input type="password" name="password" id="password" />
+                <input type="password" name="password" id="password" {% if username %}class="focus-me"{% endif %} />
             </div>
             <div class="medium-4 columns">
             </div>
@@ -39,6 +39,7 @@
             </div>
             <div class="medium-5 columns">
                 <input type="submit" class="button" value="Log in" />
+                <a href="{{url('remind')}}" class="secondary button">Password reminder</a>
             </div>
             <div class="medium-4 columns"></div>
         </div>
