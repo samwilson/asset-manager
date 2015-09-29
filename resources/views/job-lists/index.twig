@@ -6,6 +6,8 @@
         <li><strong>Type:</strong></li>
         {% if selected_type is not null %}
         <li><a href="{{url('job-lists')}}">All</a></li>
+        {% else %}
+        <li><a href="{{url('job-lists')}}"><em>All</em></a></li>
         {% endif %}
         {% for type in job_types %}
         <li>

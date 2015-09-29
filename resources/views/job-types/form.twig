@@ -1,0 +1,27 @@
+<div class="row">
+    <form action="{{url('job-types')}}" method="post">
+        <fieldset>
+            <legend>{% if job_type.id %}Edit{% else %}Create{% endif %} Job Type:</legend>
+            <div class="row">
+                <div class="large-12 columns">
+                    <label>Name: <input type="text" name="name" value="{{job_type.name}}" /></label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-6 columns">
+                    <label>Background colour: <input type="text" name="background_colour" value="{{job_type.background_colour}}" /></label>
+                </div>
+                <div class="large-6 columns">
+                    <label>Colour: <input type="text" name="colour" value="{{job_type.colour}}" /></label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-12 columns">
+                    <input type="hidden" name="_token" value="{{csrf_token()}}" />
+                    <input type="hidden" name="id" value="{{job_type.id}}" />
+                    <input type="submit" class="button" value="Save" />
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>

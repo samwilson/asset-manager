@@ -5,23 +5,21 @@
     <ol>
         {% for type in job_types%}
             <li>
+                <span style="color:{{type.colour}}; background-color:{{type.background_colour}}">
+                    {{type.name}}
+                </span>
                 {% if user.isAdmin() %}
-                    <a href="{{url('job-types/'~type.id~'/edit')}}">
-                    {{type.name}}
-                    </a>
-                {% else %}
-                    {{type.name}}
+                    <a href="{{url('job-types/'~type.id)}}">[Edit]</a>
                 {% endif %}
                 {% if type.contact_required %}
                     <span class="label">Contact required</span>
                 {% endif %}
             </li>
         {% endfor %}
-        <li>
-            <form>
-                <label class="inline"><input type="text" name="name" /></label>
-            </form>
-        </li>
     </ol>
+
+    {% if user.isAdmin() %}
+        {%include 'job-types/form.twig' %}
+    {% endif %}
 
 {% endblock %}

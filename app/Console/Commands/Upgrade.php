@@ -194,6 +194,8 @@ class Upgrade extends \Illuminate\Console\Command {
             Schema::create('job_types', function(Blueprint $table) {
                 $table->increments('id');
                 $table->string('name')->unique();
+                $table->string('colour')->unique();
+                $table->string('background_colour')->unique();
                 $table->boolean('contact_required')->default(true);
                 $table->timestamps();
             });

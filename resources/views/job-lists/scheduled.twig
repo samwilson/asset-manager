@@ -41,7 +41,8 @@
                     {% set jl = attribute(jls, date.format('Y-m-d')) %}
                     {% if jl %}
                         <a href="{{url('job-lists/'~jl.id)}}">
-                            <strong>{{jl.type.name}}:</strong> {{jl.name}}
+                            <strong style="color:{{jl.type.colour}}; background-color:{{jl.type.background_colour}}">{{jl.type.name}}:</strong>
+                            {{jl.name}}
                         </a>
                         <a  data-tooltip aria-haspopup="true" class="has-tip ui-icon ui-icon-info" title="{{jl.comments}}"></a>
                         <span class="nowrap">(x / {{jl.jobs.count|number_format}})</span>
