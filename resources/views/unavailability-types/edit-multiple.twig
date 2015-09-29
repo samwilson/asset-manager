@@ -1,0 +1,30 @@
+<fieldset><legend>Dates of unavailability</legend>
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Start</th>
+                <th>End</th>
+                {% for type in unav_types %}
+                <th class="date-type-{{type.name|snake_case}}">{{type.name}}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tr>
+            <td>New:</td>
+            <td><input type="text" class="datepicker" name="dates[0][start_date]" placeholder="Start date" /></td>
+            <td><input type="text" class="datepicker" name="dates[0][end_date]" placeholder="End date" /></td>
+            {% for type in date_types %}
+            <td class="date-type-{{type.name|snake_case}}"><input type="radio" name="dates[0][type_id]" value="{{type.id}}" /></td>
+            {% endfor %}
+        </tr>
+        {% for date in user_dates %}
+        <tr>
+            <td></td>
+            <td><input type="text" class="datepicker" name="dates[{{date.id}}][start_date]" value="{{date.start_date}}" placeholder="Start date" /></td>
+            <td><input type="text" class="datepicker" name="dates[{{date.id}}][end_date]"  value="{{date.end_date}}" placeholder="End date" /></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p>Either the start date or the end date can be left empty, to indicate on-going non-availability.</p>
+</fieldset>

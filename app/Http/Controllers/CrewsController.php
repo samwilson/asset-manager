@@ -54,7 +54,7 @@ class CrewsController extends Controller {
         }
         $this->view->members = join(',', $members);
         $this->view->crew = $crew;
-        $this->view->crew_dates = $crew->crewDates()->orderBy('start_date')->get();
+        $this->view->unavailabilities = $crew->crewUnavailabilities()->orderBy('start_date')->get();
         return $this->view;
     }
 
@@ -82,15 +82,15 @@ class CrewsController extends Controller {
         }
 
         // Save availability dates.
-        \DB::table('crew_dates')->where('crew_id', '=', $crew->id)->delete();
-        foreach ($request->input('dates') as $d) {
-            if (empty($d['start_date']) && empty($d['end_date'])) {
+        \DB::table('crew_unavailabilities')->where('crew_id', '=', $crew->id)->delete();
+        foreach ($request->input('unavailabilities') as $unavail) {
+            if (empty($unavail['start_date']) && empty($unavail['end_date'])) {
                 continue;
             }
-            $date = new \App\Model\CrewDate();
+            $date = new \App\Model\CrewUnavailability();
             $date->crew_id = $crew->id;
-            $date->start_date = $d['start_date'];
-            $date->end_date = $d['end_date'];
+            $date->start_date = $unavail['start_date'];
+            $date->end_date = $unavail['end_date'];
             $date->save();
         }
 

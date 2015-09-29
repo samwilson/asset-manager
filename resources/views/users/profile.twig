@@ -41,7 +41,7 @@
             {% if not user.isAdmin() %}<p><em>Only Administrators can change role allocations.</em></p>{% endif %}
         </fieldset>
 
-        {% include 'users/dates-form.twig' %}
+        {% include 'unavailability-types/unavailabilities-form.twig' with {'unavailabilities':the_user.userUnavailabilities} %}
 
         <p>
             <input type="submit" class="button" value="Save" />

@@ -19,8 +19,8 @@ class Crew extends \Illuminate\Database\Eloquent\Model {
         return $this->hasMany('App\Model\CrewMember');
     }
 
-    public function crewDates() {
-        return $this->hasMany('App\Model\CrewDate');
+    public function crewUnavailabilities() {
+        return $this->hasMany('App\Model\CrewUnavailability');
     }
 
     public function setNameAttribute($newName) {
@@ -32,7 +32,7 @@ class Crew extends \Illuminate\Database\Eloquent\Model {
 
     public function availableOn($date) {
         $available = true;
-        foreach ($this->crewDates as $d) {
+        foreach ($this->crewUnavailabilities as $d) {
              $available = $available && $d->availableOn($date);
         }
         return $available;

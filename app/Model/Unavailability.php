@@ -2,12 +2,12 @@
 
 namespace App\Model;
 
-abstract class DateRange extends Model {
+abstract class Unavailability extends Model {
 
     protected $nullable = ['start_date', 'end_date'];
 
     /**
-     * An item is available on a particular date if that date lies outside of all the item's dates of non-availability.
+     * An item is available on a particular date if that date lies outside of all the item's dates of unavailability.
      * @param \DateTime|string $date
      * @return boolean
      */
@@ -15,6 +15,7 @@ abstract class DateRange extends Model {
         if (!$date instanceof \DateTime) {
             $date = new \DateTime($date);
         }
+        $date->setTime(0, 0, 0);
         $start = new \DateTime($this->start_date);
         $end = new \DateTime($this->end_date);
 
@@ -30,6 +31,11 @@ abstract class DateRange extends Model {
 
         // Start and End specified.
         if (!is_null($this->start_date) && !is_null($this->end_date)) {
+            // One day.
+            if ($start == $end && $date == $start) {
+                return false;
+            }
+            // Multiple days.
             return ($date < $start) || ($date > $end);
         }
 

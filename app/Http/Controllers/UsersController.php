@@ -94,7 +94,7 @@ class UsersController extends Controller {
             return $this->view;
         }
         $this->view->the_user = $user;
-        $this->view->user_dates = $user->userDates()->orderBy('start_date', 'DESC')->get();
+        $this->view->user_dates = $user->UserUnavailabilities()->orderBy('start_date', 'DESC')->get();
         $this->view->roles = Role::orderBy('name', 'ASC')->get();
         $this->view->title = 'User profile';
         $this->view->breadcrumbs = [
@@ -126,17 +126,17 @@ class UsersController extends Controller {
             $user->roles()->sync($request->input('roles'));
         }
 
-        // Save availability dates.
-        \DB::table('user_dates')->where('user_id', '=', $user->id)->delete();
-        foreach ($request->input('dates') as $d) {
-            if (empty($d['start_date']) && empty($d['end_date'])) {
+        // Save unavailabilities.
+        \DB::table('user_unavailabilities')->where('user_id', '=', $user->id)->delete();
+        foreach ($request->input('unavailabilities') as $unavail) {
+            if (empty($unavail['start_date']) && empty($unavail['end_date'])) {
                 continue;
             }
-            $date = new \App\Model\UserDate();
-            $date->user_id = $user->id;
-            $date->start_date = $d['start_date'];
-            $date->end_date = $d['end_date'];
-            $date->save();
+            $unavailability = new \App\Model\UserUnavailability();
+            $unavailability->user_id = $user->id;
+            $unavailability->start_date = $unavail['start_date'];
+            $unavailability->end_date = $unavail['end_date'];
+            $unavailability->save();
         }
 
         $this->alert('success', 'User profile information saved.');

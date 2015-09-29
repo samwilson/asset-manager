@@ -10,7 +10,7 @@ class UserTest extends TestCase {
         $user = new \App\Model\User(['username' => 'test']);
         $user->save();
 
-        $date = new App\Model\UserDate();
+        $date = new App\Model\UserUnavailability();
         $date->user_id = $user->id;
         $date->start_date = '2000-09-10';
         $date->end_date = '2000-09-15';

@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-class UserDate extends DateRange {
+class UserUnavailability extends Unavailability {
 
     public function user() {
         return $this->belongsTo('App\Model\User');

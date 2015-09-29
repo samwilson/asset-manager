@@ -22,8 +22,8 @@ class User extends \Illuminate\Database\Eloquent\Model implements Authenticatabl
         return $this->hasMany('App\Model\CrewMember');
     }
 
-    public function userDates() {
-        return $this->hasMany('App\Model\UserDate');
+    public function userUnavailabilities() {
+        return $this->hasMany('App\Model\UserUnavailability');
     }
 
     public function hasRole($roleId) {
@@ -52,18 +52,10 @@ class User extends \Illuminate\Database\Eloquent\Model implements Authenticatabl
                 })->get();
     }
 
-//    public function setUsernameAttribute($value) {
-//        $prohibited = ['create'];
-//        if (in_array($value, $prohibited)) {
-//            return false;
-//        }
-//        $this->attributes['username'] = $value;
-//    }
-
     public function availableOn($date) {
         $available = true;
-        foreach ($this->userDates as $d) {
-             $available = $available && $d->availableOn($date);
+        foreach ($this->userUnavailabilities as $unavail) {
+             $available = $available && $unavail->availableOn($date);
         }
         return $available;
     }

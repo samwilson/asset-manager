@@ -1,0 +1,19 @@
+<fieldset class="unavailabilities"><legend>Dates of unavailability</legend>
+    <table>
+        <tbody>
+        {% for unavail in unavailabilities %}
+            <tr>
+                <td><input type="text" class="datepicker" name="unavailabilities[{{unavail.id}}][start_date]" value="{{unavail.start_date}}" placeholder="Start date" /></td>
+                <td><input type="text" class="datepicker" name="unavailabilities[{{unavail.id}}][end_date]"  value="{{unavail.end_date}}" placeholder="End date" /></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr class="new">
+                <td><input type="text" class="datepicker" name="unavailabilities[0][start_date]" placeholder="Start date" /></td>
+                <td><input type="text" class="datepicker" name="unavailabilities[0][end_date]" placeholder="End date" /></td>
+            </tr>
+        </tfoot>
+    </table>
+    <p>Either the start date or the end date can be left empty, to indicate on-going unavailability.</p>
+</fieldset>
