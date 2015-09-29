@@ -44,8 +44,10 @@
                             <strong style="color:{{jl.type.colour}}; background-color:{{jl.type.background_colour}}">{{jl.type.name}}:</strong>
                             {{jl.name}}
                         </a>
-                        <a  data-tooltip aria-haspopup="true" class="has-tip ui-icon ui-icon-info" title="{{jl.comments}}"></a>
-                        <span class="nowrap">(x / {{jl.jobs.count|number_format}})</span>
+                        {% if jl.comments %}
+                        <a data-tooltip aria-haspopup="true" class="has-tip ui-icon ui-icon-info" title="{{jl.comments}}"></a>
+                        {% endif %}
+                        <span class="nowrap">({{jl.completeCount()}} / {{jl.jobs.count|number_format}})</span>
                         <div class="progress alert">
                             <span class="meter" style="width:{{jl.percentIncomplete()}}%"></span>
                         </div>

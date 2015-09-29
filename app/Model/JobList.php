@@ -18,11 +18,23 @@ class JobList extends Taggable {
         return $this->hasMany('App\Model\Job');
     }
 
+    public function completeCount() {
+        $complete = 0;
+        $this->load('jobs');
+        foreach ($this->jobs as $job) {
+            $status = $job->status();
+            if (in_array($status, ['Complete'])) {
+                $complete++;
+            }
+        }
+        return $complete;
+    }
+
     /**
      * @return float
      */
     public function percentComplete() {
-        return round((10 / $this->jobs->count()) * 100);
+        return round(($this->completeCount() / $this->jobs->count()) * 100);
     }
 
     /**
