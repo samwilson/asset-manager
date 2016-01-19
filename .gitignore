@@ -3,6 +3,7 @@
 /Homestead.yaml
 /.env
 /nbproject/private/
+/modules/
+/bootstrap/cache/
 testdox.html
 testdox.txt
-/app/Modules/

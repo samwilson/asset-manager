@@ -22,7 +22,8 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "App\\Modules\\": "modules/"
         }
     },
     "autoload-dev": {
@@ -54,7 +55,7 @@
     "extra": {
         "merge-plugin": {
             "include": [
-                "app/Modules/*/composer.json"
+                "modules/*/composer.json"
             ]
         }
     }
