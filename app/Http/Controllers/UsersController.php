@@ -81,8 +81,13 @@ class UsersController extends Controller {
     }
 
     public function remindPost(Request $request) {
+        $user = User::whereUsername($request->input('username'))->first();
+        if ($user instanceof User) {
+            $user->sendPasswordReminder();
+        }
+        // Doesn't matter if it's not actually a success; don't tell them that.
         $this->alert('success', 'Please check your email.');
-        return redirect('');
+        return redirect('/login');
     }
 
     public function profile($username) {
@@ -155,6 +160,7 @@ class UsersController extends Controller {
         $this->view->breadcrumbs = [
             'users' => 'Users',
         ];
+        $this->view->email_queue_count = \App\Model\QueuedEmail::count();
         $this->view->roles = Role::orderBy('name', 'ASC')->get();
         $this->view->users = User::orderBy('name', 'ASC')->paginate(20);
         $start = new \DateTime('today');

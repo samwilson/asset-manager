@@ -55,6 +55,10 @@ class AssetTest extends TestCase {
         $asset->addTags('One,Two,Three');
         $asset->load('tags');
         $this->assertEquals(3, $asset->tags->count());
+        // Make sure empty tags aren't added.
+        $asset->addTags('One,Two,,Three');
+        $asset->load('tags');
+        $this->assertEquals(3, $asset->tags->count());
     }
 
 }

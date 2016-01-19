@@ -22,6 +22,9 @@ class Tag extends \Illuminate\Database\Eloquent\Model {
     public static function getIds($tagList) {
         $out = array();
         foreach (explode(',', $tagList) as $t) {
+            if (empty($t)) {
+                continue;
+            }
             $tag = self::firstOrCreate(['name' => $t]);
             $out[$tag->id] = $tag->id;
         }

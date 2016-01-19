@@ -2,7 +2,7 @@
 
 return [
     'site_name' => env('SITE_NAME', 'AssetManager'),
-
+    'site_email' => env('SITE_EMAIL', 'do-not-reply@example.org'),
     'version' => '0.1.0',
     'title' => env('APP_TITLE', 'AssetManager'),
     'debug' => env('APP_DEBUG', false),
@@ -16,7 +16,7 @@ return [
       | your application so that it is used when running Artisan tasks.
       |
      */
-    'url' => 'http://localhost',
+    'url' => rtrim(env('SITE_URL', 'http://localhost/'), '/ ') . '/',
     /*
       |--------------------------------------------------------------------------
       | Application Timezone
@@ -119,6 +119,7 @@ return [
         TwigBridge\ServiceProvider::class,
         Styde\BladePagination\ServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        Caffeinated\Modules\ModulesServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -157,6 +158,7 @@ return [
         'Lang' => Illuminate\Support\Facades\Lang::class,
         'Log' => Illuminate\Support\Facades\Log::class,
         'Mail' => Illuminate\Support\Facades\Mail::class,
+        'Module' => Caffeinated\Modules\Facades\Module::class,
         'Password' => Illuminate\Support\Facades\Password::class,
         'Queue' => Illuminate\Support\Facades\Queue::class,
         'Redirect' => Illuminate\Support\Facades\Redirect::class,

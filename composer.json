@@ -12,7 +12,10 @@
         "adldap2/adldap2": "5.*",
         "styde/blade-pagination": "5.1.*@dev",
         "erusev/parsedown": "1.*",
-        "iatstuti/laravel-nullable-fields": "~0.1"
+        "iatstuti/laravel-nullable-fields": "~0.1",
+        "caffeinated/modules": "^2.1",
+        "wikimedia/composer-merge-plugin": "*",
+        "guzzlehttp/guzzle": "*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "~2.0"
@@ -47,5 +50,12 @@
     },
     "config": {
         "preferred-install": "dist"
+    },
+    "extra": {
+        "merge-plugin": {
+            "include": [
+                "app/Modules/*/composer.json"
+            ]
+        }
     }
 }

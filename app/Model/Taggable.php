@@ -2,6 +2,9 @@
 
 namespace App\Model;
 
+/**
+ * @method Asset[] tagged(string $tags) Description
+ */
 abstract class Taggable extends Model {
 
     public function tags() {

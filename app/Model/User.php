@@ -6,6 +6,7 @@ use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Support\Facades\DB;
 
 class User extends \Illuminate\Database\Eloquent\Model implements AuthenticatableContract, CanResetPasswordContract {
 
@@ -55,9 +56,28 @@ class User extends \Illuminate\Database\Eloquent\Model implements Authenticatabl
     public function availableOn($date) {
         $available = true;
         foreach ($this->userUnavailabilities as $unavail) {
-             $available = $available && $unavail->availableOn($date);
+            $available = $available && $unavail->availableOn($date);
         }
         return $available;
+    }
+
+    public function sendPasswordReminder() {
+        DB::beginTransaction();
+        // Save the reset token.
+        $passwordReminder = str_random(40);
+        $this->password_reminder = bcrypt($passwordReminder);
+        $this->save();
+
+        // Queue.
+        $queuedEmail = new QueuedEmail();
+        $queuedEmail->recipient_id = $this->id;
+        $queuedEmail->subject = 'Password reminder for ' . config('app.site_name');
+        $queuedEmail->template = 'users/reminder_email';
+        $queuedEmail->data = [
+            'password_reminder' => $passwordReminder,
+        ];
+        $queuedEmail->save();
+        DB::commit();
     }
 
 }

@@ -1,0 +1,12 @@
+<p>Hi {{user.name}},</p>
+
+<p>This is the password reminder that you requested.</p>
+
+<p>
+    To log in, click the following link:<br />
+    <a href="{{url('remind/'~password_reminder)}}">{{url('remind/'~user.password_reminder)}}</a>
+</p>
+
+<p>If you did not request this reminder, please disregard. No further action is required.</p>
+
+<p>&mdash; sent from <a href="{{url()}}">{{site_name}}</a></p>

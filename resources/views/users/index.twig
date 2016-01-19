@@ -5,7 +5,7 @@
         <p>
             <label for="username">New user:</label>
             <input type="text" name="username" id="username" placeholder="Enter username here" />
-            <input type="submit" value="Create" />
+            <input type="submit" value="Create" class="button" />
         </p>
     </form>
 
@@ -47,5 +47,7 @@
             {% endfor %}
         </tbody>
     </table>
+
+    <p>{{trans_choice('mail.queue-count', email_queue_count, {count:email_queue_count})}}</p>
 
 {% endblock %}

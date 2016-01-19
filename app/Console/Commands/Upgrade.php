@@ -36,6 +36,7 @@ class Upgrade extends \Illuminate\Console\Command {
                 $table->string('username')->unique();
                 $table->string('email')->nullable();
                 $table->string('password', 60);
+                $table->string('password_reminder', 100)->nullable();
                 $table->rememberToken();
                 $table->timestamps();
             });
@@ -46,6 +47,7 @@ class Upgrade extends \Illuminate\Console\Command {
             $adminUser->username = 'admin';
             $adminUser->name = 'Administrator';
             $adminUser->password = bcrypt('admin');
+            $adminUser->email = config('app.site_email');
             $adminUser->save();
         }
         if (!Schema::hasTable('roles')) {
@@ -109,14 +111,48 @@ class Upgrade extends \Illuminate\Console\Command {
                 $table->timestamps();
             });
         }
+        if (!Schema::hasTable('queued_emails')) {
+            $this->info("Creating 'queued_emails' table.");
+            Schema::create('queued_emails', function(Blueprint $table) {
+                $table->increments('id');
+                $table->integer('recipient_id')->unsigned()->nullable();
+                $table->foreign('recipient_id')->references('id')->on('users');
+                $table->string('subject');
+                $table->string('template');
+                $table->text('data');
+                $table->timestamps();
+            });
+        }
     }
 
     protected function assets() {
+        if (!Schema::hasTable('countries')) {
+            $this->info("Creating 'countries' table.");
+            Schema::create('countries', function(Blueprint $table) {
+                $table->increments('id');
+                $table->string('name')->unique();
+                $table->timestamps();
+            });
+        }
+        if (!Schema::hasTable('states')) {
+            $this->info("Creating 'states' table.");
+            Schema::create('states', function(Blueprint $table) {
+                $table->increments('id');
+                $table->string('name')->unique();
+                $table->integer('country_id')->unsigned()->nullable();
+                $table->foreign('country_id')->references('id')->on('countries');
+                $table->timestamps();
+            });
+        }
         if (!Schema::hasTable('assets')) {
             $this->info("Creating 'assets' table.");
             Schema::create('assets', function(Blueprint $table) {
                 $table->increments('id');
                 $table->string('identifier')->unique();
+                $table->integer('state_id')->unsigned()->nullable();
+                $table->foreign('state_id')->references('id')->on('states');
+                $table->string('city')->nullable();
+                $table->string('street_address')->nullable();
                 $table->decimal('latitude', 13, 10)->nullable();
                 $table->decimal('longitude', 13, 10)->nullable();
                 $table->text('comments')->nullable();

@@ -1,16 +1,20 @@
 <?php
 
+use App\Model\User;
+use App\Model\UserUnavailability;
+use App\Model\QueuedEmail;
+
 class UserTest extends TestCase {
 
     /**
-     * User dates of non-availability are inclusive.
+     * @testdox Dates of non-availability can be specified for users (in exactly the same way as for Crews).
      * @test
      */
     public function dates() {
-        $user = new \App\Model\User(['username' => 'test']);
+        $user = new User(['username' => 'test']);
         $user->save();
 
-        $date = new App\Model\UserUnavailability();
+        $date = new UserUnavailability();
         $date->user_id = $user->id;
         $date->start_date = '2000-09-10';
         $date->end_date = '2000-09-15';
@@ -27,6 +31,17 @@ class UserTest extends TestCase {
         $this->assertFalse($user->availableOn('2000-09-10'));
         $this->assertFalse($user->availableOn('2000-09-15'));
         $this->assertTrue($user->availableOn('2000-09-16'));
+    }
+
+    /**
+     * @testdox Requesting a password reminder adds an item to the Mail Queue.
+     * @test
+     */
+    public function email_reminder() {
+        $user = new User(['username' => 'test']);
+        $user->save();
+        $user->sendPasswordReminder();
+        $this->assertEquals(1, QueuedEmail::count());
     }
 
 }
