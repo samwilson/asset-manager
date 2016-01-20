@@ -1,6 +1,7 @@
 {% extends "base" %}
 {% block content %}
 
+    {% if user.isAdmin() %}
     <form action="{{url('users')}}" method="get" id="new-user-form">
         <p>
             <label for="username">New user:</label>
@@ -8,6 +9,7 @@
             <input type="submit" value="Create" class="button" />
         </p>
     </form>
+    {% endif %}
 
     {{users.render()|raw}}
     <table class="calendar">

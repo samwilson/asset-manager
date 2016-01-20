@@ -152,10 +152,6 @@ class UsersController extends Controller {
         if ($request->input('username')) {
             return redirect('users/' . $request->input('username'));
         }
-        if (!$this->user || !$this->user->isAdmin()) {
-            $this->alert('warning', "You are not allowed to view users' profiles.", false);
-            return $this->view;
-        }
         $this->view->title = 'Users';
         $this->view->breadcrumbs = [
             'users' => 'Users',

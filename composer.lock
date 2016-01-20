@@ -9,16 +9,16 @@
     "packages": [
         {
             "name": "adldap2/adldap2",
-            "version": "v5.2.7",
+            "version": "v5.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Adldap2/Adldap2.git",
-                "reference": "baf1ca9981efb746f59a8f7aea7b93160d3401d3"
+                "reference": "2a1c0ff7175fcd1307f29e3d2155bc7c3a0285f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Adldap2/Adldap2/zipball/baf1ca9981efb746f59a8f7aea7b93160d3401d3",
-                "reference": "baf1ca9981efb746f59a8f7aea7b93160d3401d3",
+                "url": "https://api.github.com/repos/Adldap2/Adldap2/zipball/2a1c0ff7175fcd1307f29e3d2155bc7c3a0285f1",
+                "reference": "2a1c0ff7175fcd1307f29e3d2155bc7c3a0285f1",
                 "shasum": ""
             },
             "require": {
@@ -57,7 +57,7 @@
                 "ldap",
                 "windows"
             ],
-            "time": "2015-12-09 14:21:28"
+            "time": "2016-01-19 15:26:18"
         },
         {
             "name": "caffeinated/modules",

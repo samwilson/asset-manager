@@ -4,6 +4,8 @@ namespace App\Model;
 
 class JobType extends Model {
 
+    public $fillable = ['name'];
+
     public function jobLists() {
         return $this->hasMany('App\Model\JobList');
     }

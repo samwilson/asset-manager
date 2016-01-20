@@ -4,6 +4,7 @@ namespace App\Model;
 
 class JobList extends Taggable {
 
+    protected $fillable = ['name'];
     protected $nullable = ['crew_id', 'start_date', 'due_date', 'comments'];
 
     public function type() {

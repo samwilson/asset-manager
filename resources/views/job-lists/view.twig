@@ -29,8 +29,18 @@
                         {% else %}<em>Not scheduled</em>{% endif %}
                     </td>
                 </tr>
+                <tr><th>Crew:</th><td>{{job_list.crew.name}}</td></tr>
                 <tr><th>Due date:</th><td>{{job_list.due_date}}</td></tr>
                 <tr><th>Asset count:</th><td>{{job_list.jobs.count|number_format}}</td></tr>
+                <tr>
+                    <th>Status:</th>
+                    <td>
+                        {{job_list.status()}}
+                        {% if job_list.percentComplete() != 100 %}
+                        ({{job_list.percentComplete()}}% complete)
+                        {% endif %}
+                    </td>
+                </tr>
             </table>
         </div>
         <div class="large-7 columns">
@@ -39,8 +49,8 @@
     </div>
 
     <h2>Jobs ({{jobs.total|number_format}})</h2>
+    <p>{{jobs.render()|raw}}</p>
     <table>
-        <caption>{{jobs.render()|raw}}</caption>
         <thead>
             <tr>
                 <th>Asset</th>

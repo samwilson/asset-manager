@@ -12,6 +12,7 @@
         {% for type in job_types %}
         <li>
             <a href="{{url('job-lists?type='~type.id)}}">
+                <span class="label" style="color:{{type.colour}}; background-color:{{type.background_colour}}">&bull;</span>
                 {% if type.id != selected_type %}
                 {{type.name}}
                 {% else %}
@@ -23,7 +24,7 @@
     </ol>
 
     {% if job_lists.total > 0 %}
-    {{ job_lists.render()|raw }}
+    <p>{{job_lists.render()|raw}}</p>
     <table>
         <thead>
             <tr>
