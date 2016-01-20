@@ -14,7 +14,6 @@
         "erusev/parsedown": "1.*",
         "iatstuti/laravel-nullable-fields": "~0.1",
         "caffeinated/modules": "^2.1",
-        "wikimedia/composer-merge-plugin": "*",
         "guzzlehttp/guzzle": "*"
     },
     "require-dev": {
@@ -51,12 +50,5 @@
     },
     "config": {
         "preferred-install": "dist"
-    },
-    "extra": {
-        "merge-plugin": {
-            "include": [
-                "modules/*/composer.json"
-            ]
-        }
     }
 }
