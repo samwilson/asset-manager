@@ -10,6 +10,14 @@ class Asset extends Taggable {
         $this->attributes['identifier'] = substr($value, 0, 150);
     }
 
+    public function suburb() {
+        return $this->belongsTo('App\Model\Suburb');
+    }
+
+    public function state() {
+        return $this->belongsTo('App\Model\State');
+    }
+
     public function contacts() {
         return $this->belongsToMany('App\Model\Contact');
     }

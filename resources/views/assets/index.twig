@@ -42,7 +42,10 @@
             <tr>
                 <th></th>
                 <th>Identifier</th>
-                <th><abbr title="Geographic location">Loc.</abbr></th>
+                <th>Location description</th>
+                <th>Street address</th>
+                <th>Suburb</th>
+                <th>State</th>
                 <th>Tags</th>
                 <th>Contacts</th>
             </tr>
@@ -58,11 +61,10 @@
                     <th>
                         <a href="{{url('assets/'~asset.id)}}" title="View asset details">{{asset.identifier}}</a>
                     </th>
-                    <th>
-                        {% if asset.latitude %}
-                        Yes
-                        {% endif %}
-                    </th>
+                    <th>{{asset.location_description}}</th>
+                    <th>{{asset.street_address}}</th>
+                    <th>{{asset.suburb.name}}</th>
+                    <th>{{asset.state.name}}</th>
                     <td>
                         {% for tag in asset.tags %}
                         <span class="label secondary">{{tag.name}}</span>

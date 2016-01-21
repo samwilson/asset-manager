@@ -144,6 +144,14 @@ class Upgrade extends \Illuminate\Console\Command {
                 $table->timestamps();
             });
         }
+        if (!Schema::hasTable('suburbs')) {
+            $this->info("Creating 'suburbs' table.");
+            Schema::create('suburbs', function(Blueprint $table) {
+                $table->increments('id');
+                $table->string('name')->unique();
+                $table->timestamps();
+            });
+        }
         if (!Schema::hasTable('assets')) {
             $this->info("Creating 'assets' table.");
             Schema::create('assets', function(Blueprint $table) {
@@ -151,8 +159,10 @@ class Upgrade extends \Illuminate\Console\Command {
                 $table->string('identifier')->unique();
                 $table->integer('state_id')->unsigned()->nullable();
                 $table->foreign('state_id')->references('id')->on('states');
-                $table->string('city')->nullable();
+                $table->integer('suburb_id')->unsigned()->nullable();
+                $table->foreign('suburb_id')->references('id')->on('suburbs');
                 $table->string('street_address')->nullable();
+                $table->string('location_description')->nullable();
                 $table->decimal('latitude', 13, 10)->nullable();
                 $table->decimal('longitude', 13, 10)->nullable();
                 $table->text('comments')->nullable();
