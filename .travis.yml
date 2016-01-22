@@ -20,3 +20,4 @@ install:
 
 script:
   - phpunit
+  - phpcs --standard=psr2 $TRAVIS_BUILD_DIR/app

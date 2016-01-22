@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\Schema;
 use App\Model\User;
 use App\Model\Role;
 
-class Upgrade extends \Illuminate\Console\Command {
+class Upgrade extends \Illuminate\Console\Command
+{
 
     protected $name = "upgrade";
     protected $description = "Upgrade the application. Idempotent.";
@@ -17,7 +18,8 @@ class Upgrade extends \Illuminate\Console\Command {
      *
      * @return void
      */
-    public function fire() {
+    public function fire()
+    {
         $this->call('down');
         $this->info("Upgrading application.");
         $this->users();
@@ -27,10 +29,11 @@ class Upgrade extends \Illuminate\Console\Command {
         $this->call('up');
     }
 
-    protected function users() {
+    protected function users()
+    {
         if (!Schema::hasTable('users')) {
             $this->info("Creating 'users' table.");
-            Schema::create('users', function(Blueprint $table) {
+            Schema::create('users', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name')->nullable();
                 $table->string('username')->unique();
@@ -52,7 +55,7 @@ class Upgrade extends \Illuminate\Console\Command {
         }
         if (!Schema::hasTable('roles')) {
             $this->info("Creating 'roles' table.");
-            Schema::create('roles', function(Blueprint $table) {
+            Schema::create('roles', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name')->unique();
                 $table->timestamps();
@@ -74,7 +77,7 @@ class Upgrade extends \Illuminate\Console\Command {
         }
         if (!Schema::hasTable('role_user')) {
             $this->info("Creating 'role_user' table.");
-            Schema::create('role_user', function(Blueprint $table) {
+            Schema::create('role_user', function (Blueprint $table) {
                 $table->integer('user_id')->unsigned();
                 $table->foreign('user_id')->references('id')->on('users');
                 $table->integer('role_id')->unsigned();
@@ -91,7 +94,7 @@ class Upgrade extends \Illuminate\Console\Command {
         }
         if (!Schema::hasTable('unavailability_types')) {
             $this->info("Creating 'unavailability_types' table.");
-            Schema::create('unavailability_types', function(Blueprint $table) {
+            Schema::create('unavailability_types', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name')->unique();
                 $table->string('background_colour');
@@ -100,7 +103,7 @@ class Upgrade extends \Illuminate\Console\Command {
         }
         if (!Schema::hasTable('user_unavailabilities')) {
             $this->info("Creating 'user_unavailabilities' table.");
-            Schema::create('user_unavailabilities', function(Blueprint $table) {
+            Schema::create('user_unavailabilities', function (Blueprint $table) {
                 $table->increments('id');
                 $table->integer('user_id')->unsigned()->nullable();
                 $table->foreign('user_id')->references('id')->on('users');
@@ -113,7 +116,7 @@ class Upgrade extends \Illuminate\Console\Command {
         }
         if (!Schema::hasTable('queued_emails')) {
             $this->info("Creating 'queued_emails' table.");
-            Schema::create('queued_emails', function(Blueprint $table) {
+            Schema::create('queued_emails', function (Blueprint $table) {
                 $table->increments('id');
                 $table->integer('recipient_id')->unsigned()->nullable();
                 $table->foreign('recipient_id')->references('id')->on('users');
@@ -125,10 +128,11 @@ class Upgrade extends \Illuminate\Console\Command {
         }
     }
 
-    protected function assets() {
+    protected function assets()
+    {
         if (!Schema::hasTable('countries')) {
             $this->info("Creating 'countries' table.");
-            Schema::create('countries', function(Blueprint $table) {
+            Schema::create('countries', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name')->unique();
                 $table->timestamps();
@@ -136,7 +140,7 @@ class Upgrade extends \Illuminate\Console\Command {
         }
         if (!Schema::hasTable('states')) {
             $this->info("Creating 'states' table.");
-            Schema::create('states', function(Blueprint $table) {
+            Schema::create('states', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name')->unique();
                 $table->integer('country_id')->unsigned()->nullable();
@@ -146,7 +150,7 @@ class Upgrade extends \Illuminate\Console\Command {
         }
         if (!Schema::hasTable('suburbs')) {
             $this->info("Creating 'suburbs' table.");
-            Schema::create('suburbs', function(Blueprint $table) {
+            Schema::create('suburbs', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name')->unique();
                 $table->timestamps();
@@ -154,7 +158,7 @@ class Upgrade extends \Illuminate\Console\Command {
         }
         if (!Schema::hasTable('assets')) {
             $this->info("Creating 'assets' table.");
-            Schema::create('assets', function(Blueprint $table) {
+            Schema::create('assets', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('identifier')->unique();
                 $table->integer('state_id')->unsigned()->nullable();
@@ -171,7 +175,7 @@ class Upgrade extends \Illuminate\Console\Command {
         }
         if (!Schema::hasTable('categories')) {
             $this->info("Creating 'categories' table.");
-            Schema::create('categories', function(Blueprint $table) {
+            Schema::create('categories', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name')->unique();
                 $table->integer('parent_id')->unsigned()->nullable();
@@ -181,7 +185,7 @@ class Upgrade extends \Illuminate\Console\Command {
         }
         if (!Schema::hasTable('asset_category')) {
             $this->info("Creating 'asset_category' table.");
-            Schema::create('asset_category', function(Blueprint $table) {
+            Schema::create('asset_category', function (Blueprint $table) {
                 $table->integer('asset_id')->unsigned();
                 $table->foreign('asset_id')->references('id')->on('assets');
                 $table->integer('category_id')->unsigned();
@@ -191,7 +195,7 @@ class Upgrade extends \Illuminate\Console\Command {
         }
         if (!Schema::hasTable('tags')) {
             $this->info("Creating 'tags' table.");
-            Schema::create('tags', function(Blueprint $table) {
+            Schema::create('tags', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name')->unique();
                 $table->timestamps();
@@ -199,7 +203,7 @@ class Upgrade extends \Illuminate\Console\Command {
         }
         if (!Schema::hasTable('asset_tag')) {
             $this->info("Creating 'asset_tag' table.");
-            Schema::create('asset_tag', function(Blueprint $table) {
+            Schema::create('asset_tag', function (Blueprint $table) {
                 $table->integer('asset_id')->unsigned();
                 $table->foreign('asset_id')->references('id')->on('assets');
                 $table->integer('tag_id')->unsigned();
@@ -209,10 +213,11 @@ class Upgrade extends \Illuminate\Console\Command {
         }
     }
 
-    protected function contacts() {
+    protected function contacts()
+    {
         if (!Schema::hasTable('contacts')) {
             $this->info("Creating 'contacts' table.");
-            Schema::create('contacts', function(Blueprint $table) {
+            Schema::create('contacts', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name')->unique();
                 $table->string('phone_1')->nullable();
@@ -224,7 +229,7 @@ class Upgrade extends \Illuminate\Console\Command {
         }
         if (!Schema::hasTable('asset_contact')) {
             $this->info("Creating 'asset_contact' table.");
-            Schema::create('asset_contact', function(Blueprint $table) {
+            Schema::create('asset_contact', function (Blueprint $table) {
                 $table->integer('asset_id')->unsigned();
                 $table->foreign('asset_id')->references('id')->on('assets');
                 $table->integer('contact_id')->unsigned();
@@ -234,10 +239,11 @@ class Upgrade extends \Illuminate\Console\Command {
         }
     }
 
-    protected function jobLists() {
+    protected function jobLists()
+    {
         if (!Schema::hasTable('job_types')) {
             $this->info("Creating 'job_types' table.");
-            Schema::create('job_types', function(Blueprint $table) {
+            Schema::create('job_types', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name')->unique();
                 $table->string('colour');
@@ -248,7 +254,7 @@ class Upgrade extends \Illuminate\Console\Command {
         }
         if (!Schema::hasTable('crews')) {
             $this->info("Creating 'crews' table.");
-            Schema::create('crews', function(Blueprint $table) {
+            Schema::create('crews', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name')->unique();
                 $table->text('comments');
@@ -257,7 +263,7 @@ class Upgrade extends \Illuminate\Console\Command {
         }
         if (!Schema::hasTable('crew_members')) {
             $this->info("Creating 'crew_members' table.");
-            Schema::create('crew_members', function(Blueprint $table) {
+            Schema::create('crew_members', function (Blueprint $table) {
                 $table->increments('id');
                 $table->integer('crew_id')->unsigned()->nullable();
                 $table->foreign('crew_id')->references('id')->on('crews');
@@ -269,7 +275,7 @@ class Upgrade extends \Illuminate\Console\Command {
         }
         if (!Schema::hasTable('crew_unavailabilities')) {
             $this->info("Creating 'crew_unavailabilities' table.");
-            Schema::create('crew_unavailabilities', function(Blueprint $table) {
+            Schema::create('crew_unavailabilities', function (Blueprint $table) {
                 $table->increments('id');
                 $table->integer('crew_id')->unsigned()->nullable();
                 $table->foreign('crew_id')->references('id')->on('crews');
@@ -282,7 +288,7 @@ class Upgrade extends \Illuminate\Console\Command {
         }
         if (!Schema::hasTable('job_lists')) {
             $this->info("Creating 'job_lists' table.");
-            Schema::create('job_lists', function(Blueprint $table) {
+            Schema::create('job_lists', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name')->unique();
                 $table->integer('type_id')->unsigned();
@@ -297,7 +303,7 @@ class Upgrade extends \Illuminate\Console\Command {
         }
         if (!Schema::hasTable('job_list_tag')) {
             $this->info("Creating 'job_list_tag' table.");
-            Schema::create('job_list_tag', function(Blueprint $table) {
+            Schema::create('job_list_tag', function (Blueprint $table) {
                 $table->integer('job_list_id')->unsigned();
                 $table->foreign('job_list_id')->references('id')->on('job_lists');
                 $table->integer('tag_id')->unsigned();
@@ -307,7 +313,7 @@ class Upgrade extends \Illuminate\Console\Command {
         }
         if (!Schema::hasTable('jobs')) {
             $this->info("Creating 'jobs' table.");
-            Schema::create('jobs', function(Blueprint $table) {
+            Schema::create('jobs', function (Blueprint $table) {
                 $table->increments('id');
                 $table->integer('job_list_id')->unsigned()->nullable();
                 $table->foreign('job_list_id')->references('id')->on('job_lists');
@@ -322,7 +328,7 @@ class Upgrade extends \Illuminate\Console\Command {
         }
         if (!Schema::hasTable('contact_attempts')) {
             $this->info("Creating 'contact_attempts' table.");
-            Schema::create('contact_attempts', function(Blueprint $table) {
+            Schema::create('contact_attempts', function (Blueprint $table) {
                 $table->increments('id');
                 $table->integer('job_id')->unsigned();
                 $table->foreign('job_id')->references('id')->on('jobs');
@@ -338,7 +344,7 @@ class Upgrade extends \Illuminate\Console\Command {
         }
         if (!Schema::hasTable('job_tag')) {
             $this->info("Creating 'job_tag' table.");
-            Schema::create('job_tag', function(Blueprint $table) {
+            Schema::create('job_tag', function (Blueprint $table) {
                 $table->integer('job_id')->unsigned();
                 $table->foreign('job_id')->references('id')->on('jobs');
                 $table->integer('tag_id')->unsigned();
@@ -347,5 +353,4 @@ class Upgrade extends \Illuminate\Console\Command {
             });
         }
     }
-
 }

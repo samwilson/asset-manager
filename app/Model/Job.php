@@ -4,38 +4,46 @@ namespace App\Model;
 
 use DB;
 
-class Job extends \Illuminate\Database\Eloquent\Model {
+class Job extends \Illuminate\Database\Eloquent\Model
+{
 
-    public function crew() {
+    public function crew()
+    {
         return $this->belongsTo('App\Model\Crew');
     }
 
-    public function jobList() {
+    public function jobList()
+    {
         return $this->belongsTo('App\Model\JobList');
     }
 
-    public function asset() {
+    public function asset()
+    {
         return $this->belongsTo('App\Model\Asset');
     }
 
-    public function contactAttempts() {
+    public function contactAttempts()
+    {
         return $this->hasMany('App\Model\ContactAttempt');
     }
 
-    public function scopeCurrent($query) {
+    public function scopeCurrent($query)
+    {
         return $query
-                        ->where('start_date', '<=', DB::raw('CURRENT_DATE'))
-                        ->where(function($query) {
-                            $query->where('end_date', '>=', DB::raw('CURRENT_DATE'))
-                            ->orWhere('end_date', null);
-                        });
+                ->where('start_date', '<=', DB::raw('CURRENT_DATE'))
+                ->where(function ($query) {
+                    $query->where('end_date', '>=', DB::raw('CURRENT_DATE'))
+                    ->orWhere('end_date', null);
+                });
     }
 
-    public function contactRequired() {
+    public function contactRequired()
+    {
         return $this->jobList->type->contact_required;
     }
 
-    public function contactMade() {
+    public function contactMade()
+    {
         foreach ($this->contactAttempts as $attempt) {
             if ($attempt->contact_made) {
                 return true;
@@ -44,7 +52,8 @@ class Job extends \Illuminate\Database\Eloquent\Model {
         return false;
     }
 
-    public function status() {
+    public function status()
+    {
         if ($this->date_removed) {
             return 'Cancelled';
         }
@@ -56,5 +65,4 @@ class Job extends \Illuminate\Database\Eloquent\Model {
         }
         return 'Incomplete';
     }
-
 }

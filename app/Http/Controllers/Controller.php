@@ -7,7 +7,8 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Support\Facades\Auth;
 
-abstract class Controller extends BaseController {
+abstract class Controller extends BaseController
+{
 
     use DispatchesJobs,
         ValidatesRequests;
@@ -18,11 +19,13 @@ abstract class Controller extends BaseController {
     /** @var \App\Model\User */
     protected $user;
 
-    public function __construct() {
-        $this->instantiate_view();
+    public function __construct()
+    {
+        $this->instantiateView();
     }
 
-    protected function instantiate_view() {
+    protected function instantiateView()
+    {
         $route = \Illuminate\Support\Facades\Request::route()->getAction()['controller'];
         $parts = explode('@', $route);
         $controllerParts = explode('\\', $parts[0]);
@@ -62,7 +65,8 @@ abstract class Controller extends BaseController {
      * @param string $message The message to display.
      * @param boolean $delayed Whether to display it now, or flash it to the next request.
      */
-    protected function alert($status, $message, $delayed = true) {
+    protected function alert($status, $message, $delayed = true)
+    {
         $alert = array(
             'status' => $status,
             'message' => $message,
@@ -75,5 +79,4 @@ abstract class Controller extends BaseController {
             $this->view->alerts[] = $alert;
         }
     }
-
 }

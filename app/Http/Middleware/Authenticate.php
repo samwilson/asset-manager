@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\Guard;
 
 class Authenticate
 {
+
     /**
      * The Guard implementation.
      *

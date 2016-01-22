@@ -8,9 +8,11 @@ use App\Model\Crew;
 use App\Model\CrewMember;
 use App\Model\User;
 
-class CrewsController extends Controller {
+class CrewsController extends Controller
+{
 
-    public function index(Request $request) {
+    public function index(Request $request)
+    {
         $this->view->title = 'Crews';
         $this->view->breadcrumbs = [
             'crews' => 'Crews',
@@ -26,7 +28,8 @@ class CrewsController extends Controller {
         return $this->view;
     }
 
-    public function create() {
+    public function create()
+    {
         if (!$this->user || !$this->user->isAdmin()) {
             return redirect('crews');
         }
@@ -39,7 +42,8 @@ class CrewsController extends Controller {
         return $this->view;
     }
 
-    public function edit(Request $request, $id) {
+    public function edit(Request $request, $id)
+    {
         $crew = Crew::find($id);
         $this->view->title = 'Crew ' . $crew->id;
         $this->view->breadcrumbs = [
@@ -58,7 +62,8 @@ class CrewsController extends Controller {
         return $this->view;
     }
 
-    public function save(Request $request, $id = null) {
+    public function save(Request $request, $id = null)
+    {
         if (!$this->user->isAdmin()) {
             return redirect('crews');
         }
@@ -97,5 +102,4 @@ class CrewsController extends Controller {
         \DB::commit();
         return redirect('crews');
     }
-
 }

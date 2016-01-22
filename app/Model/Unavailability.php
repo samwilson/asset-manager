@@ -2,7 +2,8 @@
 
 namespace App\Model;
 
-abstract class Unavailability extends Model {
+abstract class Unavailability extends Model
+{
 
     protected $nullable = ['start_date', 'end_date'];
 
@@ -11,7 +12,8 @@ abstract class Unavailability extends Model {
      * @param \DateTime|string $date
      * @return boolean
      */
-    public function availableOn($date) {
+    public function availableOn($date)
+    {
         if (!$date instanceof \DateTime) {
             $date = new \DateTime($date);
         }
@@ -42,5 +44,4 @@ abstract class Unavailability extends Model {
         // Shouldn't ever be here! :-)
         throw new \Exception('Something wrong with the dates.');
     }
-
 }

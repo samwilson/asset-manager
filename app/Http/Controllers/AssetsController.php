@@ -7,10 +7,14 @@ use App\Http\Controllers\Controller;
 use App\Model\Asset;
 use App\Model\Category;
 use App\Model\Tag;
+use App\Model\State;
+use App\Model\Suburb;
 
-class AssetsController extends Controller {
+class AssetsController extends Controller
+{
 
-    public function map(Request $request) {
+    public function map(Request $request)
+    {
         $this->view->title = 'Asset map';
         $this->view->breadcrumbs = [
             'assets' => 'Assets',
@@ -19,10 +23,11 @@ class AssetsController extends Controller {
         return $this->view;
     }
 
-    public function index(Request $request) {
+    public function index(Request $request)
+    {
 
         // Get search terms.
-        $assetIdentifiers = preg_split('/(\n|\r)/', $request->input('identifiers', ''), NULL, PREG_SPLIT_NO_EMPTY);
+        $assetIdentifiers = preg_split('/(\n|\r)/', $request->input('identifiers', ''), null, PREG_SPLIT_NO_EMPTY);
         $this->view->identifiers = array_map('trim', $assetIdentifiers);
         $this->view->identifier = trim($request->input('identifier'));
         $this->view->tagged = $request->input('tagged');
@@ -58,7 +63,7 @@ class AssetsController extends Controller {
         }
 
         // Add extra view data, and return.
-        $this->view->categories = Category::where('parent_id', NULL)->orderBy('name', 'ASC')->get();
+        $this->view->categories = Category::where('parent_id', null)->orderBy('name', 'ASC')->get();
         $this->view->title = 'Assets';
         $this->view->breadcrumbs = [
             'assets' => 'Assets',
@@ -66,7 +71,8 @@ class AssetsController extends Controller {
         return $this->view;
     }
 
-    public function import() {
+    public function import()
+    {
         $this->view->title = 'Import';
         $this->view->breadcrumbs = [
             'assets' => 'Assets',
@@ -75,7 +81,8 @@ class AssetsController extends Controller {
         return $this->view;
     }
 
-    public function importPost(Request $request) {
+    public function importPost(Request $request)
+    {
         if (!$this->user->isAdmin()) {
             $this->alert('info', 'Only admins can import.');
             return redirect('/assets/import');
@@ -86,7 +93,7 @@ class AssetsController extends Controller {
 
         $fileInfo = $_FILES['file'];
         $csv = new \App\Csv($fileInfo['tmp_name']);
-        if (!$csv->has_header('Identifier')) {
+        if (!$csv->hasHeader('Identifier')) {
             throw new \Exception("'Identifier' column missing from CSV.");
         }
         $tagIds = Tag::getIds($request->input('tags'));
@@ -102,13 +109,14 @@ class AssetsController extends Controller {
         return redirect('/assets');
     }
 
-    public function view($id) {
+    public function view($id)
+    {
         $asset = Asset::find($id);
         if (!$asset) {
             $this->alert('warning', "Asset #$id does not exist.");
             return redirect('assets');
         }
-        $this->view->title = 'Asset '.$asset->identifier;
+        $this->view->title = 'Asset ' . $asset->identifier;
         $this->view->breadcrumbs = [
             'assets' => 'Assets',
             'assets/' . $asset->id => $asset->identifier,
@@ -117,14 +125,17 @@ class AssetsController extends Controller {
         return $this->view;
     }
 
-    public function edit($id) {
+    public function edit($id)
+    {
         if (!$this->user || !$this->user->isClerk()) {
             $this->alert('warning', 'Only Clerks are allowed to edit Assets.');
             return redirect("assets/$id");
         }
         $this->view->asset = Asset::find($id);
-        $this->view->title = 'Editing Asset '.$this->view->asset->identifier;
-        $this->view->categories = Category::where('parent_id', NULL)->orderBy('name', 'ASC')->get();
+        $this->view->title = 'Editing Asset ' . $this->view->asset->identifier;
+        $this->view->categories = Category::where('parent_id', null)->orderBy('name', 'ASC')->get();
+        $this->view->states = State::all();
+        $this->view->suburbs = Suburb::all();
         $this->view->breadcrumbs = [
             'assets' => 'Assets',
             'assets/' . $this->view->asset->id => $this->view->asset->identifier,
@@ -134,7 +145,8 @@ class AssetsController extends Controller {
         return $this->view;
     }
 
-    public function create() {
+    public function create()
+    {
         if (!$this->user || !$this->user->isClerk()) {
             $this->alert('info', 'Only Managers can create assets.');
             return redirect('/assets');
@@ -144,18 +156,25 @@ class AssetsController extends Controller {
             'assets' => 'Assets',
             'assets/create' => 'Create',
         ];
-        $this->view->categories = Category::where('parent_id', NULL)->orderBy('name', 'ASC')->get();
+        $this->view->categories = Category::where('parent_id', null)->orderBy('name', 'ASC')->get();
+        $this->view->states = State::all();
+        $this->view->suburbs = Suburb::all();
         $this->view->asset = new Asset();
         return $this->view;
     }
 
-    public function save(Request $request) {
+    public function save(Request $request)
+    {
         if (!$this->user || !$this->user->isClerk()) {
             $this->alert('warning', 'Only Clerks are allowed to edit assets.', false);
             return $this->view;
         }
         $asset = Asset::firstOrNew(['id' => $request->input('id')]);
         $asset->identifier = $request->input('identifier');
+        $asset->state_id = $request->input('state_id');
+        $asset->suburb_id = $request->input('suburb_id');
+        $asset->street_address = $request->input('street_address');
+        $asset->location_description = $request->input('location_description');
         $asset->latitude = $request->input('latitude');
         $asset->longitude = $request->input('longitude');
         $asset->comments = $request->input('comments');
@@ -164,5 +183,4 @@ class AssetsController extends Controller {
         $asset->categories()->sync($request->input('category_ids', array()));
         return redirect('assets/' . $asset->id);
     }
-
 }

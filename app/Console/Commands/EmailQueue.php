@@ -4,12 +4,14 @@ namespace App\Console\Commands;
 
 use App\Model\QueuedEmail;
 
-class EmailQueue extends \Illuminate\Console\Command {
+class EmailQueue extends \Illuminate\Console\Command
+{
 
     protected $signature = "emailqueue {num=1}";
     protected $description = "Process the email queue.";
 
-    public function handle() {
+    public function handle()
+    {
         $num = $this->argument('num');
         $queuedEmails = QueuedEmail::query()->take($num)->get();
         foreach ($queuedEmails as $email) {
@@ -39,5 +41,4 @@ class EmailQueue extends \Illuminate\Console\Command {
             $email->delete();
         }
     }
-
 }

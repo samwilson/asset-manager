@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-class JobsController extends Controller {
+class JobsController extends Controller
+{
 
-    public function mobile($id) {
+    public function mobile($id)
+    {
         return $this->view;
     }
-
 }

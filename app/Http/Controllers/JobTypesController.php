@@ -6,9 +6,11 @@ use App\Model\JobType;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class JobTypesController extends Controller {
+class JobTypesController extends Controller
+{
 
-    public function index() {
+    public function index()
+    {
         if (!$this->user || !$this->user->isAdmin()) {
             return redirect('/');
         }
@@ -17,7 +19,8 @@ class JobTypesController extends Controller {
         return $this->view;
     }
 
-    public function edit($id) {
+    public function edit($id)
+    {
         if (!$this->user || !$this->user->isAdmin()) {
             return redirect('/');
         }
@@ -26,7 +29,8 @@ class JobTypesController extends Controller {
         return $this->view;
     }
 
-    public function save(Request $request) {
+    public function save(Request $request)
+    {
         if (!$this->user || !$this->user->isAdmin()) {
             return redirect('/');
         }
@@ -37,5 +41,4 @@ class JobTypesController extends Controller {
         $jt->save();
         return redirect('job-types');
     }
-
 }

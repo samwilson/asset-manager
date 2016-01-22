@@ -7,9 +7,11 @@ use App\Model\User;
 use App\Model\Crew;
 use App\Model\JobList;
 
-class DashboardController extends \App\Http\Controllers\Controller {
+class DashboardController extends \App\Http\Controllers\Controller
+{
 
-    public function home() {
+    public function home()
+    {
         $this->view->title = $this->view->site_name;
         $this->view->asset_count = Asset::count();
         $this->view->user_count = User::count();
@@ -17,5 +19,4 @@ class DashboardController extends \App\Http\Controllers\Controller {
         $this->view->job_list_count = JobList::count();
         return $this->view;
     }
-
 }

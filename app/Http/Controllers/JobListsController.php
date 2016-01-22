@@ -11,9 +11,11 @@ use App\Model\Job;
 use App\Model\JobType;
 use App\Model\Tag;
 
-class JobListsController extends Controller {
+class JobListsController extends Controller
+{
 
-    public function index(Request $request) {
+    public function index(Request $request)
+    {
         $this->view->title = 'Job Lists';
         $this->view->breadcrumbs = [
             'job-lists' => 'Job Lists',
@@ -31,7 +33,8 @@ class JobListsController extends Controller {
         return $this->view;
     }
 
-    public function create(Request $request) {
+    public function create(Request $request)
+    {
         if (!$this->user || !$this->user->isClerk()) {
             $this->alert('warning', 'Only Clerks are allowed to create Job Lists.');
             return redirect("assets");
@@ -51,7 +54,8 @@ class JobListsController extends Controller {
         return $this->view;
     }
 
-    public function edit($id) {
+    public function edit($id)
+    {
         if (!$this->user || !$this->user->isClerk()) {
             $this->alert('warning', 'Only Clerks are allowed to edit Job Lists.');
             return redirect("job-lists/$id");
@@ -68,7 +72,8 @@ class JobListsController extends Controller {
         return $this->view;
     }
 
-    public function saveNew(Request $request) {
+    public function saveNew(Request $request)
+    {
         DB::beginTransaction();
         $jobList = new JobList();
         $jobList->name = $request->input('name');
@@ -92,7 +97,8 @@ class JobListsController extends Controller {
         return redirect('job-lists/' . $jobList->id);
     }
 
-    public function saveExisting(Request $request, $id) {
+    public function saveExisting(Request $request, $id)
+    {
         DB::beginTransaction();
         $jobList = JobList::find($id);
         $jobList->name = $request->input('name');
@@ -107,7 +113,8 @@ class JobListsController extends Controller {
         return redirect('job-lists/' . $jobList->id);
     }
 
-    public function view(Request $request, $id) {
+    public function view(Request $request, $id)
+    {
         $jobList = JobList::with('type')->find($id);
         $this->view->job_list = $jobList;
         //$this->view->jobs = $jobList->jobs()->orderBy('start_date', 'DESC')->get();
@@ -120,9 +127,10 @@ class JobListsController extends Controller {
         return $this->view;
     }
 
-    protected function getAssets($request) {
+    protected function getAssets($request)
+    {
         // Get search terms.
-        $assetIdentifiers = preg_split('/(\n|\r)/', $request->input('identifiers', ''), NULL, PREG_SPLIT_NO_EMPTY);
+        $assetIdentifiers = preg_split('/(\n|\r)/', $request->input('identifiers', ''), null, PREG_SPLIT_NO_EMPTY);
         $identifiers = array_map('trim', $assetIdentifiers);
         $identifier = trim($request->input('identifier'));
         $categoryIds = collect($request->input('category_ids'));
@@ -147,7 +155,8 @@ class JobListsController extends Controller {
         return $assets->get();
     }
 
-    public function scheduled(Request $reqest) {
+    public function scheduled(Request $reqest)
+    {
         $this->view->title = "Job Schedule";
         $this->view->breadcrumbs = [
             'job-lists' => 'Job Lists',
@@ -178,7 +187,8 @@ class JobListsController extends Controller {
         return $this->view;
     }
 
-    public function geojson(Request $request, $id) {
+    public function geojson(Request $request, $id)
+    {
         $jobList = JobList::find($id);
         $out = [];
         foreach ($jobList->jobs()->with('asset')->get() as $job) {
@@ -197,11 +207,11 @@ class JobListsController extends Controller {
         return \Response::json($out);
     }
 
-    public function mobileUser() {
+    public function mobileUser()
+    {
         if (!$this->user) {
             return redirect('login?return_to=/m');
         }
         return $this->view;
     }
-
 }

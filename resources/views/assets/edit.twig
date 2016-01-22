@@ -21,8 +21,42 @@
             <legend>Location</legend>
             <div class="full-width row">
                 <div class="large-6 columns">
-                    <label>Latitude: <input type="text" name="latitude" value="{{asset.latitude}}" /></label>
-                    <label>Longitude: <input type="text" name="longitude" value="{{asset.longitude}}" /></label>
+                    <div class="row">
+                        <div class="large-12 columns">
+                            <label>
+                                Location description:
+                                <input type="text" name="location_description" value="{{asset.location_description}}" />
+                            </label>
+                            <label>
+                                Street address:
+                                <input type="text" name="street_address" value="{{asset.street_address}}" />
+                            </label>
+                        </div>
+                        <div class="large-6 columns">
+                            <label>
+                                Suburb:
+                                <select name="suburb_id" required>
+                                    <option selected></option>
+                                    {% for suburb in suburbs %}
+                                        <option value="{{suburb.id}}" {%if asset.suburb_id==suburb.id%}selected{%endif%}>{{suburb.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </label>
+                            <label>
+                                State:
+                                <select name="state_id" required>
+                                    <option selected></option>
+                                    {% for state in states %}
+                                        <option value="{{state.id}}" {%if asset.state_id==state.id%}selected{%endif%}>{{state.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </label>
+                        </div>
+                        <div class="large-6 columns">
+                            <label>Latitude: <input type="text" name="latitude" value="{{asset.latitude}}" /></label>
+                            <label>Longitude: <input type="text" name="longitude" value="{{asset.longitude}}" /></label>
+                        </div>
+                    </div>
                 </div>
                 <div class="large-6 columns">
                     <div id="asset-location-map" class="map" data-latitude="{{asset.latitude}}" data-longitude="{{asset.longitude}}"></div>

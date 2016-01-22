@@ -2,10 +2,11 @@
 
 namespace App\Model;
 
-class Contact extends \Illuminate\Database\Eloquent\Model {
+class Contact extends \Illuminate\Database\Eloquent\Model
+{
 
-    public function assets() {
+    public function assets()
+    {
         return $this->belongsToMany('App\Model\Asset');
     }
-
 }

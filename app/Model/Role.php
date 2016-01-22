@@ -2,7 +2,8 @@
 
 namespace App\Model;
 
-class Role extends Model {
+class Role extends Model
+{
 
     const ADMIN = 1;
     const MANAGER = 2;
@@ -10,8 +11,8 @@ class Role extends Model {
 
     public $fillable = ['id', 'name'];
 
-    public function users() {
+    public function users()
+    {
         return $this->belongsToMany('App\Model\User');
     }
-
 }

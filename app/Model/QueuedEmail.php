@@ -2,7 +2,8 @@
 
 namespace App\Model;
 
-class QueuedEmail extends Model {
+class QueuedEmail extends Model
+{
 
     /**
      * The attributes that should be casted to native types.
@@ -13,10 +14,10 @@ class QueuedEmail extends Model {
         'data' => 'array',
     ];
 
-    public function recipient() {
+    public function recipient()
+    {
         return $this->belongsTo('App\Model\User');
     }
-
 //
 //    public function setDataAttribute($data) {
 //        $this->attributes['data'] = serialize($data);

@@ -2,7 +2,8 @@
 
 namespace App\Model;
 
-class Crew extends \Illuminate\Database\Eloquent\Model {
+class Crew extends \Illuminate\Database\Eloquent\Model
+{
 
     /**
      * The attributes that are mass assignable.
@@ -11,31 +12,35 @@ class Crew extends \Illuminate\Database\Eloquent\Model {
      */
     protected $fillable = ['name'];
 
-    public function jobLists() {
+    public function jobLists()
+    {
         return $this->hasMany('App\Model\JobList');
     }
 
-    public function members() {
+    public function members()
+    {
         return $this->hasMany('App\Model\CrewMember');
     }
 
-    public function crewUnavailabilities() {
+    public function crewUnavailabilities()
+    {
         return $this->hasMany('App\Model\CrewUnavailability');
     }
 
-    public function setNameAttribute($newName) {
+    public function setNameAttribute($newName)
+    {
         if (empty($newName)) {
             throw new \Exception('A Crew name must not be empty.');
         }
         $this->attributes['name'] = trim($newName);
     }
 
-    public function availableOn($date) {
+    public function availableOn($date)
+    {
         $available = true;
         foreach ($this->crewUnavailabilities as $d) {
-             $available = $available && $d->availableOn($date);
+            $available = $available && $d->availableOn($date);
         }
         return $available;
     }
-
 }

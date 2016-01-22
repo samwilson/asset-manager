@@ -2,10 +2,11 @@
 
 namespace App\Model;
 
-class Task extends \Illuminate\Database\Eloquent\Model {
+class Task extends \Illuminate\Database\Eloquent\Model
+{
 
-    public function workOrder() {
+    public function workOrder()
+    {
         return $this->belongsTo('Model\\Model\\WorkOrder');
     }
-
 }

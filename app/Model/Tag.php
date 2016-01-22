@@ -2,15 +2,18 @@
 
 namespace App\Model;
 
-class Tag extends \Illuminate\Database\Eloquent\Model {
+class Tag extends \Illuminate\Database\Eloquent\Model
+{
 
     protected $fillable = ['id', 'name'];
 
-    public function assets() {
+    public function assets()
+    {
         return $this->belongsToMany('\\App\\Model\\Asset');
     }
 
-    public function jobLists() {
+    public function jobLists()
+    {
         return $this->belongsToMany('\\App\\Model\\JobList');
     }
 
@@ -19,7 +22,8 @@ class Tag extends \Illuminate\Database\Eloquent\Model {
      * @param string $tagList Comma-separated list of tags.
      * @return array
      */
-    public static function getIds($tagList) {
+    public static function getIds($tagList)
+    {
         $out = array();
         foreach (explode(',', $tagList) as $t) {
             if (empty($t)) {
@@ -30,5 +34,4 @@ class Tag extends \Illuminate\Database\Eloquent\Model {
         }
         return $out;
     }
-
 }

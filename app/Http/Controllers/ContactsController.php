@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 use App\Model\Contact;
 use App\Model\Asset;
 
-class ContactsController extends \App\Http\Controllers\Controller {
+class ContactsController extends \App\Http\Controllers\Controller
+{
 
-    public function index(Request $request) {
+    public function index(Request $request)
+    {
         $this->view->title = 'Contacts';
         $this->view->breadcrumbs = [
             'contacts' => 'Contacts',
@@ -17,7 +19,8 @@ class ContactsController extends \App\Http\Controllers\Controller {
         return $this->view;
     }
 
-    public function create() {
+    public function create()
+    {
         $this->view->title = 'Create a new Contact';
         $this->view->breadcrumbs = [
             'contacts' => 'Contacts',
@@ -26,7 +29,8 @@ class ContactsController extends \App\Http\Controllers\Controller {
         return $this->view;
     }
 
-    public function createForAsset(Request $request) {
+    public function createForAsset(Request $request)
+    {
         // Get the Asset.
         $assetId = $request->input('asset_id');
         $asset = Asset::find($assetId);
@@ -45,8 +49,8 @@ class ContactsController extends \App\Http\Controllers\Controller {
         return redirect("assets/$asset->id#contacts");
     }
 
-    public function edit() {
+    public function edit()
+    {
         
     }
-
 }

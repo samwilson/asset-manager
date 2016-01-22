@@ -61,4 +61,12 @@ class AssetTest extends TestCase {
         $this->assertEquals(3, $asset->tags->count());
     }
 
+    /**
+     * @testdox It is possible to import multiple Assets at one time.
+     * @test
+     */
+    public function import() {
+        
+    }
+
 }

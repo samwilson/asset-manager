@@ -8,38 +8,46 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Support\Facades\DB;
 
-class User extends \Illuminate\Database\Eloquent\Model implements AuthenticatableContract, CanResetPasswordContract {
+class User extends \Illuminate\Database\Eloquent\Model implements AuthenticatableContract, CanResetPasswordContract
+{
 
     use Authenticatable,
         CanResetPassword;
 
     protected $fillable = ['name', 'email', 'username', 'password'];
 
-    public function roles() {
+    public function roles()
+    {
         return $this->belongsToMany('App\Model\Role');
     }
 
-    public function crewMemberships() {
+    public function crewMemberships()
+    {
         return $this->hasMany('App\Model\CrewMember');
     }
 
-    public function userUnavailabilities() {
+    public function userUnavailabilities()
+    {
         return $this->hasMany('App\Model\UserUnavailability');
     }
 
-    public function hasRole($roleId) {
+    public function hasRole($roleId)
+    {
         return $this->roles->where('id', $roleId)->count() > 0;
     }
 
-    public function isClerk() {
+    public function isClerk()
+    {
         return $this->isAdmin() || $this->hasRole(Role::CLERK);
     }
 
-    public function isManager() {
+    public function isManager()
+    {
         return $this->isAdmin() || $this->hasRole(Role::MANAGER);
     }
 
-    public function isAdmin() {
+    public function isAdmin()
+    {
         return $this->hasRole(Role::ADMIN);
     }
 
@@ -47,13 +55,15 @@ class User extends \Illuminate\Database\Eloquent\Model implements Authenticatabl
      * Get all Administrators.
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public static function administrators() {
-        return self::whereHas('roles', function($query) {
-                    $query->where('id', Role::ADMIN);
-                })->get();
+    public static function administrators()
+    {
+        return self::whereHas('roles', function ($query) {
+            $query->where('id', Role::ADMIN);
+        })->get();
     }
 
-    public function availableOn($date) {
+    public function availableOn($date)
+    {
         $available = true;
         foreach ($this->userUnavailabilities as $unavail) {
             $available = $available && $unavail->availableOn($date);
@@ -61,7 +71,8 @@ class User extends \Illuminate\Database\Eloquent\Model implements Authenticatabl
         return $available;
     }
 
-    public function sendPasswordReminder() {
+    public function sendPasswordReminder()
+    {
         DB::beginTransaction();
         // Save the reset token.
         $passwordReminder = str_random(40);
@@ -79,5 +90,4 @@ class User extends \Illuminate\Database\Eloquent\Model implements Authenticatabl
         $queuedEmail->save();
         DB::commit();
     }
-
 }

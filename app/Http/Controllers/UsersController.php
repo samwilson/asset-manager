@@ -7,9 +7,11 @@ use Illuminate\Support\Facades\Auth;
 use App\Model\User;
 use App\Model\Role;
 
-class UsersController extends Controller {
+class UsersController extends Controller
+{
 
-    public function login(Request $request) {
+    public function login(Request $request)
+    {
         $this->view->title = 'Log in';
         $adldap = config('adldap');
         $this->view->adldap_enabled = $adldap['enabled'];
@@ -22,14 +24,15 @@ class UsersController extends Controller {
         return $this->view;
     }
 
-    public function loginPost(Request $request) {
+    public function loginPost(Request $request)
+    {
         $username = $request->input('username');
         $request->session()->set('username', $username);
         $password = $request->input('password');
 
         // Try to log in.
         if (Auth::attempt(['username' => $username, 'password' => $password])) {
-            $this->alert('success', 'You are now logged in.', TRUE);
+            $this->alert('success', 'You are now logged in.', true);
             return redirect()->intended();
         }
 
@@ -52,7 +55,7 @@ class UsersController extends Controller {
                 $user->email = $ldapUser->getEmail();
                 $user->save();
                 Auth::login($user);
-                $this->alert('success', 'You are now logged in.', TRUE);
+                $this->alert('success', 'You are now logged in.', true);
                 return redirect('/');
             } catch (\Adldap\Exceptions\AdldapException $ex) {
                 // Invalid credentials.
@@ -64,13 +67,15 @@ class UsersController extends Controller {
         return redirect()->back()->withInput();
     }
 
-    public function logout() {
+    public function logout()
+    {
         Auth::logout();
         $this->alert('success', 'You have been logged out.');
         return redirect('/login');
     }
 
-    public function remind(Request $request) {
+    public function remind(Request $request)
+    {
         $this->view->breadcrumbs = [
             'users' => 'Users',
             'login' => 'Log In',
@@ -80,7 +85,8 @@ class UsersController extends Controller {
         return $this->view;
     }
 
-    public function remindPost(Request $request) {
+    public function remindPost(Request $request)
+    {
         $user = User::whereUsername($request->input('username'))->first();
         if ($user instanceof User) {
             $user->sendPasswordReminder();
@@ -90,7 +96,8 @@ class UsersController extends Controller {
         return redirect('/login');
     }
 
-    public function profile($username) {
+    public function profile($username)
+    {
         $user = User::firstOrNew(['username' => $username]);
         $isOwn = ($this->user && $this->user->id === $user->id);
         $isAdmin = ($this->user && $this->user->isAdmin());
@@ -109,7 +116,8 @@ class UsersController extends Controller {
         return $this->view;
     }
 
-    public function profilePost(Request $request, $username) {
+    public function profilePost(Request $request, $username)
+    {
         $user = User::firstOrNew(['username' => $username]);
         $isOwn = ($this->user && $this->user->id === $user->id);
         $isAdmin = ($this->user && $this->user->isAdmin());
@@ -148,7 +156,8 @@ class UsersController extends Controller {
         return redirect('users');
     }
 
-    public function index(Request $request) {
+    public function index(Request $request)
+    {
         if ($request->input('username')) {
             return redirect('users/' . $request->input('username'));
         }
@@ -166,7 +175,8 @@ class UsersController extends Controller {
         return $this->view;
     }
 
-    public function json(Request $request) {
+    public function json(Request $request)
+    {
         $term = '%' . $request->input('term') . '%';
         $users = User::where('name', 'LIKE', $term)
                 ->orWhere('username', 'LIKE', $term)
@@ -177,5 +187,4 @@ class UsersController extends Controller {
         }
         return \Response::json($out);
     }
-
 }

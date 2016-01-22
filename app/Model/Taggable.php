@@ -5,9 +5,11 @@ namespace App\Model;
 /**
  * @method Asset[] tagged(string $tags) Description
  */
-abstract class Taggable extends Model {
+abstract class Taggable extends Model
+{
 
-    public function tags() {
+    public function tags()
+    {
         return $this->belongsToMany('App\Model\Tag');
     }
 
@@ -16,12 +18,13 @@ abstract class Taggable extends Model {
      * @uses \App\Model\Tag::getIds()
      * @param string|int[] $tags
      */
-    public function addTags($tags) {
+    public function addTags($tags)
+    {
         $tagIds = (is_string($tags)) ? Tag::getIds($tags) : $tags;
         $data = [];
-        $tableName = snake_case(class_basename($this)).'_tag';
+        $tableName = snake_case(class_basename($this)) . '_tag';
         $sql = 'INSERT IGNORE INTO `' . $tableName . '` (`asset_id`,`tag_id`) VALUES';
-        for ($i=0; $i<count($tagIds); $i++) {
+        for ($i = 0; $i < count($tagIds); $i++) {
             $tagId = array_values($tagIds)[$i];
             $data["asset$i"] = $this->id;
             $data["tag$i"] = $tagId;
@@ -36,7 +39,8 @@ abstract class Taggable extends Model {
      * @param \Illuminate\Database\Query\Builder $query
      * @param string $tagged
      */
-    public function scopeTagged($query, $tagged) {
+    public function scopeTagged($query, $tagged)
+    {
         foreach (explode(',', $tagged) as $tag) {
             $query->whereHas('tags', function ($query) use ($tag) {
                 $query->where('name', $tag);
@@ -45,12 +49,12 @@ abstract class Taggable extends Model {
         return $query;
     }
 
-    public function tagsAsString() {
+    public function tagsAsString()
+    {
         $tags = array();
         foreach ($this->tags()->orderBy('name', 'ASC')->get() as $tag) {
             $tags[] = $tag->name;
         }
         return join(', ', $tags);
     }
-
 }

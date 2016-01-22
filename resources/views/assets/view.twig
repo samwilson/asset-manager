@@ -10,20 +10,25 @@
 
     <div class="full-width row">
         <div class="large-6 columns">
-            {{asset.comments|parsedown|raw}}
-            <p>Tags:
-                {% for tag in asset.tags %}
-                <span class="secondary label">{{tag.name}}</span>
-                {% endfor %}
-            </p>
-            <p>Categories:
-                {% for cat in asset.categories %}
-                <span class="label">{{cat.name}}</span>
-                {% endfor %}
-                {% if asset.categories.count == 0 %}
-                <em>None.</em>
-                {% endif %}
-            </p>
+            {% if asset.comments %}
+            <div class="panel">
+                {{asset.comments|parsedown|raw}}
+            </div>
+            {% endif %}
+            <dl>
+                <dt>Suburb:</dt>
+                <dd>{{asset.suburb.name}}, {{asset.state.name}} ({{asset.state.country.abbreviation}})</dd>
+                <dt>Street address:</dt>
+                <dd>{{asset.street_address}}</dd>
+                <dt>Location description:</dt>
+                <dd>{{asset.location_description}}</dd>
+                <dt>Tags:</dt>
+                <dd>
+                    {% for tag in asset.tags %}
+                    <span class="secondary label">{{tag.name}}</span>
+                    {% endfor %}
+                </dd>
+            </dl>
         </div>
         <div class="large-6 columns">
             <div id="asset-location-map" class="map" data-latitude="{{asset.latitude}}" data-longitude="{{asset.longitude}}"></div>
