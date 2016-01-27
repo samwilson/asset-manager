@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use App\Http\Controllers\Controller;
 use App\Model\Asset;
 use App\Model\Category;
@@ -94,7 +95,7 @@ class AssetsController extends Controller
         $fileInfo = $_FILES['file'];
         $csv = new \App\Csv($fileInfo['tmp_name']);
         if (!$csv->hasHeader('Identifier')) {
-            throw new \Symfony\Component\HttpKernel\Exception\HttpException(500, "'Identifier' column missing from CSV.");
+            throw new HttpException(500, "'Identifier' column missing from CSV.");
         }
         $imported = 0;
         $tagIds = Tag::getIds($request->input('tags'));

@@ -17,24 +17,26 @@ class Csv
             throw new \Exception("Unable to open $filename.");
         }
         // Find indexes of headers
-        $header_row = fgetcsv($this->handle);
+        $headerRow = fgetcsv($this->handle);
         $index = 0;
-        foreach ($header_row as $header) {
+        foreach ($headerRow as $h) {
+            $header = snake_case($h);
             $this->head_name_map[$header] = $index;
             $this->head_index_map[$index] = $header;
             $index ++;
         }
     }
 
-    public function get($col_name, $optional = false)
+    public function get($colName, $optional = false)
     {
-        if (isset($this->head_name_map[$col_name])) {
-            return trim($this->current_line[$col_name]);
+        $header = snake_case($colName);
+        if (isset($this->head_name_map[$header])) {
+            return trim($this->current_line[$header]);
         }
         if ($optional) {
             return false;
         } else {
-            throw new \Exception("$col_name column not found." . print_r($this->head_name_map, true));
+            throw new \Exception("$colName column not found." . print_r($this->head_name_map, true));
         }
     }
 
@@ -43,8 +45,8 @@ class Csv
         $line = fgetcsv($this->handle);
         $this->current_line = array();
         $index = 0;
-        foreach ($this->head_index_map as $index => $header_name) {
-            $this->current_line[$header_name] = (isset($line[$index])) ? $line[$index] : null;
+        foreach ($this->head_index_map as $index => $headerName) {
+            $this->current_line[$headerName] = (isset($line[$index])) ? $line[$index] : null;
         }
         return $line !== false;
     }
@@ -57,6 +59,6 @@ class Csv
      */
     public function hasHeader($header)
     {
-        return isset($this->head_name_map[$header]);
+        return isset($this->head_name_map[snake_case($header)]);
     }
 }
