@@ -21,6 +21,9 @@ abstract class Taggable extends Model
     public function addTags($tags)
     {
         $tagIds = (is_string($tags)) ? Tag::getIds($tags) : $tags;
+        if (empty($tagIds)) {
+            return;
+        }
         $data = [];
         $tableName = snake_case(class_basename($this)) . '_tag';
         $sql = 'INSERT IGNORE INTO `' . $tableName . '` (`asset_id`,`tag_id`) VALUES';

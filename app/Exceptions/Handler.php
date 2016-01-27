@@ -42,4 +42,28 @@ class Handler extends ExceptionHandler
     {
         return parent::render($request, $e);
     }
+
+    protected function renderHttpException(HttpException $e)
+    {
+        $status = $e->getStatusCode();
+        if (view()->exists("errors.{$status}")) {
+            $viewData = [
+                'app_env' => env('APP_ENV'),
+                'app_version' => config('app.version'),
+                'app_title' => config('app.title'),
+                'site_name' => config('app.site_name'),
+                'scripts' => [
+                    'jquery.js',
+                    'jquery-ui.min.js',
+                    'foundation.min.js',
+                    'tag-it.min.js',
+                    'app.js',
+                ],
+                'exception' => $e,
+            ];
+            return response()->view("errors.{$status}", $viewData, $status);
+        } else {
+            return $this->convertExceptionToResponse($e);
+        }
+    }
 }

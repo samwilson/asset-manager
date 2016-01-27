@@ -94,18 +94,32 @@ class AssetsController extends Controller
         $fileInfo = $_FILES['file'];
         $csv = new \App\Csv($fileInfo['tmp_name']);
         if (!$csv->hasHeader('Identifier')) {
-            throw new \Exception("'Identifier' column missing from CSV.");
+            throw new \Symfony\Component\HttpKernel\Exception\HttpException(500, "'Identifier' column missing from CSV.");
         }
+        $imported = 0;
         $tagIds = Tag::getIds($request->input('tags'));
         while ($csv->next()) {
             $identifier = $csv->get('Identifier');
             $asset = Asset::firstOrNew(['identifier' => $identifier]);
+            $stateName = $csv->get('State', true);
+            if (!empty($stateName)) {
+                $asset->state_id = State::firstOrCreate(['name' => $stateName])->id;
+            }
+            $suburbName = $csv->get('Suburb', true);
+            if (!empty($suburbName)) {
+                $asset->suburb_id = Suburb::firstOrCreate(['name' => $suburbName])->id;
+            }
+            $asset->street_address = $csv->get('Street address', true);
+            $asset->location_description = $csv->get('Location description', true);
             $asset->latitude = $csv->get('Latitude', true);
             $asset->longitude = $csv->get('Longitude', true);
             $asset->comments = $csv->get('Comments', true);
             $asset->save();
+            $asset->addTags($csv->get('Tags', true));
             $asset->addTags($tagIds);
+            $imported++;
         }
+        $this->alert('success', "$imported assets imported.");
         return redirect('/assets');
     }
 

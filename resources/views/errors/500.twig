@@ -1,0 +1,11 @@
+{% extends "base" %}
+
+{% block content %}
+
+    <h1>
+        Error!
+        <small>{{exception.getMessage}}</small>
+    </h1>
+    {{dump(exception)}}
+{%endblock %}
+
