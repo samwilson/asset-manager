@@ -1,0 +1,11 @@
+{% extends "base" %}
+
+{% block content %}
+
+    
+    <p><a href="{{url('jobs/'~job.id~'/edit')}}">Edit</a></p>
+
+    
+    Asset: <a href="{{url('assets/'~job.asset.id)}}">{{job.asset.identifier}}</a>
+
+{% endblock %}
