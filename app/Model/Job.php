@@ -4,8 +4,11 @@ namespace App\Model;
 
 use DB;
 
-class Job extends \Illuminate\Database\Eloquent\Model
+class Job extends Model
 {
+
+    const STATUS_INCOMPLETE = 10;
+    const STATUS_COMPLETE = 20;
 
     public function crew()
     {

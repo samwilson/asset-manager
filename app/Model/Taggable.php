@@ -25,13 +25,13 @@ abstract class Taggable extends Model
             return;
         }
         $data = [];
-        $tableName = snake_case(class_basename($this)) . '_tag';
-        $sql = 'INSERT IGNORE INTO `' . $tableName . '` (`asset_id`,`tag_id`) VALUES';
+        $entityName = snake_case(class_basename($this));
+        $sql = 'INSERT IGNORE INTO `' . $entityName . '_tag` (`' . $entityName . '_id`,`tag_id`) VALUES';
         for ($i = 0; $i < count($tagIds); $i++) {
             $tagId = array_values($tagIds)[$i];
-            $data["asset$i"] = $this->id;
+            $data["entity$i"] = $this->id;
             $data["tag$i"] = $tagId;
-            $sql .= " (:asset$i,:tag$i), ";
+            $sql .= " (:entity$i,:tag$i), ";
         }
         $sql = rtrim($sql, ' ,');
         \DB::insert($sql, $data);

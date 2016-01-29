@@ -9,6 +9,6 @@ class JobResolution extends Model
     const FAILED = 2;
     const CANCELLED = 3;
 
-    public $fillable = ['id', 'name', 'type'];
-
+    public $fillable = ['id', 'name', 'type',];
+    protected $attributes = ['type' => self::SUCCEEDED,];
 }

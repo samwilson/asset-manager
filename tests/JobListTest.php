@@ -2,6 +2,7 @@
 
 use App\Model\Job;
 use App\Model\JobList;
+use App\Model\Tag;
 
 class JobListTest extends TestCase {
 
@@ -15,11 +16,17 @@ class JobListTest extends TestCase {
     }
 
     /**
-     * @testdox It is possible to retrieve a list of the Assets in the Work Order that have not yet had their Contacts contacted.
+     * @testdox Tags can be added to Job Lists.
      * @test
      */
-    public function y() {
-        
+    public function tags() {
+        $type = new \App\Model\JobType();
+        $type->save();
+        $jobList = new JobList();
+        $jobList->type_id = $type->id;
+        $jobList->save();
+        $jobList->addTags('one,two');
+        $this->assertEquals(2, Tag::count());
     }
 
     /**

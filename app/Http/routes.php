@@ -57,6 +57,11 @@ Route::get('job-types', 'JobTypesController@index');
 Route::get('job-types/{id}', 'JobTypesController@edit')->where(['id' => '[0-9]+']);
 Route::post('job-types', 'JobTypesController@save');
 
+// Jobs.
+Route::get('jobs', 'JobsController@index');
+Route::get('jobs/{id}', 'JobsController@view'); //->where(['id' => '[0-9]+']);
+Route::get('jobs/{job}/edit', 'JobsController@edit'); //->where(['id' => '[0-9]+']);
+
 // Tags.
 Route::get('tags', 'TagsController@index');
 

@@ -16,6 +16,6 @@ class JobResolutionTest extends TestCase
         // Three JRs are created upon installation.
         $this->assertEquals(4, $jobResolution->id);
         $this->assertEquals('', $jobResolution->name);
-        $this->assertEquals(JobResolution::SUCCEEDED, $jobResolution->type);
+        $this->assertEquals(JobResolution::SUCCEEDED, $jobResolution->type, 'Defaults to suceeded');
     }
 }

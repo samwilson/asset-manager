@@ -83,7 +83,7 @@ class JobListsController extends Controller
         $jobList->crew_id = $request->input('crew_id');
         $jobList->comments = $request->input('comments');
         $jobList->save();
-        $jobList->tags()->sync(Tag::getIds($request->input('tagged')));
+        $jobList->addTags($request->input('tags'));
         // Then save all assets.
         $assets = $this->getAssets($request);
         foreach ($assets as $asset) {

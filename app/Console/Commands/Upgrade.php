@@ -6,6 +6,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use App\Model\User;
 use App\Model\Role;
+use App\Model\JobResolution;
 
 class Upgrade extends \Illuminate\Console\Command
 {
@@ -311,6 +312,47 @@ class Upgrade extends \Illuminate\Console\Command
                 $table->primary(['job_list_id', 'tag_id']);
             });
         }
+        if (!Schema::hasTable('job_resolutions')) {
+            $this->info("Creating 'job_resolutions' table.");
+            Schema::create('job_resolutions', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('name')->unique();
+                $table->enum('type', [
+                    JobResolution::SUCCEEDED,
+                    JobResolution::CANCELLED,
+                    JobResolution::FAILED,
+                ])->default(JobResolution::SUCCEEDED);
+                $table->text('comments');
+                $table->timestamps();
+            });
+        }
+        $jobResolutionSucceeded = JobResolution::whereType(JobResolution::SUCCEEDED)->first();
+        if (!$jobResolutionSucceeded) {
+            $this->info("Creating job-resolution 'succeeded'.");
+            JobResolution::firstOrCreate([
+                'id' => JobResolution::SUCCEEDED,
+                'name' => trans('job-resolutions.succeeded'),
+                'type' => JobResolution::SUCCEEDED,
+            ]);
+        }
+        $jobResolutionCancelled = JobResolution::whereType(JobResolution::CANCELLED)->first();
+        if (!$jobResolutionCancelled) {
+            $this->info("Creating job-resolution 'cancelled'.");
+            JobResolution::firstOrCreate([
+                'id' => JobResolution::CANCELLED,
+                'name' => trans('job-resolutions.cancelled'),
+                'type' => JobResolution::CANCELLED,
+            ]);
+        }
+        $jobResolutionFailed = JobResolution::whereType(JobResolution::FAILED)->first();
+        if (!$jobResolutionFailed) {
+            $this->info("Creating job-resolution 'failed'.");
+            JobResolution::firstOrCreate([
+                'id' => JobResolution::FAILED,
+                'name' => trans('job-resolutions.failed'),
+                'type' => JobResolution::FAILED,
+            ]);
+        }
         if (!Schema::hasTable('jobs')) {
             $this->info("Creating 'jobs' table.");
             Schema::create('jobs', function (Blueprint $table) {
@@ -322,6 +364,8 @@ class Upgrade extends \Illuminate\Console\Command
                 $table->date('date_added')->comment('Date added to Job List.');
                 $table->date('date_removed')->nullable()->comment('Date removed from Job List.');
                 $table->date('date_resolved')->nullable()->comment('Date of completion or failure.');
+                $table->integer('resolution_id')->unsigned()->nullable();
+                $table->foreign('resolution_id')->references('id')->on('job_resolutions');
                 $table->timestamps();
                 $table->unique(['job_list_id', 'asset_id']);
             });
