@@ -1,0 +1,43 @@
+{% extends "base" %}
+
+{% block content %}
+
+    <ul>
+        <li>Asset: <a href="{{url('assets/'~job.asset.id)}}">{{job.asset.identifier}}</a></li>
+        <li>Job list: <a href="{{url('job-lists/'~job.jobList.id)}}">{{job.jobList.name}}</a></li>
+    </ul>
+
+    <form action="{{url('jobs/'~job.id~'/edit')}}" method="post">
+        <fieldset>
+            <legend>Resolution</legend>
+            <p class="large-6 columns">
+                <label>Resolution:</label>
+                <select name="resolution_id">
+                    <option value=""></option>
+                    {% for jr in jobResolutions %}
+                    <option value="{{jr.id}}" {%if jr.id==job.resolution_id %}selected{% endif %}>
+                        {{jr.name}}
+                    </option>
+                    {% endfor %}
+                </select>
+            </p>
+            <p class="large-6 columns">
+                <label>Date resolved:</label>
+                <input type="text" name="date_resolved" value="{{job.date_resolved}}" class="datepicker" />
+            </p>
+        </fieldset>
+        <fieldset>
+            <legend>Attachments</legend>
+            
+        </fieldset>
+        <p>
+            <input type="hidden" name="_token" value="{{csrf_token()}}" />
+            {% if return_to %}
+            <input type="hidden" name="return_to" value="{{return_to}}" />
+            {% endif %}
+            <input type="submit" class="button" value="Save" />
+            <a href="{{url('jobs/'~job.id)}}" class="button secondary">Cancel</a>
+        </p>
+    </form>
+
+{% endblock %}

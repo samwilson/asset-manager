@@ -20,6 +20,11 @@ class Job extends Model
         return $this->belongsTo('App\Model\JobList');
     }
 
+    public function resolution()
+    {
+        return $this->belongsTo('App\Model\JobResolution');
+    }
+
     public function asset()
     {
         return $this->belongsTo('App\Model\Asset');

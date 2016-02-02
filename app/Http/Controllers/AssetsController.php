@@ -163,8 +163,7 @@ class AssetsController extends Controller
     public function create()
     {
         if (!$this->user || !$this->user->isClerk()) {
-            $this->alert('info', 'Only Managers can create assets.');
-            return redirect('/assets');
+            $this->alert('info', 'Only Managers can create assets.', false);
         }
         $this->view->title = 'Create Asset';
         $this->view->breadcrumbs = [

@@ -1,0 +1,28 @@
+{% extends "base" %}
+
+{% block content %}
+
+    {{jobs.render()|raw}}
+
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Job ID</th>
+                <th>Asset</th>
+                <th>Job list</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        {% for job in jobs %}
+            <tr>
+                <td><a href="{{url('jobs/'~job.id~'/edit')}}">[Edit]</td>
+                <td>{{job.id}}</td>
+                <td><a href="{{url('assets/'~job.asset.id)}}">{{job.asset.identifier}}</a></td>
+                <td><a href="{{url('job-lists/'~job.jobList.id)}}">{{job.jobList.name}}</a></td>
+                <td>{{job.status()}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    
+{% endblock %}

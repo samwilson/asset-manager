@@ -6,6 +6,7 @@ use App\Model\Asset;
 use App\Model\User;
 use App\Model\Crew;
 use App\Model\JobList;
+use App\Model\Job;
 
 class DashboardController extends \App\Http\Controllers\Controller
 {
@@ -17,6 +18,7 @@ class DashboardController extends \App\Http\Controllers\Controller
         $this->view->user_count = User::count();
         $this->view->crew_count = Crew::count();
         $this->view->job_list_count = JobList::count();
+        $this->view->job_count = Job::count();
         return $this->view;
     }
 }

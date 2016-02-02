@@ -48,26 +48,33 @@
         </div>
     </div>
 
-    <h2>Jobs ({{jobs.total|number_format}})</h2>
+    <h2 id="jobs">Jobs ({{jobs.total|number_format}})</h2>
     <p>{{jobs.render()|raw}}</p>
     <table>
         <thead>
             <tr>
                 <th>Asset</th>
                 <th>Tags</th>
+                <th>Resolution</th>
                 <th>Status</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
             {% for job in jobs %}
                 <tr>
-                    <td><a href="{{url('jobs/'~job.id)}}">{{job.asset.identifier}}</a></td>
+                    <td><a href="{{url('assets/'~job.asset.id)}}">{{job.asset.identifier}}</a></td>
                     <td>
                         {% for tag in job.asset.tags %}
                             <span class="label secondary">{{tag.name}}</span>
                         {% endfor %}
                     </td>
+                    <td>
+                        {{job.resolution.name}}
+                        {% if job.date_resolved %} ({{job.date_resolved}}) {% endif %}
+                    </td>
                     <td>{{job.status()}}</td>
+                    <td><a href="{{url('jobs/'~job.id~'/edit')}}?return_to={{'job-lists/'~job_list.id~'#jobs'|url_encode()}}">[Edit]</a></td>
                 </tr>
             {% endfor %}
         </tbody>
