@@ -84,7 +84,7 @@ class AssetsController extends Controller
 
     public function importPost(Request $request)
     {
-        if (!$this->user->isAdmin()) {
+        if (!$this->user || !$this->user->isAdmin()) {
             $this->alert('info', 'Only admins can import.');
             return redirect('/assets/import');
         }

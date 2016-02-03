@@ -142,11 +142,9 @@ latex_elements = {
 }
 
 # Grouping the document tree into LaTeX files. List of tuples
-# (source start file, target name, title,
-#  author, documentclass [howto, manual, or own class]).
+# (source start file, target name, title, author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('home', 'AssetManager.tex', u'AssetManager Documentation',
-   u'Sam Wilson', 'manual'),
+  ('index', 'AssetManager.tex', u'AssetManager Documentation', u'http://assetmanager.readthedocs.org/', 'article'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -175,7 +173,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('home', 'assetmanager', u'AssetManager Documentation',
+    ('index', 'assetmanager', u'AssetManager Documentation',
      [u'Sam Wilson'], 1)
 ]
 
@@ -189,7 +187,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('home', 'AssetManager', u'AssetManager Documentation',
+  ('index', 'AssetManager', u'AssetManager Documentation',
    u'Sam Wilson', 'AssetManager', 'One line description of project.',
    'Miscellaneous'),
 ]

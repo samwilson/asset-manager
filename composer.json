@@ -14,7 +14,8 @@
         "erusev/parsedown": "1.*",
         "iatstuti/laravel-nullable-fields": "*",
         "caffeinated/modules": "*",
-        "guzzlehttp/guzzle": "*"
+        "guzzlehttp/guzzle": "*",
+        "zurb/foundation": "6.*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "2.*",

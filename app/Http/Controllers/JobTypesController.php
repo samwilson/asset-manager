@@ -22,7 +22,7 @@ class JobTypesController extends Controller
     public function edit($id)
     {
         if (!$this->user || !$this->user->isAdmin()) {
-            return redirect('/');
+            return redirect('job-types');
         }
         $this->view->title = 'Job Type';
         $this->view->job_type = JobType::find($id);
@@ -31,8 +31,8 @@ class JobTypesController extends Controller
 
     public function save(Request $request)
     {
-        if (!$this->user || !$this->user->isAdmin()) {
-            return redirect('/');
+        if (!$this->user || !$this->user->isAdmin() || $request->input('cancel')) {
+            return redirect('job-types');
         }
         $jt = JobType::findOrNew($request->input('id'));
         $jt->name = $request->input('name');

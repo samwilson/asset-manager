@@ -19,7 +19,8 @@
                 <div class="large-12 columns">
                     <input type="hidden" name="_token" value="{{csrf_token()}}" />
                     <input type="hidden" name="id" value="{{job_type.id}}" />
-                    <input type="submit" class="button" value="Save" />
+                    <input type="submit" class="button" name="save" value="Save" />
+                    <input type="submit" class="button secondary" name="cancel" value="Cancel" />
                 </div>
             </div>
         </fieldset>
