@@ -4,7 +4,10 @@
 /.env
 /nbproject/private/
 /modules/
+!/modules/README.md
 /bootstrap/cache/
 /tests/testdox.html
 /tests/testdox.txt
 /docs/_build
+/public/css/foundation.min.css
+/public/js/foundation.min.js

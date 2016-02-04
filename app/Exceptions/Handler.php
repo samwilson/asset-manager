@@ -59,6 +59,7 @@ class Handler extends ExceptionHandler
                     'tag-it.min.js',
                     'app.js',
                 ],
+                'modules' => \Module::slugs(),
                 'exception' => $e,
             ];
             return response()->view("errors.{$status}", $viewData, $status);

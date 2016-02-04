@@ -45,18 +45,17 @@ class UsersController extends Controller
                 $adldap->getConfiguration()->setAdminPassword($password);
             }
             try {
-                $authed = $adldap->authenticate($username, $password);
-//                if (!$authed) {
-//                    
-//                }
+                $adldap->authenticate($username, $password);
                 $user = User::firstOrCreate(['username' => $username]);
                 $ldapUser = $adldap->users()->find($username);
-                $user->name = $ldapUser->getDisplayName();
-                $user->email = $ldapUser->getEmail();
-                $user->save();
-                Auth::login($user);
-                $this->alert('success', 'You are now logged in.', true);
-                return redirect('/');
+                if ($ldapUser instanceof \Adldap\Models\User) {
+                    $user->name = $ldapUser->getDisplayName();
+                    $user->email = $ldapUser->getEmail();
+                    $user->save();
+                    Auth::login($user);
+                    $this->alert('success', 'You are now logged in.', true);
+                    return redirect('/');
+                }
             } catch (\Adldap\Exceptions\AdldapException $ex) {
                 // Invalid credentials.
             }
@@ -179,8 +178,8 @@ class UsersController extends Controller
     {
         $term = '%' . $request->input('term') . '%';
         $users = User::where('name', 'LIKE', $term)
-                ->orWhere('username', 'LIKE', $term)
-                ->get();
+            ->orWhere('username', 'LIKE', $term)
+            ->get();
         $out = array();
         foreach ($users as $user) {
             $out[] = array('label' => $user->username);

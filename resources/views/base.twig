@@ -50,6 +50,7 @@
 
                     <!-- Left Nav Section -->
                     <ul class="left">
+
                         <li class="has-dropdown">
                             <a>Assets</a>
                             <ul class="dropdown">
@@ -80,6 +81,11 @@
                         </li>
                         {% endif  %}
                     </ul>
+
+                    {% for module in modules %}
+                        {% include module~'::nav' %}
+                    {% endfor %}
+
                 </section>
             </nav>
         </header>

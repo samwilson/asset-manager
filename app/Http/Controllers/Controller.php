@@ -32,12 +32,21 @@ abstract class Controller extends BaseController
         $controllerName = array_pop($controllerParts);
         $controller = str_slug(snake_case(substr($controllerName, 0, -strlen('Controller'))));
         $action = str_slug(snake_case($parts[1]));
+
+        // Set up the view based on the module, controller, and action names.
         $viewFile = "$controller.$action";
-        if (!file_exists(app_path("../resources/views/$controller/$action.twig"))) {
-            $this->view = view('base');
-        } else {
-            $this->view = view($viewFile);
+        foreach (\Module::slugs() as $mod) {
+            if (view()->exists("$mod::$viewFile")) {
+                $this->view = view("$mod::$viewFile");
+            }
         }
+        if (!$this->view && view()->exists($viewFile)) {
+            $this->view = view($viewFile);
+        } elseif (!$this->view) {
+            $this->view = view('base');
+        }
+
+        // Set up some more view variables.
         $this->view->controller = $controller;
         $this->view->action = $action;
         $this->view->app_env = env('APP_ENV');
@@ -51,11 +60,12 @@ abstract class Controller extends BaseController
             'tag-it.min.js',
             'app.js',
         );
-        $this->view->return_to = substr(\Request::url(), strlen(url()));
+        $this->view->return_to = substr(\Request::url(), strlen(url('')));
         $this->user = Auth::user();
         $this->view->user = $this->user;
         $this->view->tab = 'schedule';
         $this->view->alerts = \Session::get('alerts', array());
+        $this->view->modules = \Module::slugs();
     }
 
     /**
