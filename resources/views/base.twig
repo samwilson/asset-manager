@@ -10,34 +10,40 @@
             {{site_name}}
         </title>
 
-        <link href="{{asset('css/foundation.min.css')}}" rel="stylesheet" type="text/css" />
-        <link href="{{asset('css/jquery-ui.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('components/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('components/bootstrap-datepicker/dist/css/bootstrap-datepicker.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{asset('css/jquery.tagit.css')}}" rel="stylesheet" type="text/css">
         <link href="{{asset('leaflet/leaflet.css')}}" rel="stylesheet" type="text/css">
         <link href="{{asset('css/app.css')}}" rel="stylesheet" type="text/css" />
 
-        <script src="{{asset('js/modernizr.js')}}"></script>
-        <script>var baseUrl="{{url('/')}}";</script>
+        <script type="text/javascript">
+            var baseUrl="{{url('/')}}";
+        </script>
 
     </head>
     <body class="controller-{{controller}} action-{{action}}">
-        <header>
-            <nav class="top-bar" data-topbar data-options="is_hover:false">
-                <ul class="title-area">
-                    <li class="name">
-                        <h1><a href="{{url('/')}}" title="Go to dashboard">{{site_name}}</a></h1>
-                    </li>
-                </ul>
+        <header class="navbar navbar-inverse navbar-static-top">
 
-                <section class="top-bar-section">
-                    <!-- Right Nav Section -->
-                    <ul class="right">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mainmenu" aria-expanded="false">
+                      <span class="sr-only">Toggle navigation</span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="{{url('/')}}" title="Go to dashboard">{{site_name}}</a>
+                </div>
+
+                <section class="collapse navbar-collapse" id="mainmenu">
+
+                    <ul class="nav navbar-nav navbar-right">
                         <li><a href="{{url('m')}}" title="Switch to mobile view">Mobile</a></li>
 
                         {% if user %}
-                        <li class="has-dropdown">
+                        <li class="dropdown">
                             <a>You are logged in as {{user.name}}</a>
-                            <ul class="dropdown">
+                            <ul class="dropdown-menu">
                                 <li><a href="{{url('users/'~user.username)}}">Profile</a></li>
                                 <li><a href="{{url('logout')}}">Log out</a></li>
                             </ul>
@@ -49,11 +55,14 @@
                     </ul>
 
                     <!-- Left Nav Section -->
-                    <ul class="left">
+                    <ul class="nav navbar-nav navbar-left">
 
-                        <li class="has-dropdown">
-                            <a>Assets</a>
-                            <ul class="dropdown">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                Assets
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
                                 <li><a href="{{url('assets')}}">Search</a></li>
                                 <li><a href="{{url('assets/map')}}">Map</a></li>
                                 <li><a href="{{url('assets/create')}}">Create</a></li>
@@ -61,18 +70,24 @@
                                 <li><a href="{{url('contacts')}}">Contacts</a></li>
                             </ul>
                         </li>
-                        <li class="has-dropdown">
-                            <a>Jobs</a>
-                            <ul class="dropdown">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                Jobs
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
                                 <li><a href="{{url('job-lists/scheduled')}}">Scheduled</a></li>
                                 <li><a href="{{url('job-lists/unscheduled')}}">Unscheduled</a></li>
                                 <li><a href="{{url('job-lists')}}">Search</a></li>
                             </ul>
                         </li>
                         {% if user.isAdmin() %}
-                        <li class="has-dropdown">
-                            <a>Admin</a>
-                            <ul class="dropdown">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                Admin
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
                                 <li><a href="{{url('users')}}">Users</a></li>
                                 <li><a href="{{url('crews')}}">Crews</a></li>
                                 <li><a href="{{url('tags')}}">Tags</a></li>
@@ -90,7 +105,7 @@
             </nav>
         </header>
 
-        <div id="content">
+        <div id="content" class="container-fluid">
 
             {% if alerts %}
                 <div class="hidden-print">
@@ -104,10 +119,10 @@
             {% endif %}
 
             {% if breadcrumbs %}
-            <ul class="breadcrumbs">
+            <ul class="breadcrumb">
                 <li><a href="{{url('/')}}">Home</a></li>
                 {% for url,title in breadcrumbs %}
-                <li class="{% if loop.last %}current{% endif %}">
+                <li class="{% if loop.last %}active{% endif %}">
                     <a href="{{url(url)}}">{{title}}</a>
                 </li>
                 {% endfor %}
@@ -123,36 +138,35 @@
 
         </div>
 
-        <footer class="top-bar">
-            <section class="top-bar-section">
-                <!-- Right Nav Section -->
-                <ul class="right">
+        <footer>
+            <section class="container-fluid">
+                <ul class="list-inline">
+                    <li>{{app_title}} {{app_version}}</li>
                     <li>
-                        <a href="#" data-options="align:top" data-dropdown="software-links">{{app_title}} {{app_version}}</a>
+                        <a href="http://assetmanager.readthedocs.org/en/latest/" target="_blank"
+                           title="Got to the AssetManager documentation (opens in a new tab)">
+                            Documentation
+                        </a>
                     </li>
-                </ul>
-                <!-- Left Nav Section -->
-                <ul class="left">
+                    <li>
+                        <a href="https://github.com/samwilson/asset-manager/issues" target="_blank"
+                           title="Report a new issue (opens in a new tab)">
+                            Issue Tracker
+                        </a>
+                    </li>
                 </ul>
             </section>
         </footer>
-        <ul id="software-links" class="f-dropdown" data-dropdown-content>
-            <li>
-                <a href="http://assetmanager.readthedocs.org/en/latest/" target="_blank" title="Got to the AssetManager documentation (opens in a new tab)">
-                    Documentation
-                </a>
-            </li>
-            <li>
-                <a href="https://github.com/samwilson/asset-manager/issues" target="_blank" title="Report a new issue (opens in a new tab)">
-                    Issue Tracker
-                </a>
-            </li>
-        </ul>
 
+        <script src="{{asset('components/jquery/jquery.min.js')}}"></script>
+        <script src="{{asset('components/bootstrap/js/bootstrap.min.js')}}"></script>
+        <script src="{{asset('components/bootstrap-datepicker/js/bootstrap-datepicker.js')}}"></script>
         <script src="{{asset('leaflet/leaflet.js')}}"></script>
+        <script src="{{asset('js/tag-it.min.js')}}"></script>
+        <script src="{{asset('js/app.js')}}"></script>
         {% for script in scripts %}
             <script type="text/javascript" src="{{asset('js/'~script)}}"></script>
         {% endfor %}
-        <script>$(document).foundation();</script>
+
     </body>
 </html>

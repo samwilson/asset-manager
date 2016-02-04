@@ -19,14 +19,17 @@ in the site's header.
 
 For example, to add a new menu:
 
-    <ul class="left">
-        <li class="has-dropdown">
-            <a>Module name</a>
-            <ul class="dropdown">
+    <ul class="nav navbar-nav navbar-left">
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                Module name
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
                 <li><a href="{{url('module-name/search')}}">Search</a></li>
                 <li><a href="{{url('module-name/export')}}">Export</a></li>
             </ul>
         </li>
     </ul>
 
-See http://foundation.zurb.com/sites/docs/top-bar.html for more information.
+See http://getbootstrap.com/components/#navbar for more information.

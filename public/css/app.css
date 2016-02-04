@@ -5,7 +5,7 @@
 
 .sub-nav { background-color:#f2f2f2 }
 
-pre.queries { margin:0 1em }
+footer { font-size:smaller; text-align:center; border-top:2px solid #101010 }
 
 select { height: auto }
 select[size], select[multiple] { background-image:none }

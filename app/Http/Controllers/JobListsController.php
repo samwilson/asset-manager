@@ -160,7 +160,7 @@ class JobListsController extends Controller
         $this->view->title = "Job Schedule";
         $this->view->breadcrumbs = [
             'job-lists' => 'Job Lists',
-            'job-lists/schedule' => 'Schedule',
+            'job-lists/scheduled' => 'Scheduled',
         ];
         $startDate = new \DateTime($reqest->input('start_date'));
         $endDate = new \DateTime($reqest->input('end_date'));

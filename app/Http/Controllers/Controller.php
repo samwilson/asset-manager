@@ -53,13 +53,7 @@ abstract class Controller extends BaseController
         $this->view->app_version = config('app.version');
         $this->view->app_title = config('app.title');
         $this->view->site_name = config('app.site_name');
-        $this->view->scripts = array(
-            'jquery.js',
-            'jquery-ui.min.js',
-            'foundation.min.js',
-            'tag-it.min.js',
-            'app.js',
-        );
+        $this->view->scripts = [];
         $this->view->return_to = substr(\Request::url(), strlen(url('')));
         $this->user = Auth::user();
         $this->view->user = $this->user;

@@ -15,7 +15,9 @@
         "iatstuti/laravel-nullable-fields": "*",
         "caffeinated/modules": "*",
         "guzzlehttp/guzzle": "*",
-        "zurb/foundation": "6.*"
+        "robloach/component-installer": "*",
+        "components/bootstrap-default": "*",
+        "eternicode/bootstrap-datepicker": "1.*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "2.*",
@@ -41,8 +43,7 @@
             "php artisan clear-compiled"
         ],
         "post-update-cmd": [
-            "php artisan optimize",
-            "php artisan vendor:publish"
+            "php artisan optimize"
         ],
         "post-root-package-install": [
             "php -r \"copy('.env.example', '.env');\""
@@ -52,6 +53,7 @@
         ]
     },
     "config": {
-        "preferred-install": "dist"
+        "preferred-install": "dist",
+        "component-dir": "public/components"
     }
 }
