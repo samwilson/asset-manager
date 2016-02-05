@@ -28,8 +28,7 @@ class JobList extends Taggable
         $complete = 0;
         $this->load('jobs');
         foreach ($this->jobs as $job) {
-            $status = $job->status();
-            if (in_array($status, ['Complete'])) {
+            if ($job->status() == Job::STATUS_COMPLETE) {
                 $complete++;
             }
         }

@@ -111,7 +111,7 @@
                     </form>
 
                     {% for module in modules %}
-                        {% include module~'::nav' %}
+                        {% include module~'::nav' ignore missing %}
                     {% endfor %}
 
                 </section>

@@ -38,7 +38,8 @@ class Asset extends Taggable
     }
 
     /**
-     * 
+     * Append a new comment to this Asset's comment field.
+     * A blank line will be added between the old and new comments.
      * @param string $newComment The comment to append.
      */
     public function appendComments($newComment)

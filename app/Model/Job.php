@@ -70,4 +70,19 @@ class Job extends Model
         }
         return self::STATUS_INCOMPLETE;
     }
+
+    /**
+     * Save the model to the database.
+     *
+     * @param  array  $options
+     * @return bool
+     */
+    public function save(array $options = [])
+    {
+        // If only a date of resolution is set, assume it's successful.
+        if ($this->date_resolved && !$this->resolution_id) {
+            $this->resolution_id = JobResolution::SUCCEEDED;
+        }
+        parent::save($options);
+    }
 }
