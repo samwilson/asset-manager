@@ -2,25 +2,30 @@
 
 {% block content %}
 
-    <form action="{{url('assets')}}" method="post">
+    <form action="{{url('assets')}}" method="post" class="form">
         <input type="hidden" name="_token" value="{{csrf_token()}}" />
-        <fieldset class="row full-width">
+        <fieldset class="row">
             <legend>{{trans('app.search')}}</legend>
-            <div class="large-3 columns">
-                <label>Identifier contains: <input type="text" name="identifier" value="{{identifier}}" /></label>
+            <div class="col-lg-3">
+                <label>Identifier contains: <input type="text" name="identifier" value="{{identifier}}" class="form-control" /></label>
                 <label>
                     Identifier is one of (one per line):
-                    <textarea name="identifiers" rows="8">{{identifiers|join('\n')}}</textarea>
+                    <textarea name="identifiers" rows="8" class="form-control">{{identifiers|join('\n')}}</textarea>
                 </label>
             </div>
-            <div class="large-6 columns">
-                <label>Tagged: <input type="text" name="tagged" class="tagit" value="{{tagged}}" /></label>
-                <label><em>Not</em> tagged: <input disabled type="text" name="not_tagged" class="tagit" value="{{not_tagged}}" /></label>
+            <div class="col-lg-6">
+                <label>
+                    Tagged:
+                    <input type="text" name="tagged" class="tagit form-control" value="{{tagged}}" />
+                </label>
+                <label>
+                    <em>Not</em> tagged:
+                    <input disabled type="text" name="not_tagged" class="tagit form-control" value="{{not_tagged}}" />
+                </label>
             </div>
-            <div class="large-2 columns"></div>
-            <div class="large-1 columns">
-                <input type="submit" name="search" value="{{trans('app.search')}}" class="button" /><br />
-                <a href="{{url('assets')}}" class="button secondary">Reset</a>
+            <div class="col-lg-3">
+                <input type="submit" name="search" value="{{trans('app.search')}}" class="btn btn-info" /><br />
+                <a href="{{url('assets')}}" class="btn btn-default">Reset</a>
             </p>
         </fieldset>
 
@@ -42,6 +47,7 @@
             <tr>
                 <th></th>
                 <th>Identifier</th>
+                <th>Status</th>
                 <th>Location description</th>
                 <th>Street address</th>
                 <th>Suburb</th>
@@ -58,16 +64,17 @@
                         <a href="{{url('assets/'~asset.id~'/edit')}}">Edit</a>
                         {% endif %}
                     </td>
-                    <th>
+                    <td>
                         <a href="{{url('assets/'~asset.id)}}" title="View asset details">{{asset.identifier}}</a>
-                    </th>
-                    <th>{{asset.location_description}}</th>
-                    <th>{{asset.street_address}}</th>
-                    <th>{{asset.suburb.name}}</th>
-                    <th>{{asset.state.name}}</th>
+                    </td>
+                    <td>{{asset.status()}}</td>
+                    <td>{{asset.location_description}}</td>
+                    <td>{{asset.street_address}}</td>
+                    <td>{{asset.suburb.name}}</td>
+                    <td>{{asset.state.name}}</td>
                     <td>
                         {% for tag in asset.tags %}
-                        <span class="label secondary">{{tag.name}}</span>
+                        <span class="label label-primary">{{tag.name}}</span>
                         {% endfor %}
                     </td>
                     <td>

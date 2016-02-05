@@ -12,6 +12,7 @@
 
         <link href="{{asset('components/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{asset('components/bootstrap-datepicker/dist/css/bootstrap-datepicker.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('components/jquery-ui/themes/flick/jquery-ui.min.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{asset('css/jquery.tagit.css')}}" rel="stylesheet" type="text/css">
         <link href="{{asset('leaflet/leaflet.css')}}" rel="stylesheet" type="text/css">
         <link href="{{asset('css/app.css')}}" rel="stylesheet" type="text/css" />
@@ -97,6 +98,18 @@
                         {% endif  %}
                     </ul>
 
+                    <form class="navbar-form navbar-right" method="get" id="quick-search" action="{{url('search')}}">
+                        <div class="form-group">
+                            <select name="type" class="form-control">
+                                <option value="a">Asset</option>
+                                <option value="j">Job</option>
+                                <option value="jl">Job List</option>
+                            </select>
+                            <input type="text" name="q" size="10" class="form-control" placeholder="Search..." />
+                            <button class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+                        </div>
+                    </form>
+
                     {% for module in modules %}
                         {% include module~'::nav' %}
                     {% endfor %}
@@ -108,14 +121,16 @@
         <div id="content" class="container-fluid">
 
             {% if alerts %}
-                <div class="hidden-print">
-                    {% for alert in alerts %}
-                        <div data-alert class="alert-box {{alert.status}}">
-                            {{alert.message|raw}}
-                            <a href="#" class="close">&times;</a>
-                        </div>
-                    {% endfor %}
+            <div class="alerts">
+                {% for alert in alerts %}
+                <div class="alert alert-{{alert.status}} alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{alert.message|raw}}
                 </div>
+                {% endfor %}
+            </div>
             {% endif %}
 
             {% if breadcrumbs %}
@@ -162,6 +177,7 @@
         <script src="{{asset('components/bootstrap/js/bootstrap.min.js')}}"></script>
         <script src="{{asset('components/bootstrap-datepicker/js/bootstrap-datepicker.js')}}"></script>
         <script src="{{asset('leaflet/leaflet.js')}}"></script>
+        <script src="{{asset('components/jquery-ui/jquery-ui.min.js')}}"></script>
         <script src="{{asset('js/tag-it.min.js')}}"></script>
         <script src="{{asset('js/app.js')}}"></script>
         {% for script in scripts %}

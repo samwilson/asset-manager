@@ -1,47 +1,36 @@
 {% extends "base" %}
 {% block content %}
 
-    <form action="{{url('login')}}" method="post" id="login-form">
-        <input type="hidden" name="_token" value="{{csrf_token()}}">
+    <form action="{{url('login')}}" method="post" id="login-form" class="form-horizontal">
+        {{csrf_field()}}
 
-        <div class="row collapse">
-            <div class="medium-2 columns">
-                <label class="right inline" for="username">Username:</label>
-            </div>
-            <div class="medium-1 columns">&nbsp;</div>
-            <div class="medium-5 columns">
-                <input type="text" name="username" value="{{username}}" id="username" {% if not username %}class="focus-me"{% endif %} />
-            </div>
-            <div class="medium-2 columns">
-                {% if adldap_enabled and adldap_suffix %}
-                <span class="postfix" for="username">{{adldap_suffix}}</span>
-                {% endif %}
-            </div>
-            <div class="medium-2 columns">
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="username">Username:</label>
+            <div class="col-md-4">
+                 <div class="input-group">
+                    <input type="text" name="username" class="form-control" value="{{username}}"
+                           id="username" {% if not username %}class="focus-me"{% endif %} />
+                    {% if adldap_enabled and adldap_suffix %}
+                    <div class="input-group-addon">
+                        {{adldap_suffix}}
+                    </div>
+                    {% endif %}
+                 </div>
             </div>
         </div>
 
-        <div class="row collapse">
-            <div class="medium-2 columns">
-                <label class="right inline" for="password">Password:</label>
-            </div>
-            <div class="medium-1 columns">&nbsp;</div>
-            <div class="medium-5 columns">
-                <input type="password" name="password" id="password" {% if username %}class="focus-me"{% endif %} />
-            </div>
-            <div class="medium-4 columns">
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="password">Password:</label>
+            <div class="col-md-4">
+                <input type="password" name="password" id="password" class="{% if username %}focus-me{% endif %} form-control" />
             </div>
         </div>
 
-        <div class="row collapse">
-            <div class="medium-3 columns">
-                &nbsp;
+        <div class="form-group">
+            <div class="col-md-4 col-md-offset-2">
+                <input type="submit" class="btn btn-primary" value="Log in" />
+                <a href="{{url('remind')}}" class="btn btn-default">Password reminder</a>
             </div>
-            <div class="medium-5 columns">
-                <input type="submit" class="button" value="Log in" />
-                <a href="{{url('remind')}}" class="secondary button">Password reminder</a>
-            </div>
-            <div class="medium-4 columns"></div>
         </div>
 
     </form>

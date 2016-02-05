@@ -36,4 +36,15 @@ class Asset extends Taggable
     {
         return $this->hasMany('App\Model\Job');
     }
+
+    /**
+     * 
+     * @param string $newComment The comment to append.
+     */
+    public function appendComments($newComment)
+    {
+        if (strpos($this->comments, $newComment) === false) {
+            $this->comments = rtrim($this->comments, "\n") . "\n\n$newComment";
+        }
+    }
 }

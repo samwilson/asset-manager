@@ -62,11 +62,27 @@ class AssetTest extends TestCase {
     }
 
     /**
-     * @testdox It is possible to import multiple Assets at one time.
+     * @testdox When adding a comment to an Asset, if the comment is already part of the Asset's comment then the new comment will not be added.
      * @test
      */
-    public function import() {
-        
+    public function comments() {
+        $asset = new Asset();
+        $asset->identifier = 'TEST123';
+
+        // Set initial comment.
+        $asset->comments = 'Test comment.';
+        $asset->save();
+        $this->assertEquals('Test comment.', $asset->comments);
+
+        // Appending the same string shouldn't modify it.
+        $asset->appendComments('Test comment.');
+        $asset->save();
+        $this->assertEquals('Test comment.', $asset->comments);
+
+        // Append a different string and it'll make sure there's a newline between them.
+        $asset->appendComments('Blah.');
+        $asset->save();
+        $this->assertEquals("Test comment.\n\nBlah.", $asset->comments);
     }
 
 }

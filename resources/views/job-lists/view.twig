@@ -10,8 +10,8 @@
 
 {% block content %}
 
-    <div class="full-width row">
-        <div class="large-5 columns">
+    <div class="row">
+        <div class="col-md-5">
             {{job_list.comments|parsedown|raw}}
             <table>
                 <tr><th>Type:</th><td>{{job_list.type.name}}</td></tr>
@@ -43,14 +43,14 @@
                 </tr>
             </table>
         </div>
-        <div class="large-7 columns">
+        <div class="col-md-7">
             <div class="map" id="job-list-map" data-geojson="{{url('job-lists/'~job_list.id~'.geojson')}}"></div>
         </div>
     </div>
 
     <h2 id="jobs">Jobs ({{jobs.total|number_format}})</h2>
     <p>{{jobs.render()|raw}}</p>
-    <table>
+    <table class="table table-condensed">
         <thead>
             <tr>
                 <th>Asset</th>
@@ -66,7 +66,7 @@
                     <td><a href="{{url('assets/'~job.asset.id)}}">{{job.asset.identifier}}</a></td>
                     <td>
                         {% for tag in job.asset.tags %}
-                            <span class="label secondary">{{tag.name}}</span>
+                            <span class="label label-default">{{tag.name}}</span>
                         {% endfor %}
                     </td>
                     <td>

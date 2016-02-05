@@ -8,8 +8,8 @@
 
 {% block content %}
 
-    <div class="full-width row">
-        <div class="large-6 columns">
+    <div class="row">
+        <div class="col-lg-6">
             {% if asset.comments %}
             <div class="panel">
                 {{asset.comments|parsedown|raw}}
@@ -17,7 +17,7 @@
             {% endif %}
             <dl>
                 <dt>Suburb:</dt>
-                <dd>{{asset.suburb.name}}, {{asset.state.name}} ({{asset.state.country.abbreviation}})</dd>
+                <dd>{{asset.suburb.name}}, {{asset.state.name}} {{asset.state.country.abbreviation}}</dd>
                 <dt>Street address:</dt>
                 <dd>{{asset.street_address}}</dd>
                 <dt>Location description:</dt>
@@ -25,19 +25,19 @@
                 <dt>Tags:</dt>
                 <dd>
                     {% for tag in asset.tags %}
-                    <span class="secondary label">{{tag.name}}</span>
+                    <span class="label label-primary">{{tag.name}}</span>
                     {% endfor %}
                 </dd>
             </dl>
         </div>
-        <div class="large-6 columns">
+        <div class="col-lg-6">
             <div id="asset-location-map" class="map" data-latitude="{{asset.latitude}}" data-longitude="{{asset.longitude}}"></div>
         </div>
     </div>
 
     <h2>Job Lists</h2>
     <p><a href="{{url('job-lists')}}">Job Lists</a> that contain this Asset.</p>
-    <table>
+    <table class="table">
         <thead>
             <tr>
                 <th>Job List</th>
@@ -56,10 +56,10 @@
         {% endfor %}
     </table>
 
-    <div id="contacts">
+    <div id="contacts" class="">
         <h2>Contacts</h2>
-        <div class="full-width row">
-            <div class="large-6 columns">
+        <div class="row">
+            <div class="col-lg-6">
                 <ul>
                 {% for contact in asset.contacts %}
                     <li>
@@ -79,10 +79,9 @@
                 </ul>
             </div>
 
-            <div class="large-6 columns">
+            <div class="col-lg-6">
                 <form action="{{url('contacts/create-for-asset')}}" method="post">
-                    <table>
-                        <caption>Add new contact</caption>
+                    <table class="table">
                         <thead>
                             <tr>
                                 <th>Name</th>

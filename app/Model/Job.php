@@ -62,15 +62,12 @@ class Job extends Model
 
     public function status()
     {
-        if ($this->date_removed) {
-            return 'Cancelled';
-        }
-        if ($this->date_resolved) {
-            return 'Complete';
+        if ($this->resolution_id) {
+            return self::STATUS_COMPLETE;
         }
         if ($this->contactRequired() && !$this->contactMade()) {
             return 'Contact attempt required';
         }
-        return 'Incomplete';
+        return self::STATUS_INCOMPLETE;
     }
 }

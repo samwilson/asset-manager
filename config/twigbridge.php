@@ -209,7 +209,8 @@ return [
         |
         */
         'filters' => [
-            'get' => 'data_get',    
+            'get' => 'data_get',
+            'parsedown' => ['callback' => function($in){ return (new \Parsedown())->text($in);}],
         ],
     ],  
 ];

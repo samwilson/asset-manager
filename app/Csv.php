@@ -36,7 +36,7 @@ class Csv
         if ($optional) {
             return false;
         } else {
-            throw new \Exception("$colName column not found." . print_r($this->head_name_map, true));
+            throw new \Exception("$colName column not found. Headers found:" . join(', ', $this->head_index_map));
         }
     }
 
