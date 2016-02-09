@@ -10,6 +10,8 @@ footer { font-size:smaller; text-align:center; border-top:2px solid #101010 }
 select { height: auto }
 select[size], select[multiple] { background-image:none }
 
+.img-thumbnail { max-width:210px; text-align:center }
+
 table tbody th,
 table tbody td { vertical-align:top }
 table tbody td.type-int { text-align:right }

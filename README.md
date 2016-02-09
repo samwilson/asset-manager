@@ -46,3 +46,4 @@ AssetManager is built using these terrific packages:
 * http://parsedown.org
 * http://aehlke.github.io/tag-it
 * https://github.com/deringer/laravel-nullable-fields
+* http://image.intervention.io

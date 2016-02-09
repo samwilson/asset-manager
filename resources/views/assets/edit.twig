@@ -2,40 +2,37 @@
 
 {% block content %}
 
-    <form method="post" action="{{url('assets/save')}}">
-        <input type="hidden" name="_token" value="{{csrf_token()}}">
+    <form method="post" action="{{url('assets/save')}}" enctype="multipart/form-data">
+        {{csrf_field()}}
         {% if asset.id %}<input type="hidden" name="id" value="{{asset.id}}">{% endif %}
-        <fieldset><legend>Identity</legend>
-            <p>
-                <label>Identifier:
-                <input type="text" name="identifier" value="{{asset.identifier}}" required />
-                </label>
+        <fieldset>
+            <legend>Identity</legend>
+            <p class="form-group">
+                <label class="control-label">Identifier:</label>
+                <input type="text" name="identifier" value="{{asset.identifier}}" required class="form-control" />
             </p>
-            <p>
-                <label>Tags:
-                <input type="text" name="tags" value="{{asset.tagsAsString()}}" class="tagit" />
-                </label>
+            <p class="form-group">
+                <label class="control-label">Tags:</label>
+                <input type="text" name="tags" value="{{asset.tagsAsString()}}" class="tagit form-control" />
             </p>
         </fieldset>
         <fieldset>
             <legend>Location</legend>
-            <div class="full-width row">
-                <div class="large-6 columns">
+            <div class="row">
+                <div class="col-lg-6">
                     <div class="row">
-                        <div class="large-12 columns">
-                            <label>
-                                Location description:
-                                <input type="text" name="location_description" value="{{asset.location_description}}" />
-                            </label>
+                        <div class="col-lg-4">
+                            <label class="control-label">Location description:</label>
+                            <input type="text" name="location_description" value="{{asset.location_description}}" class="form-control" />
                             <label>
                                 Street address:
-                                <input type="text" name="street_address" value="{{asset.street_address}}" />
+                                <input type="text" name="street_address" value="{{asset.street_address}}" class="form-control" />
                             </label>
                         </div>
-                        <div class="large-6 columns">
+                        <div class="col-lg-4">
                             <label>
                                 Suburb:
-                                <select name="suburb_id" required>
+                                <select name="suburb_id" required class="form-control">
                                     <option selected></option>
                                     {% for suburb in suburbs %}
                                         <option value="{{suburb.id}}" {%if asset.suburb_id==suburb.id%}selected{%endif%}>{{suburb.name}}</option>
@@ -44,7 +41,7 @@
                             </label>
                             <label>
                                 State:
-                                <select name="state_id" required>
+                                <select name="state_id" required class="form-control">
                                     <option selected></option>
                                     {% for state in states %}
                                         <option value="{{state.id}}" {%if asset.state_id==state.id%}selected{%endif%}>{{state.name}}</option>
@@ -52,22 +49,27 @@
                                 </select>
                             </label>
                         </div>
-                        <div class="large-6 columns">
-                            <label>Latitude: <input type="text" name="latitude" value="{{asset.latitude}}" /></label>
-                            <label>Longitude: <input type="text" name="longitude" value="{{asset.longitude}}" /></label>
+                        <div class="col-lg-4">
+                            <label>Latitude: <input type="text" name="latitude" value="{{asset.latitude}}" class="form-control" /></label>
+                            <label>Longitude: <input type="text" name="longitude" value="{{asset.longitude}}" class="form-control" /></label>
                         </div>
                     </div>
                 </div>
-                <div class="large-6 columns">
+                <div class="col-lg-6">
                     <div id="asset-location-map" class="map" data-latitude="{{asset.latitude}}" data-longitude="{{asset.longitude}}"></div>
                 </div>
             </div>
         </fieldset>
-        <p>
-            <label>Comments: <textarea name="comments" rows="10" class="markdown">{{asset.comments}}</textarea></label>
+        <p class="">
+            <p>
+                <label for="file" class="control-label">Attach file:</label>
+                <input type="file" id="file" name="file" class="form-control" />
+            </p>
+            <label class="control-label" for="comments">Comments:</label>
+            <textarea name="comments" rows="10" cols="80" id="comments" class="markdown form-control">{{asset.comments}}</textarea>
         </p>
         <p>
-            <input type="submit" value="Save" class="button" />
+            <input type="submit" value="Save" class="btn btn-success" />
             <a href="{%if asset.id %}{{url('/assets/'~asset.id)}}{%else%}{{url('assets')}}{%endif%}" class="secondary button">
                 Cancel
             </a>

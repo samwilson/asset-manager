@@ -25,6 +25,7 @@ class Upgrade extends \Illuminate\Console\Command
         $this->info("Upgrading application.");
         $this->users();
         $this->assets();
+        $this->files();
         $this->contacts();
         $this->jobLists();
         $this->call('up');
@@ -125,6 +126,29 @@ class Upgrade extends \Illuminate\Console\Command
                 $table->string('template');
                 $table->text('data');
                 $table->timestamps();
+            });
+        }
+    }
+
+    public function files()
+    {
+        if (!Schema::hasTable('files')) {
+            $this->info("Creating 'files' table.");
+            Schema::create('files', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('name');
+                $table->string('mime_type');
+                $table->timestamps();
+            });
+        }
+        if (!Schema::hasTable('asset_file')) {
+            $this->info("Creating 'asset_file' table.");
+            Schema::create('asset_file', function (Blueprint $table) {
+                $table->integer('asset_id')->unsigned();
+                $table->foreign('asset_id')->references('id')->on('assets');
+                $table->integer('file_id')->unsigned();
+                $table->foreign('file_id')->references('id')->on('files');
+                $table->primary(['asset_id', 'file_id']);
             });
         }
     }

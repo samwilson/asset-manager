@@ -1,8 +1,11 @@
 <?php
 
 // Homepage.
-Route::get('/', 'DashboardController@home');
-Route::get('/tags.json', 'TagsController@json');
+Route::get('', 'DashboardController@home');
+Route::get('tags.json', 'TagsController@json');
+
+// Files.
+Route::get('files/{id}/{format?}', 'FilesController@view');
 
 // Users.
 Route::get('login', 'UsersController@login');

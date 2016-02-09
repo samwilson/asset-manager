@@ -8,8 +8,8 @@
             <label class="col-md-2 control-label" for="username">Username:</label>
             <div class="col-md-4">
                  <div class="input-group">
-                    <input type="text" name="username" class="form-control" value="{{username}}"
-                           id="username" {% if not username %}class="focus-me"{% endif %} />
+                    <input type="text" name="username" value="{{username}}"
+                           id="username" class="form-control {% if not username %}focus-me{% endif %}" />
                     {% if adldap_enabled and adldap_suffix %}
                     <div class="input-group-addon">
                         {{adldap_suffix}}

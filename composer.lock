@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0e09ddd22d24aff198911dc3110cf9e5",
-    "content-hash": "4cd75a1d226013648b2950b31ce8a5e0",
+    "hash": "fa61f9d827b11da08993432ca355f4df",
+    "content-hash": "a963557f39cf24809beb8bcacbeee942",
     "packages": [
         {
             "name": "adldap2/adldap2",
-            "version": "v5.2.8",
+            "version": "v5.2.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Adldap2/Adldap2.git",
-                "reference": "2a1c0ff7175fcd1307f29e3d2155bc7c3a0285f1"
+                "reference": "44aaf173e03b9afd1479ba334aa1755321fb6ec5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Adldap2/Adldap2/zipball/2a1c0ff7175fcd1307f29e3d2155bc7c3a0285f1",
-                "reference": "2a1c0ff7175fcd1307f29e3d2155bc7c3a0285f1",
+                "url": "https://api.github.com/repos/Adldap2/Adldap2/zipball/44aaf173e03b9afd1479ba334aa1755321fb6ec5",
+                "reference": "44aaf173e03b9afd1479ba334aa1755321fb6ec5",
                 "shasum": ""
             },
             "require": {
@@ -57,7 +57,50 @@
                 "ldap",
                 "windows"
             ],
-            "time": "2016-01-19 15:26:18"
+            "time": "2016-02-05 20:28:42"
+        },
+        {
+            "name": "brainbits/fugue-icons-bundle",
+            "version": "3.5.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/brainbits/fugue-icons-bundle.git",
+                "reference": "3b621552dd2f3d3172235f69f2963b70a23f4597"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/brainbits/fugue-icons-bundle/zipball/3b621552dd2f3d3172235f69f2963b70a23f4597",
+                "reference": "3b621552dd2f3d3172235f69f2963b70a23f4597",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Brainbits": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "CC-BY-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Stephan Wentz",
+                    "email": "swentz@brainbits.net",
+                    "role": "Packager"
+                },
+                {
+                    "name": "Yusuke Kamiyamane",
+                    "homepage": "http://p.yusukekamiyamane.com/"
+                }
+            ],
+            "description": "Bundle including the fugue icon set.",
+            "homepage": "http://p.yusukekamiyamane.com/",
+            "keywords": [
+                "fugue",
+                "icons"
+            ],
+            "time": "2013-05-15 12:31:26"
         },
         {
             "name": "caffeinated/modules",
@@ -889,6 +932,68 @@
             "time": "2016-01-28 23:13:44"
         },
         {
+            "name": "intervention/image",
+            "version": "2.3.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Intervention/image.git",
+                "reference": "9f29360b8ab94585cb9e80cf9045abd5b85feb89"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Intervention/image/zipball/9f29360b8ab94585cb9e80cf9045abd5b85feb89",
+                "reference": "9f29360b8ab94585cb9e80cf9045abd5b85feb89",
+                "shasum": ""
+            },
+            "require": {
+                "ext-fileinfo": "*",
+                "guzzlehttp/psr7": "~1.1",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "~0.9.2",
+                "phpunit/phpunit": "3.*"
+            },
+            "suggest": {
+                "ext-gd": "to use GD library based image processing.",
+                "ext-imagick": "to use Imagick based image processing.",
+                "intervention/imagecache": "Caching extension for the Intervention Image library"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Intervention\\Image\\": "src/Intervention/Image"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Oliver Vogel",
+                    "email": "oliver@olivervogel.net",
+                    "homepage": "http://olivervogel.net/"
+                }
+            ],
+            "description": "Image handling and manipulation library with support for Laravel integration",
+            "homepage": "http://image.intervention.io/",
+            "keywords": [
+                "gd",
+                "image",
+                "imagick",
+                "laravel",
+                "thumbnail",
+                "watermark"
+            ],
+            "time": "2016-01-02 19:15:13"
+        },
+        {
             "name": "jakub-onderka/php-console-color",
             "version": "0.1",
             "source": {
@@ -1543,16 +1648,16 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "1.1.6",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "e6f80ab77885151908d0ec743689ca700886e8b0"
+                "reference": "b0e69d10852716b2ccbdff69c75c477637220790"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/e6f80ab77885151908d0ec743689ca700886e8b0",
-                "reference": "e6f80ab77885151908d0ec743689ca700886e8b0",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/b0e69d10852716b2ccbdff69c75c477637220790",
+                "reference": "b0e69d10852716b2ccbdff69c75c477637220790",
                 "shasum": ""
             },
             "require": {
@@ -1587,7 +1692,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2016-01-29 16:19:52"
+            "time": "2016-02-06 03:52:05"
         },
         {
             "name": "phayes/geophp",

@@ -7,6 +7,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use App\Http\Controllers\Controller;
 use App\Model\Asset;
 use App\Model\Category;
+use App\Model\File;
 use App\Model\Tag;
 use App\Model\State;
 use App\Model\Suburb;
@@ -149,8 +150,8 @@ class AssetsController extends Controller
         $this->view->asset = Asset::find($id);
         $this->view->title = 'Editing Asset ' . $this->view->asset->identifier;
         $this->view->categories = Category::where('parent_id', null)->orderBy('name', 'ASC')->get();
-        $this->view->states = State::all();
-        $this->view->suburbs = Suburb::all();
+        $this->view->states = State::orderBy('name')->get();
+        $this->view->suburbs = Suburb::orderBy('name')->get();
         $this->view->breadcrumbs = [
             'assets' => 'Assets',
             'assets/' . $this->view->asset->id => $this->view->asset->identifier,
@@ -195,6 +196,8 @@ class AssetsController extends Controller
         $asset->save();
         $asset->tags()->sync(Tag::getIds($request->input('tags')));
         $asset->categories()->sync($request->input('category_ids', array()));
+        $file = File::createFromUploaded($request->file('file'));
+        $asset->files()->attach($file->id);
         return redirect('assets/' . $asset->id);
     }
 }

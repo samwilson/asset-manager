@@ -29,11 +29,12 @@ class UsersController extends Controller
         $username = $request->input('username');
         $request->session()->set('username', $username);
         $password = $request->input('password');
+        $returnTo = url($request->input('return_to', ''));
 
         // Try to log in.
         if (Auth::attempt(['username' => $username, 'password' => $password])) {
             $this->alert('success', 'You are now logged in.', true);
-            return redirect()->intended();
+            return redirect($returnTo);
         }
 
         // If that fails, try Adldap.
@@ -54,7 +55,7 @@ class UsersController extends Controller
                     $user->save();
                     Auth::login($user);
                     $this->alert('success', 'You are now logged in.', true);
-                    return redirect('/');
+                    return redirect($returnTo);
                 }
             } catch (\Adldap\Exceptions\AdldapException $ex) {
                 // Invalid credentials.

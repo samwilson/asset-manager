@@ -15,7 +15,7 @@
                 {{asset.comments|parsedown|raw}}
             </div>
             {% endif %}
-            <dl>
+            <dl class="dl-horizontal">
                 <dt>Suburb:</dt>
                 <dd>{{asset.suburb.name}}, {{asset.state.name}} {{asset.state.country.abbreviation}}</dd>
                 <dt>Street address:</dt>
@@ -26,6 +26,15 @@
                 <dd>
                     {% for tag in asset.tags %}
                     <span class="label label-primary">{{tag.name}}</span>
+                    {% endfor %}
+                </dd>
+                <dt>Files:</dt>
+                <dd>
+                    {% for file in asset.files %}
+                        <a href="{{url('files/'~file.id)}}" class="img-thumbnail">
+                            <img src="{{url('files/'~file.id~'/t')}}" />
+                            {{file.name}}
+                        </a>
                     {% endfor %}
                 </dd>
             </dl>

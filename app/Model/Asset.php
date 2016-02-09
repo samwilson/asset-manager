@@ -22,6 +22,11 @@ class Asset extends Taggable
         return $this->belongsTo('App\Model\State');
     }
 
+    public function files()
+    {
+        return $this->belongsToMany('App\Model\File');
+    }
+
     public function contacts()
     {
         return $this->belongsToMany('App\Model\Contact');

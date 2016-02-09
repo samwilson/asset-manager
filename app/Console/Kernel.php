@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
+        \App\Console\Commands\Files::class,
         \App\Console\Commands\Upgrade::class,
         \App\Console\Commands\EmailQueue::class,
     ];
