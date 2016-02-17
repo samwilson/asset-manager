@@ -133,6 +133,9 @@ htmlhelp_basename = 'AssetManagerdoc'
 latex_elements = {
     'papersize': 'a4paper',
     'preamble': '',
+    'maketitle' : """\\makeatletter
+        \\py@TitleColor\\py@HeaderFamily\\maketitle
+        \\makeatother""",
 }
 
 # Grouping the document tree into LaTeX files. List of tuples
