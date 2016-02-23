@@ -7,6 +7,9 @@ Route::get('tags.json', 'TagsController@json');
 // Files.
 Route::get('files/{id}/{format?}', 'FilesController@view');
 
+// Search.
+Route::get('search', 'SearchController@search');
+
 // Users.
 Route::get('login', 'UsersController@login');
 Route::post('login', 'UsersController@loginPost');

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>
+            {% if title %}{{title}} :: {% endif %}
+            {{site_name}}
+        </title>
+
+        <link href="{{asset('components/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('components/bootstrap-datepicker/dist/css/bootstrap-datepicker.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('components/jquery-ui/themes/flick/jquery-ui.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('css/jquery.tagit.css')}}" rel="stylesheet" type="text/css">
+        <link href="{{asset('leaflet/leaflet.css')}}" rel="stylesheet" type="text/css">
+        <link href="{{asset('css/app.css')}}" rel="stylesheet" type="text/css" />
+
+        <script type="text/javascript">
+            var baseUrl="{{url('/')}}";
+        </script>
+    </head>
+
+    <body class="controller-{{controller}} action-{{action}}">
+
+        {% block body %}{% endblock %}
+
+        <script src="{{asset('components/jquery/jquery.min.js')}}"></script>
+        <script src="{{asset('components/bootstrap/js/bootstrap.min.js')}}"></script>
+        <script src="{{asset('components/bootstrap-datepicker/js/bootstrap-datepicker.js')}}"></script>
+        <script src="{{asset('leaflet/leaflet.js')}}"></script>
+        <script src="{{asset('components/jquery-ui/jquery-ui.min.js')}}"></script>
+        <script src="{{asset('js/tag-it.min.js')}}"></script>
+        <script src="{{asset('js/app.js')}}"></script>
+        {% for script in scripts %}
+            <script type="text/javascript" src="{{asset('js/'~script)}}"></script>
+        {% endfor %}
+    </body>
+
+</html>

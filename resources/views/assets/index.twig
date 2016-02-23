@@ -7,24 +7,17 @@
         <fieldset class="row">
             <legend>{{trans('app.search')}}</legend>
             <div class="col-lg-3">
-                <label>Identifier contains: <input type="text" name="identifier" value="{{identifier}}" class="form-control" /></label>
-                <label>
-                    Identifier is one of (one per line):
-                    <textarea name="identifiers" rows="8" class="form-control">{{identifiers|join('\n')}}</textarea>
-                </label>
+                <label class="control-label" for="identifier">Identifier contains:</label>
+                <input type="text" name="identifier" id="identifier" value="{{identifier}}" class="form-control" /></label>
+                <label class="control-label" for="identifiers">Identifier is one of (one per line):</label>
+                <textarea name="identifiers" rows="8" class="form-control">{{identifiers|join('\n')}}</textarea>
             </div>
             <div class="col-lg-6">
-                <label>
-                    Tagged:
-                    <input type="text" name="tagged" class="tagit form-control" value="{{tagged}}" />
-                </label>
-                <label>
-                    <em>Not</em> tagged:
-                    <input disabled type="text" name="not_tagged" class="tagit form-control" value="{{not_tagged}}" />
-                </label>
+                <label class="control-label" for="tagged">Tagged:</label>
+                <input type="text" name="tagged" id="tagged" class="tagit form-control" value="{{tagged}}" />
             </div>
             <div class="col-lg-3">
-                <input type="submit" name="search" value="{{trans('app.search')}}" class="btn btn-info" /><br />
+                <input type="submit" name="search" value="{{trans('app.search')}}" class="btn btn-info" />
                 <a href="{{url('assets')}}" class="btn btn-default">Reset</a>
             </p>
         </fieldset>
@@ -32,9 +25,9 @@
         {% if assets.total > 0 %}
         <fieldset>
             <legend>{{assets.total|number_format}} Result{% if assets.total != 1 %}s{% endif %}</legend>
-            <input type="submit" class="small button" data-new-action="{{url('assets/map')}}" value="View on map" />
-            <input type="submit" class="small button" data-new-action="{{url('assets/csv')}}" value="Get CSV" />
-            <input type="submit" class="small button" data-new-action="{{url('job-lists/create')}}" value="Create Job List" />
+            <input type="submit" class="btn btn-default" data-new-action="{{url('assets/map')}}" value="View on map" />
+            <input type="submit" class="btn btn-default" data-new-action="{{url('assets/csv')}}" value="Get CSV" />
+            <input type="submit" class="btn btn-default" data-new-action="{{url('job-lists/create')}}" value="Create Job List" />
         </fieldset>
         {% endif %}
 

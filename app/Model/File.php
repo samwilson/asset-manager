@@ -2,6 +2,8 @@
 
 namespace App\Model;
 
+use \Symfony\Component\HttpFoundation\File\UploadedFile;
+
 class File extends Model
 {
 
@@ -17,9 +19,13 @@ class File extends Model
     /**
      * Save an uploaded file into the standard system.
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile
+     * @return File|false
      */
     public static function createFromUploaded($uploadedFile)
     {
+        if (!$uploadedFile instanceof UploadedFile) {
+            return false;
+        }
         $file = new File();
         $file->name = $uploadedFile->getClientOriginalName();
         $file->mime_type = $uploadedFile->getMimeType();

@@ -1,191 +1,158 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends "page" %}
 
-        <title>
-            {% if title %}{{title}} :: {% endif %}
-            {{site_name}}
-        </title>
+{% block body %}
 
-        <link href="{{asset('components/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
-        <link href="{{asset('components/bootstrap-datepicker/dist/css/bootstrap-datepicker.css')}}" rel="stylesheet" type="text/css" />
-        <link href="{{asset('components/jquery-ui/themes/flick/jquery-ui.min.css')}}" rel="stylesheet" type="text/css" />
-        <link href="{{asset('css/jquery.tagit.css')}}" rel="stylesheet" type="text/css">
-        <link href="{{asset('leaflet/leaflet.css')}}" rel="stylesheet" type="text/css">
-        <link href="{{asset('css/app.css')}}" rel="stylesheet" type="text/css" />
+<header class="navbar navbar-inverse navbar-static-top">
 
-        <script type="text/javascript">
-            var baseUrl="{{url('/')}}";
-        </script>
-
-    </head>
-    <body class="controller-{{controller}} action-{{action}}">
-        <header class="navbar navbar-inverse navbar-static-top">
-
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mainmenu" aria-expanded="false">
-                      <span class="sr-only">Toggle navigation</span>
-                      <span class="icon-bar"></span>
-                      <span class="icon-bar"></span>
-                      <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="{{url('/')}}" title="Go to dashboard">{{site_name}}</a>
-                </div>
-
-                <section class="collapse navbar-collapse" id="mainmenu">
-
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="{{url('m')}}" title="Switch to mobile view">Mobile</a></li>
-
-                        {% if user %}
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                You are logged in as {{user.name}}
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="{{url('users/'~user.username)}}">Profile</a></li>
-                                <li><a href="{{url('logout')}}">Log out</a></li>
-                            </ul>
-                        </li>
-                        {% else %}
-                        <li><a href="{{url('login?return_to='~return_to)}}">Log in</a></li>
-                        {% endif %}
-
-                    </ul>
-
-                    <!-- Left Nav Section -->
-                    <ul class="nav navbar-nav navbar-left">
-
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                Assets
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="{{url('assets')}}">Search</a></li>
-                                <li><a href="{{url('assets/map')}}">Map</a></li>
-                                <li><a href="{{url('assets/create')}}">Create</a></li>
-                                <li><a href="{{url('assets/import')}}">Import</a></li>
-                                <li><a href="{{url('contacts')}}">Contacts</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                Jobs
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="{{url('job-lists/scheduled')}}">Scheduled</a></li>
-                                <li><a href="{{url('job-lists/unscheduled')}}">Unscheduled</a></li>
-                                <li><a href="{{url('job-lists')}}">Search</a></li>
-                            </ul>
-                        </li>
-                        {% if user.isAdmin() %}
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                Admin
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="{{url('users')}}">Users</a></li>
-                                <li><a href="{{url('crews')}}">Crews</a></li>
-                                <li><a href="{{url('tags')}}">Tags</a></li>
-                                <li><a href="{{url('job-types')}}">Job Types</a></li>
-                            </ul>
-                        </li>
-                        {% endif  %}
-                    </ul>
-
-                    <form class="navbar-form navbar-right" method="get" id="quick-search" action="{{url('search')}}">
-                        <div class="form-group">
-                            <select name="type" class="form-control">
-                                <option value="a">Asset</option>
-                                <option value="j">Job</option>
-                                <option value="jl">Job List</option>
-                            </select>
-                            <input type="text" name="q" size="10" class="form-control" placeholder="Search..." />
-                            <button class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
-                        </div>
-                    </form>
-
-                    {% for module in modules %}
-                        {% include module~'::nav' ignore missing %}
-                    {% endfor %}
-
-                </section>
-            </div>
-        </header>
-
-        <div id="content" class="container-fluid">
-
-            {% if alerts %}
-            <div class="alerts">
-                {% for alert in alerts %}
-                <div class="alert alert-{{alert.status}} alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    {{alert.message|raw}}
-                </div>
-                {% endfor %}
-            </div>
-            {% endif %}
-
-            {% if breadcrumbs %}
-            <ul class="breadcrumb">
-                <li><a href="{{url('/')}}">Home</a></li>
-                {% for url,title in breadcrumbs %}
-                <li class="{% if loop.last %}active{% endif %}">
-                    <a href="{{url(url)}}">{{title}}</a>
-                </li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-
-            <h1>
-                {{title}}
-                {% block subtitle %}<small>{{subtitle}}</small>{% endblock %}
-            </h1>
-
-            {% block content %}{% endblock %}
-
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mainmenu" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{url('/')}}" title="Go to dashboard">{{site_name}}</a>
         </div>
 
-        <footer>
-            <section class="container-fluid">
-                <ul class="list-inline">
-                    <li>{{app_title}} {{app_version}}</li>
-                    <li>
-                        <a href="http://assetmanager.readthedocs.org/en/latest/" target="_blank"
-                           title="Got to the AssetManager documentation (opens in a new tab)">
-                            Documentation
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://github.com/samwilson/asset-manager/issues" target="_blank"
-                           title="Report a new issue (opens in a new tab)">
-                            Issue Tracker
-                        </a>
-                    </li>
-                </ul>
-            </section>
-        </footer>
+        <section class="collapse navbar-collapse" id="mainmenu">
 
-        <script src="{{asset('components/jquery/jquery.min.js')}}"></script>
-        <script src="{{asset('components/bootstrap/js/bootstrap.min.js')}}"></script>
-        <script src="{{asset('components/bootstrap-datepicker/js/bootstrap-datepicker.js')}}"></script>
-        <script src="{{asset('leaflet/leaflet.js')}}"></script>
-        <script src="{{asset('components/jquery-ui/jquery-ui.min.js')}}"></script>
-        <script src="{{asset('js/tag-it.min.js')}}"></script>
-        <script src="{{asset('js/app.js')}}"></script>
-        {% for script in scripts %}
-            <script type="text/javascript" src="{{asset('js/'~script)}}"></script>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="{{url('m')}}" title="Switch to mobile view">Mobile</a></li>
+
+                {% if user %}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        You are logged in as {{user.name}}
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{url('users/'~user.username)}}">Profile</a></li>
+                        <li><a href="{{url('logout')}}">Log out</a></li>
+                    </ul>
+                </li>
+                {% else %}
+                <li><a href="{{url('login?return_to='~return_to)}}">Log in</a></li>
+                {% endif %}
+
+            </ul>
+
+            <!-- Left Nav Section -->
+            <ul class="nav navbar-nav navbar-left">
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        Assets
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{url('assets')}}">Search</a></li>
+                        <li><a href="{{url('assets/map')}}">Map</a></li>
+                        <li><a href="{{url('assets/create')}}">Create</a></li>
+                        <li><a href="{{url('assets/import')}}">Import</a></li>
+                        <li><a href="{{url('contacts')}}">Contacts</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        Jobs
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{url('job-lists/scheduled')}}">Scheduled</a></li>
+                        <li><a href="{{url('job-lists/unscheduled')}}">Unscheduled</a></li>
+                        <li><a href="{{url('job-lists')}}">Search</a></li>
+                    </ul>
+                </li>
+                {% if user.isAdmin() %}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        Admin
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{url('users')}}">Users</a></li>
+                        <li><a href="{{url('crews')}}">Crews</a></li>
+                        <li><a href="{{url('tags')}}">Tags</a></li>
+                        <li><a href="{{url('job-types')}}">Job Types</a></li>
+                    </ul>
+                </li>
+                {% endif  %}
+            </ul>
+
+            <form class="navbar-form navbar-right" method="get" id="quick-search" action="{{url('search')}}">
+                <div class="form-group">
+                    <select name="type" class="form-control">
+                        <option value="a">Asset</option>
+                        <option value="j">Job</option>
+                        <option value="jl">Job List</option>
+                    </select>
+                    <input type="text" name="q" size="10" class="form-control" placeholder="Search..." value="{{q}}" />
+                    <button class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+                </div>
+            </form>
+
+            {% for module in modules %}
+                {% include module~'::nav' ignore missing %}
+            {% endfor %}
+
+        </section>
+    </div>
+</header>
+
+<div id="content" class="container-fluid">
+
+    {% if alerts %}
+    <div class="alerts">
+        {% for alert in alerts %}
+        <div class="alert alert-{{alert.status}} alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{alert.message|raw}}
+        </div>
         {% endfor %}
+    </div>
+    {% endif %}
 
-    </body>
-</html>
+    {% if breadcrumbs %}
+    <ul class="breadcrumb">
+        <li><a href="{{url('/')}}">Home</a></li>
+        {% for url,title in breadcrumbs %}
+        <li class="{% if loop.last %}active{% endif %}">
+            <a href="{{url(url)}}">{{title}}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <h1>
+        {{title}}
+        {% block subtitle %}<small>{{subtitle}}</small>{% endblock %}
+    </h1>
+
+    {% block content %}{% endblock %}
+
+</div>
+
+<footer>
+    <section class="container-fluid">
+        <ul class="list-inline">
+            <li>{{app_title}} {{app_version}}</li>
+            <li>
+                <a href="http://assetmanager.readthedocs.org/en/latest/" target="_blank"
+                   title="Got to the AssetManager documentation (opens in a new tab)">
+                    Documentation
+                </a>
+            </li>
+            <li>
+                <a href="https://github.com/samwilson/asset-manager/issues" target="_blank"
+                   title="Report a new issue (opens in a new tab)">
+                    Issue Tracker
+                </a>
+            </li>
+        </ul>
+    </section>
+</footer>
+
+{% endblock %}

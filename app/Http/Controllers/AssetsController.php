@@ -42,13 +42,14 @@ class AssetsController extends Controller
         }
 
         // Build and execute query.
-        if ($request->input('search')) {
+        if ($this->view->identifiers || $this->view->identifier || $this->view->tagged) {
             $assets = Asset::query();
             if (!empty($this->view->identifiers)) {
                 $assets->whereIn('identifier', $this->view->identifiers);
             }
             if (!empty($this->view->identifier)) {
                 $assets->where('identifier', 'LIKE', '%' . $this->view->identifier . '%');
+                $this->view->q = $this->view->identifier;
             }
             if ($this->view->tagged) {
                 $assets->tagged($this->view->tagged);
@@ -138,6 +139,7 @@ class AssetsController extends Controller
             'assets/' . $asset->id => $asset->identifier,
         ];
         $this->view->asset = $asset;
+        $this->view->q = $asset->identifier;
         return $this->view;
     }
 
@@ -197,7 +199,9 @@ class AssetsController extends Controller
         $asset->tags()->sync(Tag::getIds($request->input('tags')));
         $asset->categories()->sync($request->input('category_ids', array()));
         $file = File::createFromUploaded($request->file('file'));
-        $asset->files()->attach($file->id);
+        if ($file) {
+            $asset->files()->attach($file->id);
+        }
         return redirect('assets/' . $asset->id);
     }
 }

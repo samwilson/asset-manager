@@ -17,7 +17,10 @@
             {% endif %}
             <dl class="dl-horizontal">
                 <dt>Suburb:</dt>
-                <dd>{{asset.suburb.name}}, {{asset.state.name}} {{asset.state.country.abbreviation}}</dd>
+                <dd>
+                    {% if not asset.suburb.id %}<em>Unknown</em>{% else %}{{asset.suburb.name}},{% endif %}
+                    {{asset.state.name}} {{asset.state.country.abbreviation}}
+                </dd>
                 <dt>Street address:</dt>
                 <dd>{{asset.street_address}}</dd>
                 <dt>Location description:</dt>
@@ -28,16 +31,21 @@
                     <span class="label label-primary">{{tag.name}}</span>
                     {% endfor %}
                 </dd>
-                <dt>Files:</dt>
-                <dd>
-                    {% for file in asset.files %}
-                        <a href="{{url('files/'~file.id)}}" class="img-thumbnail">
-                            <img src="{{url('files/'~file.id~'/t')}}" />
-                            {{file.name}}
-                        </a>
-                    {% endfor %}
-                </dd>
             </dl>
+            <h2>Files</h2>
+            <p>
+                {% if asset.files.count == 0 %}<em>No files attached.</em>{% endif %}
+                {% for file in asset.files %}
+                    <a href="{{url('files/'~file.id)}}" class="img-thumbnail">
+                        {% if file.isImage() %}
+                        <img src="{{url('files/'~file.id~'/t')}}" />
+                        {% else %}
+                            <em class="label label-default">{{file.mime_type}}</em><br />
+                        {% endif %}
+                        {{file.name}}
+                    </a>
+                {% endfor %}
+            </p>
         </div>
         <div class="col-lg-6">
             <div id="asset-location-map" class="map" data-latitude="{{asset.latitude}}" data-longitude="{{asset.longitude}}"></div>
