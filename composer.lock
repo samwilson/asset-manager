@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "fa61f9d827b11da08993432ca355f4df",
-    "content-hash": "a963557f39cf24809beb8bcacbeee942",
+    "hash": "a51276d2ac87d1bf7f0272177f9569f8",
+    "content-hash": "314075e4c4200529d7d3e7408513c3d4",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -60,60 +60,17 @@
             "time": "2016-02-05 20:28:42"
         },
         {
-            "name": "brainbits/fugue-icons-bundle",
-            "version": "3.5.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/brainbits/fugue-icons-bundle.git",
-                "reference": "3b621552dd2f3d3172235f69f2963b70a23f4597"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/brainbits/fugue-icons-bundle/zipball/3b621552dd2f3d3172235f69f2963b70a23f4597",
-                "reference": "3b621552dd2f3d3172235f69f2963b70a23f4597",
-                "shasum": ""
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Brainbits": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "CC-BY-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "Stephan Wentz",
-                    "email": "swentz@brainbits.net",
-                    "role": "Packager"
-                },
-                {
-                    "name": "Yusuke Kamiyamane",
-                    "homepage": "http://p.yusukekamiyamane.com/"
-                }
-            ],
-            "description": "Bundle including the fugue icon set.",
-            "homepage": "http://p.yusukekamiyamane.com/",
-            "keywords": [
-                "fugue",
-                "icons"
-            ],
-            "time": "2013-05-15 12:31:26"
-        },
-        {
             "name": "caffeinated/modules",
-            "version": "v2.2",
+            "version": "v2.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/caffeinated/modules.git",
-                "reference": "502525a4da79adf47dffd6d24d5bd6515423d081"
+                "reference": "ca2904dc9969eecb4a86095c290a76c3e62153fa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/caffeinated/modules/zipball/502525a4da79adf47dffd6d24d5bd6515423d081",
-                "reference": "502525a4da79adf47dffd6d24d5bd6515423d081",
+                "url": "https://api.github.com/repos/caffeinated/modules/zipball/ca2904dc9969eecb4a86095c290a76c3e62153fa",
+                "reference": "ca2904dc9969eecb4a86095c290a76c3e62153fa",
                 "shasum": ""
             },
             "require": {
@@ -154,7 +111,7 @@
                 "laravel",
                 "modules"
             ],
-            "time": "2016-02-03 20:37:15"
+            "time": "2016-02-19 23:33:17"
         },
         {
             "name": "classpreloader/classpreloader",
@@ -833,16 +790,16 @@
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "1.2.2",
+            "version": "1.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "f5d04bdd2881ac89abde1fb78cc234bce24327bb"
+                "reference": "2e89629ff057ebb49492ba08e6995d3a6a80021b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/f5d04bdd2881ac89abde1fb78cc234bce24327bb",
-                "reference": "f5d04bdd2881ac89abde1fb78cc234bce24327bb",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/2e89629ff057ebb49492ba08e6995d3a6a80021b",
+                "reference": "2e89629ff057ebb49492ba08e6995d3a6a80021b",
                 "shasum": ""
             },
             "require": {
@@ -887,7 +844,7 @@
                 "stream",
                 "uri"
             ],
-            "time": "2016-01-23 01:23:02"
+            "time": "2016-02-18 21:54:00"
         },
         {
             "name": "iatstuti/laravel-nullable-fields",
@@ -1217,16 +1174,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.2.14",
+            "version": "v5.2.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "ce63ba53d4891bdbb5e1aaeced1b5dd34edbc86f"
+                "reference": "d4ff9a1e3e9b2f99f8f3e957876e343d804d944f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/ce63ba53d4891bdbb5e1aaeced1b5dd34edbc86f",
-                "reference": "ce63ba53d4891bdbb5e1aaeced1b5dd34edbc86f",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/d4ff9a1e3e9b2f99f8f3e957876e343d804d944f",
+                "reference": "d4ff9a1e3e9b2f99f8f3e957876e343d804d944f",
                 "shasum": ""
             },
             "require": {
@@ -1341,20 +1298,20 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2016-02-03 14:19:04"
+            "time": "2016-02-19 17:58:28"
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.16",
+            "version": "1.0.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "183e1a610664baf6dcd6fceda415baf43cbdc031"
+                "reference": "02f5b6c9a8b9278c8381e3361e7bd9d641c740ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/183e1a610664baf6dcd6fceda415baf43cbdc031",
-                "reference": "183e1a610664baf6dcd6fceda415baf43cbdc031",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/02f5b6c9a8b9278c8381e3361e7bd9d641c740ca",
+                "reference": "02f5b6c9a8b9278c8381e3361e7bd9d641c740ca",
                 "shasum": ""
             },
             "require": {
@@ -1367,8 +1324,7 @@
                 "ext-fileinfo": "*",
                 "mockery/mockery": "~0.9",
                 "phpspec/phpspec": "^2.2",
-                "phpspec/prophecy-phpunit": "~1.0",
-                "phpunit/phpunit": "~4.8"
+                "phpunit/phpunit": "~4.8 || ~5.0"
             },
             "suggest": {
                 "ext-fileinfo": "Required for MimeType",
@@ -1425,7 +1381,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2015-12-19 20:16:43"
+            "time": "2016-02-19 15:35:38"
         },
         {
             "name": "monolog/monolog",
@@ -1895,12 +1851,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rcrowe/TwigBridge.git",
-                "reference": "e41a8397dde4ba7fe945a9aca4fc9e5894fa9f86"
+                "reference": "78a4b7da75042660258a3269751c259eee81c34a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rcrowe/TwigBridge/zipball/e41a8397dde4ba7fe945a9aca4fc9e5894fa9f86",
-                "reference": "e41a8397dde4ba7fe945a9aca4fc9e5894fa9f86",
+                "url": "https://api.github.com/repos/rcrowe/TwigBridge/zipball/78a4b7da75042660258a3269751c259eee81c34a",
+                "reference": "78a4b7da75042660258a3269751c259eee81c34a",
                 "shasum": ""
             },
             "require": {
@@ -1951,7 +1907,7 @@
                 "laravel",
                 "twig"
             ],
-            "time": "2016-01-23 12:12:00"
+            "time": "2016-02-22 07:48:48"
         },
         {
             "name": "robloach/component-installer",
@@ -3103,23 +3059,23 @@
     "packages-dev": [
         {
             "name": "barryvdh/laravel-debugbar",
-            "version": "v2.1.1",
+            "version": "v2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/barryvdh/laravel-debugbar.git",
-                "reference": "974fd16e328ca851a081449100d9509af59cf0ff"
+                "reference": "13b7058d2120c8d5af7f1ada21b7c44dd87b666a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/974fd16e328ca851a081449100d9509af59cf0ff",
-                "reference": "974fd16e328ca851a081449100d9509af59cf0ff",
+                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/13b7058d2120c8d5af7f1ada21b7c44dd87b666a",
+                "reference": "13b7058d2120c8d5af7f1ada21b7c44dd87b666a",
                 "shasum": ""
             },
             "require": {
-                "illuminate/support": "~5.0.17|5.1.*|5.2.*",
+                "illuminate/support": "5.1.*|5.2.*",
                 "maximebf/debugbar": "~1.11.0",
-                "php": ">=5.4.0",
-                "symfony/finder": "~2.6|~3.0"
+                "php": ">=5.5.9",
+                "symfony/finder": "~2.7|~3.0"
             },
             "type": "library",
             "extra": {
@@ -3153,7 +3109,7 @@
                 "profiler",
                 "webprofiler"
             ],
-            "time": "2015-12-22 06:22:38"
+            "time": "2016-02-17 08:32:21"
         },
         {
             "name": "maximebf/debugbar",

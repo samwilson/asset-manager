@@ -19,8 +19,7 @@
         "components/bootstrap-default": "*",
         "eternicode/bootstrap-datepicker": "1.*",
         "components/jqueryui": "1.*",
-        "intervention/image": "*",
-        "brainbits/fugue-icons-bundle": "*"
+        "intervention/image": "*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "2.*",
