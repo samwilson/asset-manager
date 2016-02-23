@@ -18,6 +18,15 @@ class Tag extends \Illuminate\Database\Eloquent\Model
     }
 
     /**
+     * 
+     * @param \App\Model\Tag $otherTag
+     */
+    public function merge(Tag $otherTag)
+    {
+        
+    }
+
+    /**
      * Get a list of Tag IDs from a CSV string.
      * @param string $tagList Comma-separated list of tags.
      * @return array

@@ -2,7 +2,6 @@
 
 // Homepage.
 Route::get('', 'DashboardController@home');
-Route::get('tags.json', 'TagsController@json');
 
 // Files.
 Route::get('files/{id}/{format?}', 'FilesController@view');
@@ -71,6 +70,8 @@ Route::post('jobs/{id}/edit', 'JobsController@save')->where(['id' => '[0-9]+']);
 
 // Tags.
 Route::get('tags', 'TagsController@index');
+Route::get('tags.json', 'TagsController@json');
+Route::post('tags', 'TagsController@save');
 
 // Mobile.
 Route::get('m', 'JobListsController@mobileUser');

@@ -16,6 +16,15 @@ class TagsController extends Controller
         return $this->view;
     }
 
+    public function save(Request $reqest)
+    {
+        $action = $reqest->input('action');
+        if (is_callable([$this, $action])) {
+            return $this->$action($reqest);
+        }
+        return redirect('tags');
+    }
+
     public function json(Request $request)
     {
         $tags = Tag::where('name', 'LIKE', '%' . $request->input('term') . '%')->get();
