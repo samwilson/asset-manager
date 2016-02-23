@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <ol class="inline-list">
+    <ol class="list-inline">
         <li><strong>Type:</strong></li>
         {% if selected_type is not null %}
         <li><a href="{{url('job-lists')}}">All</a></li>
@@ -25,7 +25,7 @@
 
     {% if job_lists.total > 0 %}
     <p>{{job_lists.render()|raw}}</p>
-    <table>
+    <table class="table table-condensed table-striped">
         <thead>
             <tr>
                 {% if user.isClerk() %}

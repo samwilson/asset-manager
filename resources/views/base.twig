@@ -82,12 +82,12 @@
 
             <form class="navbar-form navbar-right" method="get" id="quick-search" action="{{url('search')}}">
                 <div class="form-group">
-                    <select name="type" class="form-control">
-                        <option value="a">Asset</option>
-                        <option value="j">Job</option>
-                        <option value="jl">Job List</option>
+                    <select name="quick_t" class="form-control">
+                        <option value="a" {%if quick_t=='a'%}selected{% endif %}>Asset</option>
+                        <option value="j" {%if quick_t=='j'%}selected{% endif %}>Job</option>
+                        <option value="jl" {%if quick_t=='jl'%}selected{% endif %}>Job List</option>
                     </select>
-                    <input type="text" name="q" size="10" class="form-control" placeholder="Search..." value="{{q}}" />
+                    <input type="text" name="quick_s" size="10" class="form-control" placeholder="Search..." value="{{quick_s}}" />
                     <button class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
                 </div>
             </form>

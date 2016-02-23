@@ -49,7 +49,7 @@ class AssetsController extends Controller
             }
             if (!empty($this->view->identifier)) {
                 $assets->where('identifier', 'LIKE', '%' . $this->view->identifier . '%');
-                $this->view->q = $this->view->identifier;
+                $this->view->quick_s = $this->view->identifier;
             }
             if ($this->view->tagged) {
                 $assets->tagged($this->view->tagged);
@@ -71,6 +71,7 @@ class AssetsController extends Controller
         $this->view->breadcrumbs = [
             'assets' => 'Assets',
         ];
+        $this->view->quick_t = 'a';
         return $this->view;
     }
 
@@ -139,7 +140,7 @@ class AssetsController extends Controller
             'assets/' . $asset->id => $asset->identifier,
         ];
         $this->view->asset = $asset;
-        $this->view->q = $asset->identifier;
+        $this->view->quick_s = $asset->identifier;
         return $this->view;
     }
 

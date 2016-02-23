@@ -29,6 +29,14 @@ class JobListsController extends Controller
             $jobLists->where('type_id', $this->view->selected_type);
         }
 
+        // Identifier.
+        $this->view->name = $request->input('name');
+        if ($this->view->name !== null) {
+            $jobLists->where('name', 'LIKE', '%'.$this->view->name.'%');
+            $this->view->quick_s = $this->view->name;
+            $this->view->quick_t = 'jl';
+        }
+
         $this->view->job_lists = $jobLists->paginate(50);
         return $this->view;
     }

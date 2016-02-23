@@ -71,6 +71,8 @@ class JobsController extends Controller
         ];
         $this->view->title = 'Job #' . $job->id;
         $this->view->job = $job;
+        $this->view->quick_t = 'j';
+        $this->view->quick_s = $job->id;
         return $this->view;
     }
 }
