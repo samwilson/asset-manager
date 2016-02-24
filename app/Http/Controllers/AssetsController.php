@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use App\Http\Controllers\Controller;
 use App\Model\Asset;
-use App\Model\Category;
 use App\Model\File;
 use App\Model\Tag;
 use App\Model\State;
@@ -145,7 +144,6 @@ class AssetsController extends Controller
         }
         $this->view->asset = Asset::find($id);
         $this->view->title = 'Editing Asset ' . $this->view->asset->identifier;
-        $this->view->categories = Category::where('parent_id', null)->orderBy('name', 'ASC')->get();
         $this->view->states = State::orderBy('name')->get();
         $this->view->suburbs = Suburb::orderBy('name')->get();
         $this->view->breadcrumbs = [
@@ -166,7 +164,6 @@ class AssetsController extends Controller
             'assets' => 'Assets',
             'assets/create' => 'Create',
         ];
-        $this->view->categories = Category::where('parent_id', null)->orderBy('name', 'ASC')->get();
         $this->view->states = State::all();
         $this->view->suburbs = Suburb::all();
         $this->view->asset = new Asset();

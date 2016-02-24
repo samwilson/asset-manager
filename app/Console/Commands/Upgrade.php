@@ -198,7 +198,7 @@ class Upgrade extends \Illuminate\Console\Command
                 $table->timestamps();
             });
         }
-        if (!Schema::hasTable('asset_category')) {
+        if (Schema::hasTable('asset_category')) {
             $this->info("Dropping 'asset_category' table.");
             Schema::drop('asset_category');
         }

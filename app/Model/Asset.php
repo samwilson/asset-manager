@@ -32,11 +32,6 @@ class Asset extends Taggable
         return $this->belongsToMany('App\Model\Contact');
     }
 
-    public function categories()
-    {
-        return $this->belongsToMany('App\Model\Category');
-    }
-
     public function jobs()
     {
         return $this->hasMany('App\Model\Job');
