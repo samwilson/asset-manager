@@ -1,16 +1,20 @@
 <?php
 
+namespace AssetManager\Tests;
+
 use App\Model\Job;
 use App\Model\JobList;
 use App\Model\Tag;
 
-class JobListTest extends TestCase {
+class JobListTest extends TestCase
+{
 
     /**
      * @testdox A Job List is a collection of Assets that must have some Tasks performed on them.
      * @test
      */
-    public function basic() {
+    public function basic()
+    {
         $jobList = new JobList();
         $this->assertEquals(0, $jobList->jobs->count());
     }
@@ -19,7 +23,8 @@ class JobListTest extends TestCase {
      * @testdox Tags can be added to Job Lists.
      * @test
      */
-    public function tags() {
+    public function tags()
+    {
         $type = new \App\Model\JobType();
         $type->save();
         $jobList = new JobList();
@@ -32,7 +37,8 @@ class JobListTest extends TestCase {
     /**
      * @testdox A JobList has a list of attached Jobs.
      */
-    public function jobs() {
+    public function jobs()
+    {
         $type = new \App\Model\JobType();
         $type->save();
         $jobList = new JobList();
@@ -61,5 +67,4 @@ class JobListTest extends TestCase {
         $job->save();
         $this->assertEquals(50, $jobList->percentIncomplete());
     }
-
 }

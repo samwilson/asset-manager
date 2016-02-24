@@ -1,12 +1,16 @@
 <?php
 
-class ContactTest extends TestCase {
+namespace AssetManager\Tests;
+
+class ContactTest extends TestCase
+{
 
     /**
      * @testdox A Contact has a name and two optional phone numbers. They are allocated an ID number.
      * @test
      */
-    public function basic() {
+    public function basic()
+    {
         $contact = new \App\Model\Contact();
         $contact->name = 'Test Person';
         $contact->phone_1 = '12345';
@@ -22,7 +26,8 @@ class ContactTest extends TestCase {
      * @testdox Contacts can be related to any number of assets.
      * @test
      */
-    public function assets() {
+    public function assets()
+    {
         
     }
 
@@ -30,16 +35,18 @@ class ContactTest extends TestCase {
      * @testdox Every time a Contact is contacted, details of the interaction can be recorded.
      * @test
      */
-    public function contacts() {
+    public function contacts()
+    {
         
     }
 
     /**
-     * @testdox A Job Type can require a Contact to be contacted, so a Contact can have a list of outstanding required contact-attempts.
+     * A Job Type can require a Contact to be contacted, so a Contact can have a list of outstanding required
+     * contact-attempts.
      * @test
      */
-    public function requirement() {
+    public function requirement()
+    {
         
     }
-
 }

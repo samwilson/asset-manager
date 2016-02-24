@@ -1,6 +1,6 @@
 <?php
 
-/***
+/* * *
  * Choose from: bootstrap, foundation, materialize
  * or create your own theme inside resources/views/pagination/
  * If you create a theme for a popular CSS framework
@@ -8,5 +8,5 @@
  * Or send me the template to admin@styde.net
  */
 return array(
-    'theme' => 'foundation'
+    'theme' => 'bootstrap'
 );

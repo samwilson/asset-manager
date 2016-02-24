@@ -18,12 +18,23 @@ class Tag extends \Illuminate\Database\Eloquent\Model
     }
 
     /**
-     * 
+     * Merge a tag into this one, bringing with it all Assets and JobLists.
+     *
      * @param \App\Model\Tag $otherTag
      */
     public function merge(Tag $otherTag)
     {
-        
+        if ($otherTag->id === $this->id) {
+            return;
+        }
+
+        $params = ['t' => $this->id, 'ot' => $otherTag->id];
+        \DB::update("UPDATE IGNORE asset_tag SET tag_id = :t WHERE tag_id = :ot", $params);
+        \DB::delete("DELETE FROM asset_tag WHERE tag_id = :ot", ['ot' => $otherTag->id]);
+        \DB::update("UPDATE IGNORE job_list_tag SET tag_id = :t WHERE tag_id = :ot", $params);
+        \DB::delete("DELETE FROM job_list_tag WHERE tag_id = :ot", ['ot' => $otherTag->id]);
+
+        $otherTag->delete();
     }
 
     /**
@@ -38,7 +49,7 @@ class Tag extends \Illuminate\Database\Eloquent\Model
             if (empty($t)) {
                 continue;
             }
-            $tag = self::firstOrCreate(['name' => $t]);
+            $tag = self::firstOrCreate(['name' => trim($t)]);
             $out[$tag->id] = $tag->id;
         }
         return $out;

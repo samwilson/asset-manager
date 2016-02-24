@@ -1,16 +1,20 @@
 <?php
 
+namespace AssetManager\Tests;
+
 use App\Model\Asset;
 use App\Model\Contact;
 use App\Model\Tag;
 
-class AssetTest extends TestCase {
+class AssetTest extends TestCase
+{
 
     /**
      * @testdox Assets have a unique alphanumeric identifier of up to 150 characters.
      * @test
      */
-    public function asset() {
+    public function asset()
+    {
         $asset = new Asset();
         $asset->identifier = 'TEST123';
         $asset->save();
@@ -26,7 +30,8 @@ class AssetTest extends TestCase {
      * @testdox Assets have zero or more Contacts.
      * @test
      */
-    public function contacts() {
+    public function contacts()
+    {
         $asset = new Asset();
         $asset->identifier = 'TEST123';
         $asset->save();
@@ -42,7 +47,8 @@ class AssetTest extends TestCase {
      * @testdox Assets can be tagged.
      * @test
      */
-    public function tags() {
+    public function tags()
+    {
         $asset = new Asset();
         $asset->identifier = 'TEST123';
         $asset->save();
@@ -62,10 +68,12 @@ class AssetTest extends TestCase {
     }
 
     /**
-     * @testdox When adding a comment to an Asset, if the comment is already part of the Asset's comment then the new comment will not be added.
+     * When adding a comment to an Asset, if the comment is already part of the Asset's comment then the new
+     * comment will not be added.
      * @test
      */
-    public function comments() {
+    public function comments()
+    {
         $asset = new Asset();
         $asset->identifier = 'TEST123';
 
@@ -84,5 +92,4 @@ class AssetTest extends TestCase {
         $asset->save();
         $this->assertEquals("Test comment.\n\nBlah.", $asset->comments);
     }
-
 }

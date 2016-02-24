@@ -1,15 +1,19 @@
 <?php
 
+namespace AssetManager\Tests;
+
 use App\Model\Crew;
 use App\Model\CrewUnavailability;
 
-class CrewTest extends TestCase {
+class CrewTest extends TestCase
+{
 
     /**
      * @testdox A crew is initially available to work at any time.
      * @test
      */
-    public function availableAnytime() {
+    public function availableAnytime()
+    {
         $crew = new Crew(['name' => 'Test Crew']);
         $crew->save();
         $this->assertEmpty($crew->crewDates);
@@ -19,7 +23,8 @@ class CrewTest extends TestCase {
     /**
      * @testdox Crews' dates of unavailability are those date periods during which they can not work.
      */
-    public function dates() {
+    public function dates()
+    {
         $crew = new Crew(['name' => 'Test Crew']);
         $crew->save();
 
@@ -65,5 +70,4 @@ class CrewTest extends TestCase {
         $this->assertTrue($crew->availableOn('2015-10-04'));
         $this->assertFalse($crew->availableOn('2015-10-06'));
     }
-
 }

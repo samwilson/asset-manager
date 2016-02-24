@@ -36,7 +36,7 @@ $(document).ready(function () {
     /**
      * Tag (and other tag-like) auto-completing.
      */
-    $(":input.tagit").each(function(){
+    $(":input.tagit").each(function () {
         var sourceUrl = ($(this).data("url")) ? $(this).data("url") : baseUrl + "/tags.json";
         $(this).tagit({
             "allowSpaces": true,

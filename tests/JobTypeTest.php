@@ -1,12 +1,16 @@
 <?php
 
-class JobTypeTest extends TestCase {
+namespace AssetManager\Tests;
+
+class JobTypeTest extends TestCase
+{
 
     /**
      * @testdox Job Types are identified by a name and two colours (background and foreground; these are optional).
      * @test
      */
-    public function basic() {
+    public function basic()
+    {
         $jobType = new \App\Model\JobType();
         $jobType->name = 'test';
         $jobType->colour = 'red';
@@ -21,7 +25,8 @@ class JobTypeTest extends TestCase {
      * @testdox Each JobType has a workflow of Questions that is initially empty.
      * @test
      */
-    public function workflow() {
+    public function workflow()
+    {
         $jobType = new \App\Model\JobType();
         $jobType->name = 'test';
         $jobType->save();
@@ -32,7 +37,8 @@ class JobTypeTest extends TestCase {
      * @testdox Some Job Types require Contacts to be contacted prior to work being carried out.
      * @test
      */
-    public function contacts() {
+    public function contacts()
+    {
 //        $jobType = new \App\Model\JobType();
 //        $jobType->name = 'test';
 //        $jobType->save();
@@ -40,7 +46,6 @@ class JobTypeTest extends TestCase {
 //        $jobType->contact_required = true;
 //        $jobType->save();
 //        $this->assertTrue($jobType->contact_required);
-        // Create 2 assets, add them to a Job List of this type, add a contact for them, and 
+        // Create 2 assets, add them to a Job List of this type, add a contact for them, and
     }
-
 }

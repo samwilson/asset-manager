@@ -1,16 +1,20 @@
 <?php
 
+namespace AssetManager\Tests;
+
 use App\Model\User;
 use App\Model\UserUnavailability;
 use App\Model\QueuedEmail;
 
-class UserTest extends TestCase {
+class UserTest extends TestCase
+{
 
     /**
      * @testdox Dates of non-availability can be specified for users (in exactly the same way as for Crews).
      * @test
      */
-    public function dates() {
+    public function dates()
+    {
         $user = new User(['username' => 'test']);
         $user->save();
 
@@ -37,11 +41,11 @@ class UserTest extends TestCase {
      * @testdox Requesting a password reminder adds an item to the Mail Queue.
      * @test
      */
-    public function email_reminder() {
+    public function emailReminder()
+    {
         $user = new User(['username' => 'test']);
         $user->save();
         $user->sendPasswordReminder();
         $this->assertEquals(1, QueuedEmail::count());
     }
-
 }

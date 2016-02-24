@@ -1,14 +1,18 @@
 <?php
 
+namespace AssetManager\Tests;
+
 use App\Model\Category;
 
-class CategoryTest extends TestCase {
+class CategoryTest extends TestCase
+{
 
     /**
      * @testdox An Asset Category has a unique name, and optionally a parent (and therefore also children).
      * @test
      */
-    public function asset() {
+    public function asset()
+    {
         $parentCat = new Category();
         $parentCat->name = 'Parent';
         $parentCat->save();
@@ -27,7 +31,8 @@ class CategoryTest extends TestCase {
      * @testdox Categories can be nested to any depth.
      * @test
      */
-    public function nesting() {
+    public function nesting()
+    {
         $parent = new Category();
         $parent->name = 'Parent';
         $parent->save();
@@ -44,5 +49,4 @@ class CategoryTest extends TestCase {
         $this->assertCount(1, $child1->getChildren());
         $this->assertCount(0, $child2->getChildren());
     }
-
 }

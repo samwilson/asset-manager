@@ -1,5 +1,7 @@
 <?php
 
+namespace AssetManager\Tests;
+
 use App\Model\JobResolution;
 
 class JobResolutionTest extends TestCase

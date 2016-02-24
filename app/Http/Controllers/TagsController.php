@@ -11,18 +11,40 @@ class TagsController extends Controller
 
     public function index()
     {
+        $this->view->breadcrumbs = [
+            'tags' => 'Tags',
+        ];
         $this->view->title = 'Tags';
         $this->view->tags = \App\Model\Tag::orderBy('name')->get();
         return $this->view;
     }
 
-    public function save(Request $reqest)
+    public function save(Request $request)
     {
-        $action = $reqest->input('action');
-        if (is_callable([$this, $action])) {
-            return $this->$action($reqest);
+        if (!$this->user || !$this->user->isAdmin()) {
+            $this->alert('info', trans('tags.not-allowed'));
+            return redirect('tags');
+        }
+        if ($request->input('merge')) {
+            $this->merge($request);
         }
         return redirect('tags');
+    }
+
+    protected function merge(Request $request)
+    {
+        $tagIds = $request->input('tags');
+        $firstTag = Tag::find($tagIds[0]);
+        if (!$firstTag) {
+            return;
+        }
+        foreach ($tagIds as $tagId) {
+            $tag = Tag::find($tagId);
+            if (!$tag) {
+                continue;
+            }
+            $firstTag->merge($tag);
+        }
     }
 
     public function json(Request $request)

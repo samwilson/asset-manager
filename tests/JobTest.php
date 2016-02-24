@@ -1,5 +1,7 @@
 <?php
 
+namespace AssetManager\Tests;
+
 use App\Model\Job;
 use App\Model\JobList;
 
