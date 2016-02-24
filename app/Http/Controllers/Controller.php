@@ -36,11 +36,11 @@ abstract class Controller extends BaseController
         // Set up the view based on the module, controller, and action names.
         $viewFile = "$controller.$action";
         foreach (\Module::slugs() as $mod) {
-            if (view()->exists("$mod::$viewFile")) {
+            if (view_exists("$mod::$viewFile")) {
                 $this->view = view("$mod::$viewFile");
             }
         }
-        if (!$this->view && view()->exists($viewFile)) {
+        if (!$this->view && view_exists($viewFile)) {
             $this->view = view($viewFile);
         } elseif (!$this->view) {
             $this->view = view('base');

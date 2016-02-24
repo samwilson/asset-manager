@@ -46,7 +46,7 @@ class Handler extends ExceptionHandler
     protected function renderHttpException(HttpException $e)
     {
         $status = $e->getStatusCode();
-        if (view()->exists("errors.{$status}")) {
+        if (view_exists("errors.{$status}")) {
             $viewData = [
                 'app_env' => env('APP_ENV'),
                 'app_version' => config('app.version'),
