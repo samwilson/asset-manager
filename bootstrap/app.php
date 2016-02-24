@@ -52,6 +52,12 @@ $app->configureMonologUsing(function (Monolog\Logger $monolog) {
 });
 
 
+/**
+ * Require our helpers file.
+ */
+require app_path().'/helpers.php';
+
+
 /*
 |--------------------------------------------------------------------------
 | Return The Application
