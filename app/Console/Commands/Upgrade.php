@@ -198,25 +198,15 @@ class Upgrade extends \Illuminate\Console\Command
                 $table->timestamps();
             });
         }
-        if (!Schema::hasTable('categories')) {
-            $this->info("Creating 'categories' table.");
-            Schema::create('categories', function (Blueprint $table) {
-                $table->increments('id');
-                $table->string('name')->unique();
-                $table->integer('parent_id')->unsigned()->nullable();
-                $table->foreign('parent_id')->references('id')->on('categories');
-                $table->timestamps();
-            });
-        }
         if (!Schema::hasTable('asset_category')) {
-            $this->info("Creating 'asset_category' table.");
-            Schema::create('asset_category', function (Blueprint $table) {
-                $table->integer('asset_id')->unsigned();
-                $table->foreign('asset_id')->references('id')->on('assets');
-                $table->integer('category_id')->unsigned();
-                $table->foreign('category_id')->references('id')->on('categories');
-                $table->primary(['asset_id', 'category_id']);
-            });
+            $this->info("Dropping 'asset_category' table.");
+            Schema::drop('asset_category');
+        }
+        if (Schema::hasTable('categories')) {
+            $this->info("Dropping 'categories' table.");
+            \DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+            Schema::drop('categories');
+            \DB::statement('SET FOREIGN_KEY_CHECKS = 1');
         }
         if (!Schema::hasTable('tags')) {
             $this->info("Creating 'tags' table.");

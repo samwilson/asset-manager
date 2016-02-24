@@ -23,15 +23,6 @@ form small.markdown { margin-bottom:1rem; font-size:smaller; border:1px solid #c
 
 a.disabled { cursor:not-allowed }
 
-ol.categorytree { margin:0 0.5em 0 1em; text-align:left; list-style-type:none }
-ol.categorytree .toggle { cursor:pointer }
-ol.categorytree label { background:0; border:0; font-weight:normal; display:inline!important }
-ol.categorytree input { display:inline; width:auto; margin:0 }
-ol.categorytree .description { font-size:smaller; color:#069; margin-left:2em }
-ol.categorytree .description p { margin:0 }
-ol.categorytree .description ol { list-style-type:decimal; margin:0 0 0 2em }
-ol.categorytree .description ul { list-style-type:circle; margin:0 0 0 2em }
-
 .map { height:450px; border:1px solid #ddd }
 
 table.calendar { border-collapse:collapse }

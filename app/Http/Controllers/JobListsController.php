@@ -141,7 +141,6 @@ class JobListsController extends Controller
         $assetIdentifiers = preg_split('/(\n|\r)/', $request->input('identifiers', ''), null, PREG_SPLIT_NO_EMPTY);
         $identifiers = array_map('trim', $assetIdentifiers);
         $identifier = trim($request->input('identifier'));
-        $categoryIds = collect($request->input('category_ids'));
         $tagged = $request->input('tagged');
 
         // Build and execute query.
@@ -151,11 +150,6 @@ class JobListsController extends Controller
         }
         if (!empty($identifier)) {
             $assets->where('identifier', 'LIKE', "%$identifier%");
-        }
-        if ($categoryIds->count() > 0) {
-            $assets->whereHas('categories', function ($query) {
-                $query->whereIn('id', $categoryIds);
-            })->get();
         }
         if ($tagged) {
             $assets->tagged($tagged);

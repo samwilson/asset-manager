@@ -34,7 +34,6 @@ class AssetsController extends Controller
         $this->view->identifier = trim($request->input('identifier'));
         $this->view->tagged = $request->input('tagged');
         $this->view->not_tagged = $request->input('not_tagged');
-        $this->view->categoryIds = collect($request->input('category_ids'));
 
         // No assets at all?
         if (Asset::count() === 0) {
@@ -54,11 +53,6 @@ class AssetsController extends Controller
             if ($this->view->tagged) {
                 $assets->tagged($this->view->tagged);
             }
-            if ($this->view->categoryIds->count() > 0) {
-                $assets->whereHas('categories', function ($query) {
-                    $query->whereIn('id', $this->view->categoryIds);
-                })->get();
-            }
             $this->view->assets = $assets->paginate(50);
             if ($this->view->assets->total() === 0) {
                 $this->alert('success', 'No assets found with the given criteria.', false);
@@ -66,7 +60,6 @@ class AssetsController extends Controller
         }
 
         // Add extra view data, and return.
-        $this->view->categories = Category::where('parent_id', null)->orderBy('name', 'ASC')->get();
         $this->view->title = 'Assets';
         $this->view->breadcrumbs = [
             'assets' => 'Assets',
@@ -160,7 +153,6 @@ class AssetsController extends Controller
             'assets/' . $this->view->asset->id => $this->view->asset->identifier,
             'assets/' . $this->view->asset->id . '/edit' => 'Edit',
         ];
-        $this->view->selectedCategories = $this->view->asset->categories;
         return $this->view;
     }
 
@@ -198,7 +190,6 @@ class AssetsController extends Controller
         $asset->comments = $request->input('comments');
         $asset->save();
         $asset->tags()->sync(Tag::getIds($request->input('tags')));
-        $asset->categories()->sync($request->input('category_ids', array()));
         $file = File::createFromUploaded($request->file('file'));
         if ($file) {
             $asset->files()->attach($file->id);
