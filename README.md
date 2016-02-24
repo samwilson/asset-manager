@@ -7,6 +7,7 @@ and a job scheduling system for managing work performed on the assets.
 * Documentation: [![Documentation Status](http://readthedocs.org/projects/assetmanager/badge/?version=latest)](http://assetmanager.readthedocs.org/en/latest/?badge=latest)
 * Homepage: https://github.com/samwilson/asset-manager
 * Test results: [![Build Status](https://img.shields.io/travis/samwilson/asset-manager.svg)](https://travis-ci.org/samwilson/asset-manager)
+* Code quality: [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/samwilson/asset-manager/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/samwilson/asset-manager/?branch=master)
 * License: [![GPL-3.0+](https://img.shields.io/github/license/samwilson/asset-manager.svg)](https://github.com/samwilson/asset-manager/blob/master/LICENSE.html)
 
 ## Installing
