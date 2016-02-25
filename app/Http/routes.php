@@ -31,7 +31,8 @@ Route::post('crews/{id}/edit', 'CrewsController@save');
 // Assets.
 Route::get('assets', 'AssetsController@index');
 Route::post('assets', 'AssetsController@index');
-Route::get('assets/map', 'AssetsController@map');
+Route::any('assets/map', 'AssetsController@map');
+Route::get('assets.geojson', 'AssetsController@mapJson');
 Route::get('assets/{id}', 'AssetsController@view')->where(['id' => '[0-9]+']);
 Route::get('assets/{id}/edit', 'AssetsController@edit')->where(['id' => '[0-9]+']);
 Route::get('assets/create', 'AssetsController@create');

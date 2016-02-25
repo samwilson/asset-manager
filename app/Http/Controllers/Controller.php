@@ -60,6 +60,7 @@ abstract class Controller extends BaseController
         $this->view->tab = 'schedule';
         $this->view->alerts = \Session::get('alerts', array());
         $this->view->modules = \Module::slugs();
+        $this->view->bing_key = env('BING_KEY');
     }
 
     /**

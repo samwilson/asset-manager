@@ -39,7 +39,12 @@ $(document).ready(function () {
             + ' You can <a href="http://wiki.openstreetmap.org/wiki/Beginners\'_guide" target="_blank" title="Opens in new tab">edit this map</a>!';
         var centre = [0,0]; //[-32.05454466592707, 115.74644923210144]; // Fremantle!
         var map = L.map($(this).attr("id")).setView(centre, 16);
-        L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: attrib}).addTo(map);
+        // OSM layer
+        var osmLayer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: attrib}).addTo(map);
+        // Bing layer. Imagery set can be: Aerial | AerialWithLabels | Birdseye | BirdseyeWithLabels | Road
+        var bingLayer = new L.BingLayer(bingKey, {type: "AerialWithLabels"});
+        map.addLayer(bingLayer);
+        map.addControl(new L.Control.Layers({'OSM':osmLayer, "Bing":bingLayer}, {}));
 
         // Single point?
         var latitude = $(this).data("latitude");

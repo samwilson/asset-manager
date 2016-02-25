@@ -14,6 +14,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $ven = base_path() . '/vendor';
+        $assets = [
+            "$ven/shramov/leaflet-plugins/layer/tile/Bing.js" => public_path('vendor/Bing.js'),
+        ];
+        $this->publishes($assets, 'app');
     }
 
     /**

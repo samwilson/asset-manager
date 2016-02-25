@@ -19,7 +19,8 @@
         "components/bootstrap-default": "*",
         "eternicode/bootstrap-datepicker": "1.*",
         "components/jqueryui": "1.*",
-        "intervention/image": "*"
+        "intervention/image": "*",
+        "shramov/leaflet-plugins": "*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "2.*",
@@ -45,7 +46,8 @@
             "php artisan clear-compiled"
         ],
         "post-update-cmd": [
-            "php artisan optimize"
+            "php artisan optimize",
+            "php artisan vendor:publish --tag=app --force"
         ],
         "post-root-package-install": [
             "php -r \"copy('.env.example', '.env');\""
@@ -57,5 +59,20 @@
     "config": {
         "preferred-install": "dist",
         "component-dir": "public/components"
-    }
+    },
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "shramov/leaflet-plugins",
+                "version": "1.4.3",
+                "source": {
+                    "url": "https://github.com/shramov/leaflet-plugins.git",
+                    "type": "git",
+                    "reference": "1.4.3"
+                }
+            }
+        }
+
+    ]
 }

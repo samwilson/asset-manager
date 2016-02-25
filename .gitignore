@@ -10,4 +10,5 @@
 /tests/testdox.txt
 /docs/_build
 /public/components
+/public/vendor
 /storage/files

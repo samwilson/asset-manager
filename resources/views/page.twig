@@ -20,6 +20,7 @@
 
         <script type="text/javascript">
             var baseUrl="{{url('/')}}";
+            var bingKey="{{bing_key}}";
         </script>
     </head>
 
@@ -31,11 +32,12 @@
         <script src="{{asset('components/bootstrap/js/bootstrap.min.js')}}"></script>
         <script src="{{asset('components/bootstrap-datepicker/js/bootstrap-datepicker.js')}}"></script>
         <script src="{{asset('leaflet/leaflet.js')}}"></script>
+        <script src="{{asset('vendor/Bing.js')}}"></script>
         <script src="{{asset('components/jquery-ui/jquery-ui.min.js')}}"></script>
         <script src="{{asset('js/tag-it.min.js')}}"></script>
         <script src="{{asset('js/app.js')}}"></script>
         {% for script in scripts %}
-            <script type="text/javascript" src="{{asset('js/'~script)}}"></script>
+            <script type="text/javascript" src="{{asset(script)}}"></script>
         {% endfor %}
     </body>
 

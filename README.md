@@ -48,3 +48,4 @@ AssetManager is built using these terrific packages:
 * http://aehlke.github.io/tag-it
 * https://github.com/deringer/laravel-nullable-fields
 * http://image.intervention.io
+* https://github.com/shramov/leaflet-plugins

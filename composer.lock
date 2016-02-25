@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0d2121451bffe10e88549b5e627d1d4a",
-    "content-hash": "314075e4c4200529d7d3e7408513c3d4",
+    "hash": "d583e8b4652e9266163facd77ada83a1",
+    "content-hash": "842f5186ce241b07c0e159b49ffd5423",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -61,16 +61,16 @@
         },
         {
             "name": "caffeinated/modules",
-            "version": "v2.2.3",
+            "version": "v2.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/caffeinated/modules.git",
-                "reference": "ca2904dc9969eecb4a86095c290a76c3e62153fa"
+                "reference": "987a44c864c9d6292be653787ff8702df2d527ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/caffeinated/modules/zipball/ca2904dc9969eecb4a86095c290a76c3e62153fa",
-                "reference": "ca2904dc9969eecb4a86095c290a76c3e62153fa",
+                "url": "https://api.github.com/repos/caffeinated/modules/zipball/987a44c864c9d6292be653787ff8702df2d527ce",
+                "reference": "987a44c864c9d6292be653787ff8702df2d527ce",
                 "shasum": ""
             },
             "require": {
@@ -111,7 +111,7 @@
                 "laravel",
                 "modules"
             ],
-            "time": "2016-02-19 23:33:17"
+            "time": "2016-02-24 19:14:41"
         },
         {
             "name": "classpreloader/classpreloader",
@@ -290,16 +290,16 @@
         },
         {
             "name": "components/jquery",
-            "version": "2.2.0",
+            "version": "2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/components/jquery.git",
-                "reference": "d8b2ac0c1978e9ed8602789123976b1c7161ef96"
+                "reference": "7894addbce3c4de6f82449610e6f8e168b49e9b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/components/jquery/zipball/d8b2ac0c1978e9ed8602789123976b1c7161ef96",
-                "reference": "d8b2ac0c1978e9ed8602789123976b1c7161ef96",
+                "url": "https://api.github.com/repos/components/jquery/zipball/7894addbce3c4de6f82449610e6f8e168b49e9b0",
+                "reference": "7894addbce3c4de6f82449610e6f8e168b49e9b0",
                 "shasum": ""
             },
             "type": "component",
@@ -328,7 +328,7 @@
             ],
             "description": "jQuery JavaScript Library",
             "homepage": "http://jquery.com",
-            "time": "2016-01-08 23:29:41"
+            "time": "2016-02-24 08:16:25"
         },
         {
             "name": "components/jqueryui",
@@ -1174,16 +1174,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.2.20",
+            "version": "v5.2.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "d4ff9a1e3e9b2f99f8f3e957876e343d804d944f"
+                "reference": "4df24638165650a833e072851cad39606da89faf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/d4ff9a1e3e9b2f99f8f3e957876e343d804d944f",
-                "reference": "d4ff9a1e3e9b2f99f8f3e957876e343d804d944f",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/4df24638165650a833e072851cad39606da89faf",
+                "reference": "4df24638165650a833e072851cad39606da89faf",
                 "shasum": ""
             },
             "require": {
@@ -1198,7 +1198,7 @@
                 "nesbot/carbon": "~1.20",
                 "paragonie/random_compat": "~1.1",
                 "php": ">=5.5.9",
-                "psy/psysh": "0.6.*",
+                "psy/psysh": "0.7.*",
                 "swiftmailer/swiftmailer": "~5.1",
                 "symfony/console": "2.8.*|3.0.*",
                 "symfony/debug": "2.8.*|3.0.*",
@@ -1298,7 +1298,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2016-02-19 17:58:28"
+            "time": "2016-02-24 15:13:36"
         },
         {
             "name": "league/flysystem",
@@ -1775,16 +1775,16 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.6.1",
+            "version": "v0.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "0f04df0b23663799a8941fae13cd8e6299bde3ed"
+                "reference": "1573b36948a32bdaf43db525edf5e95d5a08ed06"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/0f04df0b23663799a8941fae13cd8e6299bde3ed",
-                "reference": "0f04df0b23663799a8941fae13cd8e6299bde3ed",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/1573b36948a32bdaf43db525edf5e95d5a08ed06",
+                "reference": "1573b36948a32bdaf43db525edf5e95d5a08ed06",
                 "shasum": ""
             },
             "require": {
@@ -1843,7 +1843,7 @@
                 "interactive",
                 "shell"
             ],
-            "time": "2015-11-12 16:18:56"
+            "time": "2016-02-20 16:27:05"
         },
         {
             "name": "rcrowe/twigbridge",
@@ -1956,6 +1956,16 @@
             ],
             "description": "Allows installation of Components via Composer.",
             "time": "2015-08-10 12:35:38"
+        },
+        {
+            "name": "shramov/leaflet-plugins",
+            "version": "1.4.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/shramov/leaflet-plugins.git",
+                "reference": "1.4.3"
+            },
+            "type": "library"
         },
         {
             "name": "styde/blade-pagination",
