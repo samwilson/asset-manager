@@ -41,7 +41,7 @@ class JobTest extends TestCase
         $job = new Job();
         $job->job_list_id = $jobList->id;
         $job->save();
-        $this->assertEquals(Job::STATUS_INCOMPLETE, $job->status());
+        $this->assertEquals('Incomplete', $job->status());
     }
 
     /**
@@ -59,7 +59,7 @@ class JobTest extends TestCase
         $job = new Job();
         $job->job_list_id = $jobList->id;
         $job->save();
-        $this->assertEquals(Job::STATUS_INCOMPLETE, $job->status());
+        $this->assertEquals('Incomplete', $job->status());
         //$job->resolution
     }
 }

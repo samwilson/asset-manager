@@ -3,12 +3,12 @@
 {% block content %}
 
 <ul>
-    <li><a href="{{url('assets')}}">{{asset_count|number_format}} Assets</a></li>
-    <li><a href="{{url('job-lists')}}">{{job_list_count|number_format}} Job Lists</a></li>
-    <li><a href="{{url('jobs')}}">{{job_count|number_format}} Jobs</a></li>
-    <li><a href="{{url('users')}}">{{user_count|number_format}} Users</a></li>
-    <li><a href="{{url('crews')}}">{{crew_count|number_format}} Crews</a></li>
-    <li><a href="{{url('tags')}}">{{tag_count|number_format}} Tags</a></li>
+    <li><a href="{{url('assets')}}">{{asset_count|number_format}} Asset{% if asset_count != 1 %}s{% endif %}</a></li>
+    <li><a href="{{url('job-lists')}}">{{job_list_count|number_format}} Job List{% if job_list_count != 1 %}s{% endif %}</a></li>
+    <li><a href="{{url('jobs')}}">{{job_count|number_format}} Job{% if job_count != 1 %}s{% endif %}</a></li>
+    <li><a href="{{url('users')}}">{{user_count|number_format}} User{% if user_count != 1 %}s{% endif %}</a></li>
+    <li><a href="{{url('crews')}}">{{crew_count|number_format}} Crew{% if crew_count != 1 %}s{% endif %}</a></li>
+    <li><a href="{{url('tags')}}">{{tag_count|number_format}} Tag{% if tag_count != 1 %}s{% endif %}</a></li>
 </ul>
 
 {% endblock %}

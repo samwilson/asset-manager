@@ -2,17 +2,18 @@
 
 {% block content %}
 
-    <ul>
-        <li>Asset: <a href="{{url('assets/'~job.asset.id)}}">{{job.asset.identifier}}</a></li>
-        <li>Job list: <a href="{{url('job-lists/'~job.jobList.id)}}">{{job.jobList.name}}</a></li>
-    </ul>
+<dl class="dl-horizontal">
+    <dt>Asset:</dt><dd><a href="{{url('assets/'~job.asset.id)}}">{{job.asset.identifier}}</a></dd>
+    <dt>Job list:</dt><dd><a href="{{url('job-lists/'~job.jobList.id)}}">{{job.jobList.name}}</a></dd>
+    <dt>Job type:</dt><dd><a href="{{url()}}">{{job.jobList.type.name}}</a></dd>
+</dl>
 
     <form action="{{url('jobs/'~job.id~'/edit')}}" method="post">
-        <fieldset>
+        <fieldset class="row">
             <legend>Resolution</legend>
-            <p class="large-6 columns">
-                <label>Resolution:</label>
-                <select name="resolution_id">
+            <p class="col-md-6">
+                <label for="resolution_id" class="control-label">Resolution:</label>
+                <select name="resolution_id" class="form-control">
                     <option value=""></option>
                     {% for jr in jobResolutions %}
                     <option value="{{jr.id}}" {%if jr.id==job.resolution_id %}selected{% endif %}>
@@ -21,22 +22,22 @@
                     {% endfor %}
                 </select>
             </p>
-            <p class="large-6 columns">
-                <label>Date resolved:</label>
-                <input type="text" name="date_resolved" value="{{job.date_resolved}}" class="datepicker" />
+            <p class="col-md-6">
+                <label for="date_resolved" class="control-label">Date resolved:</label>
+                <input type="text" name="date_resolved" id="date_resoloved" value="{{job.date_resolved}}" class="datepicker form-control" />
             </p>
-        </fieldset>
-        <fieldset>
-            <legend>Attachments</legend>
-            
+            <p class="col-md-12">
+                <label class="control-label">Comments:</label>
+                <textarea class="form-control" id="resolution_comments" name="resolution_comments">{{job.resolution_comments}}</textarea>
+            </p>
         </fieldset>
         <p>
             <input type="hidden" name="_token" value="{{csrf_token()}}" />
             {% if return_to %}
             <input type="hidden" name="return_to" value="{{return_to}}" />
             {% endif %}
-            <input type="submit" class="button" value="Save" />
-            <a href="{{url('jobs/'~job.id)}}" class="button secondary">Cancel</a>
+            <input type="submit" class="btn btn-info" value="Save" />
+            <a href="{{url('jobs/'~job.id)}}" class="btn btn-default">Cancel</a>
         </p>
     </form>
 

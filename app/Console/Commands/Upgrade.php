@@ -380,6 +380,8 @@ class Upgrade extends \Illuminate\Console\Command
                 $table->date('date_resolved')->nullable()->comment('Date of completion or failure.');
                 $table->integer('resolution_id')->unsigned()->nullable();
                 $table->foreign('resolution_id')->references('id')->on('job_resolutions');
+                $table->text('instructions')->nullable();
+                $table->text('resolution_comments')->nullable();
                 $table->timestamps();
                 $table->unique(['job_list_id', 'asset_id']);
             });

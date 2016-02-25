@@ -63,12 +63,12 @@ class Job extends Model
     public function status()
     {
         if ($this->resolution_id) {
-            return self::STATUS_COMPLETE;
+            return trans('jobs.status-complete');
         }
         if ($this->contactRequired() && !$this->contactMade()) {
-            return 'Contact attempt required';
+            return trans('jobs.status-contact-required');
         }
-        return self::STATUS_INCOMPLETE;
+        return trans('jobs.status-incomplete');
     }
 
     /**

@@ -28,7 +28,7 @@ class JobList extends Taggable
         $complete = 0;
         $this->load('jobs');
         foreach ($this->jobs as $job) {
-            if ($job->status() == Job::STATUS_COMPLETE) {
+            if ($job->status() === trans('jobs.status-complete')) {
                 $complete++;
             }
         }
@@ -51,11 +51,22 @@ class JobList extends Taggable
         return 100 - $this->percentComplete();
     }
 
+    /**
+     * @return boolean
+     */
+    public function isInProgress()
+    {
+        return ($this->percentComplete() > 0 && $this->percentComplete() < 100);
+    }
+
     public function status()
     {
-        if (!is_null($this->crew_id)) {
-            return 'Scheduled';
+        if ($this->isInProgress()) {
+            return trans('job-lists.status-in-progress');
         }
-        return 'Unscheduled';
+        if (!is_null($this->crew_id)) {
+            return trans('job-lists.status-scheduled');
+        }
+        return trans('job-lists.status-unscheduled');
     }
 }

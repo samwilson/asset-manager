@@ -58,7 +58,12 @@
                     <td>{{job_list.due_date}}</td>
                     <td>{{job_list.jobs.count|number_format}}</td>
                     <td>{{job_list.crew.name}}</td>
-                    <td>{{job_list.status()}}</td>
+                    <td>
+                        {{job_list.status()}}
+                        {% if job_list.isInProgress() %}
+                            ({{job_list.percentComplete()}}% complete)
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

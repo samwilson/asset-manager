@@ -42,12 +42,9 @@ class JobsController extends Controller
             return $this->view;
         }
         $job = Job::find($id);
-        if ($request->has('resolution_id')) {
-            $job->resolution_id = $request->input('resolution_id');
-        }
-        if ($request->has('date_resolved')) {
-            $job->date_resolved = $request->input('date_resolved');
-        }
+        $job->resolution_id = $request->input('resolution_id');
+        $job->date_resolved = $request->input('date_resolved');
+        $job->resolution_comments = $request->input('resolution_comments');
         $job->save();
         $returnTo = $request->input('return_to', "jobs/$job->id");
         return redirect($returnTo);

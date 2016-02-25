@@ -2,19 +2,23 @@
 
 {% block content %}
 
-<ul>
-    <li>Asset: <a href="{{url('assets/'~job.asset.id)}}">{{job.asset.identifier}}</a></li>
-    <li>Job type: <a href="{{url()}}">{{job.jobList.type.name}}</a></li>
+<dl class="dl-horizontal">
+    <dt>Asset:</dt><dd><a href="{{url('assets/'~job.asset.id)}}">{{job.asset.identifier}}</a></dd>
+    <dt>Job list:</dt><dd><a href="{{url('job-lists/'~job.jobList.id)}}">{{job.jobList.name}}</a></dd>
+    <dt>Job type:</dt><dd><a href="{{url()}}">{{job.jobList.type.name}}</a></dd>
 
     {% if job.resolution.id %}
-    <li>
-        Job resolution: {{job.resolution.name}}
-        {% if job.resolution_date %} on {{job.resolution_date}} {% endif %}
-    </li>
+    <dt>Job resolution:</dt>
+    <dd>
+        <em>{{job.resolution.name}}{% if job.resolution_date %} on {{job.resolution_date}} {% endif %}</em>
+        {{job.resolution_comments|parsedown|raw}}
+    </dd>
     {% endif %}
 
-</ul>
+</dl>
 
-<p><a href="{{url('jobs/'~job.id~'/edit')}}" class="button">Edit</a></p>
+{% if user.isClerk() %}
+<p><a href="{{url('jobs/'~job.id~'/edit')}}" class="btn btn-default">Edit</a></p>
+{% endif %}
 
 {% endblock %}

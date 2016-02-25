@@ -57,6 +57,7 @@
                 <th>Tags</th>
                 <th>Resolution</th>
                 <th>Status</th>
+                <th>Resolution comments</th>
                 <th></th>
             </tr>
         </thead>
@@ -74,6 +75,7 @@
                         {% if job.date_resolved %} ({{job.date_resolved}}) {% endif %}
                     </td>
                     <td>{{job.status()}}</td>
+                    <td>{{job.resolution_comments|parsedown|raw}}</td>
                     <td><a href="{{url('jobs/'~job.id~'/edit')}}?return_to={{'job-lists/'~job_list.id~'#jobs'|url_encode()}}">[Edit]</a></td>
                 </tr>
             {% endfor %}

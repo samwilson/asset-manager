@@ -194,15 +194,19 @@ class JobListsController extends Controller
         $jobList = JobList::find($id);
         $out = [];
         foreach ($jobList->jobs()->with('asset')->get() as $job) {
+            $asset = $job->asset;
+            if (empty($asset->longitude) || empty($asset->latitude)) {
+                continue;
+            }
             $out[] = [
                 "type" => "Feature",
                 "properties" => [
-                    "name" => $job->asset->identifier,
-                //"popupContent" => "This is where the Rockies play!",
+                    "name" => $asset->identifier,
+                    "popupContent" => "This is where the Rockies play!",
                 ],
                 "geometry" => [
                     "type" => "Point",
-                    "coordinates" => [$job->asset->longitude, $job->asset->latitude],
+                    "coordinates" => [$asset->longitude, $asset->latitude],
                 ]
             ];
         }
