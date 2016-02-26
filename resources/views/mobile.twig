@@ -4,10 +4,11 @@
         <title>{{title}}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="{{asset('css/jquery.mobile.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('css/app_mobile.css')}}" rel="stylesheet" type="text/css" />
     </head>
     <body>
         {% block content %}{% endblock %}
-        <script src="{{asset('js/jquery.js')}}"></script>
+        <script src="{{asset('components/jquery/jquery.min.js')}}"></script>
         <script src="{{asset('js/jquery.mobile.min.js')}}"></script>
     </body>
 </html>

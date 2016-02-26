@@ -51,6 +51,14 @@ class User extends \Illuminate\Database\Eloquent\Model implements Authenticatabl
         return $this->hasRole(Role::ADMIN);
     }
 
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = $value;
+        if (empty($this->username)) {
+            $this->attributes['username'] = snake_case($value);
+        }
+    }
+
     /**
      * Get all Administrators.
      * @return \Illuminate\Database\Eloquent\Collection

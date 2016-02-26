@@ -10,28 +10,26 @@
 
 {% for crew in crews %}
 
-    <p>
-        <strong>
-            <code>{{crew.id}}</code>
-            {% if user.isAdmin() %}
-                <a href="{{url('crews/'~crew.id~'/edit')}}">{{crew.name}}</a>
-            {% else %}
-                {{crew.name}}
-            {% endif %}
-        </strong>
-        {% spaceless %}
-        ({% for member in crew.members %}
-            {% if loop.length > 1 and loop.last %} and {% elseif not loop.first %}, {% endif %}
-            <a href="{{url('users/'~member.user.username)}}">{{member.user.name}}</a>
-        {% endfor %})
-        {% endspaceless %}
-    </p>
+    <h2>
+        <code>{{crew.id}}</code>
+        {% if user.isAdmin() %}
+            <a href="{{url('crews/'~crew.id~'/edit')}}">{{crew.name}}</a>
+        {% else %}
+            {{crew.name}}
+        {% endif %}
+        <small>
+        ({% for member in crew.members %}<!--
+            -->{% if loop.length > 1 and loop.last %} and {% elseif not loop.first %}, {% endif %}<!--
+            --><a href="{{url('users/'~member.user.username)}}">{{member.user.name}}</a><!--
+        -->{% endfor %})
+        </small>
+    </h2>
 
     {{crew.comments|parsedown|raw}}
 
-    <div class="row full-width">
+    <div class="row">
         {% for month in months %}
-        <div class="large-2 columns">
+        <div class="col-md-2">
         <table class="calendar">
             <caption>{{month.format('F Y')}}</caption>
             {% for week in month %}
